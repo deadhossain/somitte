@@ -3,7 +3,7 @@
         <div class="pcoded-navigatio-lavel">Setups</div>
         <ul class="pcoded-item pcoded-left-item">
             <li class="active">
-                <a href="sample-page.htm">
+                <a href="{{route('user.index')}}">
                     <span class="pcoded-micon"><i class="feather icon-users"></i></span>
                     <span class="pcoded-mtext">Users</span>
                 </a>

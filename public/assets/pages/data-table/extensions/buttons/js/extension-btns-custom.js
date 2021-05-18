@@ -154,9 +154,19 @@ $(document).ready(function() {
         }]
     });
     $('#basic-btn').DataTable({
-        dom: 'Bfrtip',
-        buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+        // dom: 'Bfrtip',
+        responsive: true,
+        dom : "<'row'<'col-sm-3'l><'col-sm-6 d-flex justify-content-center'B><'col-sm-3'f>>" +
+                "<'row'tr>" +
+                "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+        buttons: ['colvis', 'csv', 'excel', 'pdf', 'print'],
+        colReorder: {
+            realtime: true
+        },
+        stateSave: true,
+        fixedHeader: true
     });
+    
     $('#custom-btn').DataTable({
         dom: 'Bfrtip',
         buttons: [{

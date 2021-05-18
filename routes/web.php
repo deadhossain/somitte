@@ -17,8 +17,12 @@ Route::get('/', function () {
     return view('backends.pages.main');
 });
 
+Route::get('/test', function () {
+    return view('backends.pages.user.index_test');
+});
+
 Route::get('/login', function () {
     return view('backends.pages.user.login');
 });
 
-Route::resource('users', 'backends\user\UserController');
+Route::resource('user', 'backends\user\UserController');
