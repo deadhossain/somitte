@@ -25,4 +25,6 @@ Route::get('/login', function () {
     return view('backends.pages.user.login');
 });
 
+Route::get('user/data', 'backends\user\UserController@data')->name('user.data');
 Route::resource('user', 'backends\user\UserController');
+

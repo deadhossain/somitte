@@ -7,6 +7,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
 {
@@ -17,9 +18,24 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::with('user')->get();
-        return view('backends.pages.user.index',compact('users'));
+        return view('backends.pages.user.index');
     }
+
+
+    /**
+     * Display a tables data.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function data()
+    {
+        $users = User::with('user')->get();
+        return Datatables::of($users)->addIndexColumn()
+        ->addColumn('actions', function ($user) {
+            return (string) view('backends.pages.user.actions', ['user' => $user]);
+        })->rawColumns(['actions','status'])->make();
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -78,7 +94,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::findorFail($id);
+        return view('backends.pages.user.edit',compact('user'));
     }
 
     /**

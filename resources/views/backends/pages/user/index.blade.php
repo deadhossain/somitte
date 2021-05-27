@@ -9,7 +9,7 @@
     </div>
     <div class="card-block">
         <div class="dt-responsive table-responsive">
-            <table class="table basic-datatable compact table-hover table-bordered nowrap" style="width:100%">
+            <table data-source="{{route('user.data')}}" class="table users-datatable compact table-hover table-bordered nowrap" style="width:100%">
                 <thead>
                     <tr>
                         <th>SL</th>
@@ -20,9 +20,18 @@
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
+                    <tr>
+                        <th></th>
+                        <th><input style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
+                        <th><input style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
+                        <th><input style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
+                        <th><input style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
+                        <th><input style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
+                        <th></th>
+                    </tr>
                 </thead>
                 <tbody>
-                    @php $sl = 0; @endphp
+                    {{-- @php $sl = 0; @endphp
                     @foreach ($users as $user)
                         <tr>
                             <td> {{++$sl}} </td>
@@ -33,7 +42,7 @@
                             <td> {!! $user->status !!} </td>
                             <td> @include('backends.pages.user.actions') </td>
                         </tr>
-                    @endforeach
+                    @endforeach --}}
                 </tbody>
             </table>
         </div>
@@ -41,5 +50,23 @@
 </div>
 
 @include('backends.partials.datatablescript')
+<script type="text/javascript">
+    var columns = [
+        {
+            "data": 'DT_RowIndex',
+            orderable: false,
+            searchable: false
+        },
+        {data: 'name', name: 'name'},
+        {data: 'email', name: 'email'},
+        {data: 'created_at', name: 'created_at'},
+        {data: 'created_at', name: 'created_at'},
+        {data: 'status', name: 'status'},
+        {data: 'actions', name: 'actions'},
+    ]
+    $(document).ready(function(){
+        loadDatatableWithColumns($('.users-datatable'),columns);
+    });
+</script>
 
 @endsection

@@ -128,11 +128,13 @@ $(document).ready(function() {
 
 function loadDatatableWithColumns(table,columns){
     var source_data  = table.data('source');
-    var title  = table.closest('.panel').find('.panel-title').find('a.accordion-toggle').text();
+    // alert(source_data);
+    var title  = table.closest('.card').find('.table-card-header').find('h5').text();
     let thisTable = table.DataTable({
         "dom" : "<'row'<'col-sm-3'l><'col-sm-6'B><'col-sm-3'f>>" +
                 "<'row'tr>" +
                 "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+        // buttons: ['colvis', 'csv', 'excel', 'pdf', 'print'],
         buttons: [
             {
                 extend: 'colvis',
@@ -234,7 +236,7 @@ function loadDatatableWithColumns(table,columns){
             });
         }
     });
-    // datatableButtons(thisTable,table.closest('.panel-body'));
+
     table.find('thead tr:eq(1) th').each( function (i) {
         $( 'input, select', this ).on( 'keyup change', function () {
             if ( thisTable.column(i).search() !== this.value ) {
@@ -353,56 +355,6 @@ $(document).ready(function(){
         } );
     }
 
-
-
-    function datatableButtons(thisTable,buttonScope){
-        $.fn.dataTable.Buttons.defaults.dom.container.className = 'pull-right dt-buttons btn-overlap btn-group btn-overlap';
-        new $.fn.dataTable.Buttons( thisTable, {
-            buttons: [
-              {
-                "extend": "colvis",
-                "text": "<i class='fa fa-search bigger-110 blue'></i> <span class='hidden'>Show/hide columns</span>",
-                "className": "btn btn-white btn-primary btn-bold",
-                columns: ':not(:first):not(:last)'
-              },
-
-              {
-                "extend": "csv",
-                "text": "<i class='fa fa-database bigger-110 orange'></i> <span class='hidden'>Export to CSV</span>",
-                "className": "btn btn-white btn-primary btn-bold",
-                exportOptions: {
-                    columns: 'th:not(:last-child)'
-                }
-              },
-
-              {
-                "extend": "print",
-                "text": "<i class='fa fa-print bigger-110 grey'></i> <span class='hidden'>Print</span>",
-                "className": "btn btn-white btn-primary btn-bold",
-                title: function(){
-                    return msg
-                },
-                exportOptions: {
-                    columns: 'th:not(:last-child)'
-                }
-              }
-            ]
-        } );
-        thisTable.buttons(0).container().appendTo( buttonScope.find('.tableTools-container') );
-        var defaultColvisAction = thisTable.button(0).action();
-        thisTable.button(0).action(function (e, dt, button, config) {
-
-            defaultColvisAction(e, dt, button, config);
-
-
-            if(buttonScope.find('.dt-button-collection > .dropdown-menu').length == 0) {
-                buttonScope.find('.dt-button-collection')
-                .wrapInner('<ul class="dropdown-menu dropdown-light dropdown-caret dropdown-caret" />')
-                .find('a').attr('href', '#').wrap("<li />")
-            }
-            buttonScope.find('.dt-button-collection').appendTo('.tableTools-container .dt-buttons')
-        });
-    }
 })
 </script>
 
