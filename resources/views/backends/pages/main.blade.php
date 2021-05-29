@@ -99,6 +99,20 @@
                 @include('backends.partials.sidebar')
                 <div class="pcoded-content">
                     <div class="pcoded-inner-content">
+                        @if ($errors->count()>0)
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-xl-12">
+                                    @foreach ($errors->all() as $error)
+                                        <div class="alert alert-danger border-danger">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <i class="icofont icofont-close-line-circled"></i>
+                                            </button>
+                                            <strong>Error!</strong> {{$error}}
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
                         <!-- Main-body start -->
                         @yield('main-body')
                         @include('backends.partials.style_selector')
