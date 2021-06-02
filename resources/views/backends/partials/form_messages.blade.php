@@ -24,14 +24,14 @@
     </div>
 @endif
 
-@if (\Session::has('success'))
+@if (\Session::has('message'))
     <div class="row">
         <div class="col-sm-12 col-md-12 col-xl-12">
             <div class="alert alert-success border-success">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <i class="icofont icofont-close-line-circled"></i>
                 </button>
-                <strong>Success!</strong> {!! \Session::get('success') !!}
+                {!! \Session::get('message') !!}
             </div>
         </div>
     </div>

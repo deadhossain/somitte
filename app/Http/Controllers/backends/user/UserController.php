@@ -66,7 +66,7 @@ class UserController extends Controller
             // $user->created_by = session('user')->id;
             $is_saved = $user->save();
             if ($is_saved) {
-                return redirect()->route('user.create')->with('success', 'User has been added');
+                return redirect()->route('user.create')->with('message', 'User has been added');
             } else {
                 return redirect()->route('user.create')->with('error', 'User has not been added');
             }
@@ -118,17 +118,36 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        try{
+        // try{
+        //     $user = User::findOrFail($id);
+        //     $user->active_fg = 0;
+        //     // $user->updated_by = session('user')->id;
+        //     $user->updated_by = 1;
+        //     $result = $user->save();
+        //     if ($result) return response()->json(['type'=>'success', 'title'=>'Deleted!', 'msg'=>$user->name.' has been deleted']);
+        //     return response()->json(['type'=>'error', 'title'=>'Sorry!', 'msg'=>'Failed to delete '.$user->name]);
+        // }
+        // catch (\Exception $e) {
+        //     return response()->json(['type'=>'error', 'title'=>'System Failure!!', 'msg'=>$e->getMessage()], 400);
+        // }
+
+        try {
             $user = User::findOrFail($id);
             $user->active_fg = 0;
             // $user->updated_by = session('user')->id;
             $user->updated_by = 1;
-            $result = $user->save();
-            if ($result) return response()->json(['type'=>'success', 'title'=>'Deleted!', 'msg'=>$user->name.' has been deleted']);
-            return response()->json(['type'=>'error', 'title'=>'Sorry!', 'msg'=>'Failed to delete '.$user->name]);
-        }
-        catch (\Exception $e) {
-            return response()->json(['type'=>'error', 'title'=>'System Failure!!', 'msg'=>$e->getMessage()], 400);
+            $is_saved = $user->save();
+            if ($is_saved) {
+                return back()->with('message', 'User has been deleted');
+            } else {
+                return back()->withErrors(['error'=>'User has not been deleted']);
+                // return back()->with('error', 'User has not been deleted');
+            }
+        } catch (\Throwable $th) {
+            return back()->withErrors([
+                'error'=>'User has not been deleted',
+                'error-dev'=> $th->getMessage()
+            ]);
         }
     }
 }
