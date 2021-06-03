@@ -1,6 +1,6 @@
 @extends('backends.pages.main')
 @section('main-body')
-@include('backends.partials.form_messages')
+{{-- @include('backends.partials.messages') --}}
 <!-- Tooltip Validation card start -->
 <div class="card">
     <div class="card-header">

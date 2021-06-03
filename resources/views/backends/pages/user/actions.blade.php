@@ -7,14 +7,15 @@
                 Edit
             </a>
         {{-- @endif --}}
-        <a href="#" data-modal-url="{{route('user.destroy',$user->id)}}" class="dropdown-item waves-light waves-effect deleteDTRow">
+        <a href="#" class="dropdown-item waves-light waves-effect" onclick="$(this).find('form').submit()">
             <i class="ti-trash"></i>
             Delete
+            <form action="{{ route('user.destroy', $user->id) }}" method="POST">
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            </form>
         </a>
-        <form action="{{ route('user.destroy', $user->id) }}" method="POST" style="display: inline-block;">
-            <input type="hidden" name="_method" value="DELETE">
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <input type="submit" class="dropdown-item waves-light waves-effect" value="Delete">
-        </form>
     </div>
 </div>
+
+

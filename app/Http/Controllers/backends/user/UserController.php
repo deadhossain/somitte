@@ -29,11 +29,19 @@ class UserController extends Controller
      */
     public function data()
     {
-        $users = User::with('user')->get();
-        return Datatables::of($users)->addIndexColumn()
-        ->addColumn('actions', function ($user) {
-            return (string) view('backends.pages.user.actions', ['user' => $user]);
-        })->rawColumns(['actions','status'])->make();
+        try {
+            $users = User::with('user')->get();
+            return Datatables::of($users)->addIndexColumn()
+            ->addColumn('actions', function ($user) {
+                return (string) view('backends.pages.user.actions', ['user' => $user]);
+            })->rawColumns(['actions','status'])->make();
+        } catch (\Throwable $th) {
+            // return back()->withErrors([
+            //     'error'=>'Seek system administrator help',
+            //     'error-dev'=> $th->getMessage()
+            // ]);
+        }
+
     }
 
 
@@ -66,12 +74,18 @@ class UserController extends Controller
             // $user->created_by = session('user')->id;
             $is_saved = $user->save();
             if ($is_saved) {
-                return redirect()->route('user.create')->with('message', 'User has been added');
+                // return redirect()->route('user.create')->with('message', 'User has been added');
+                return back()->with('message', 'User has been added');
             } else {
-                return redirect()->route('user.create')->with('error', 'User has not been added');
+                // return redirect()->route('user.create')->with('error', 'User has not been added');
+                return back()->withErrors(['error'=>'User has not been added']);
             }
         } catch (\Throwable $th) {
-            return redirect()->route('user.create')->with('error-dev', $th->getMessage() )->with('error','Seek system administrator help' );
+            // return redirect()->route('user.create')->with('error-dev', $th->getMessage() )->with('error','Seek system administrator help' );
+            return back()->withErrors([
+                'error'=>'Seek system administrator help',
+                'error-dev'=> $th->getMessage()
+            ]);
         }
     }
 
@@ -118,19 +132,6 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        // try{
-        //     $user = User::findOrFail($id);
-        //     $user->active_fg = 0;
-        //     // $user->updated_by = session('user')->id;
-        //     $user->updated_by = 1;
-        //     $result = $user->save();
-        //     if ($result) return response()->json(['type'=>'success', 'title'=>'Deleted!', 'msg'=>$user->name.' has been deleted']);
-        //     return response()->json(['type'=>'error', 'title'=>'Sorry!', 'msg'=>'Failed to delete '.$user->name]);
-        // }
-        // catch (\Exception $e) {
-        //     return response()->json(['type'=>'error', 'title'=>'System Failure!!', 'msg'=>$e->getMessage()], 400);
-        // }
-
         try {
             $user = User::findOrFail($id);
             $user->active_fg = 0;
@@ -141,11 +142,10 @@ class UserController extends Controller
                 return back()->with('message', 'User has been deleted');
             } else {
                 return back()->withErrors(['error'=>'User has not been deleted']);
-                // return back()->with('error', 'User has not been deleted');
             }
         } catch (\Throwable $th) {
             return back()->withErrors([
-                'error'=>'User has not been deleted',
+                'error'=>'Seek system administrator help',
                 'error-dev'=> $th->getMessage()
             ]);
         }
