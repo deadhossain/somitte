@@ -59,7 +59,7 @@
         },
         {data: 'name', name: 'name'},
         {data: 'email', name: 'email'},
-        {data: 'created_at', name: 'created_at'},
+        {data: 'user.name', name: 'user.name'},
         {data: 'created_at', name: 'created_at'},
         {data: 'status', name: 'status'},
         {data: 'actions', name: 'actions'},

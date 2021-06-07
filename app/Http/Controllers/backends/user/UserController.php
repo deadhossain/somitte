@@ -35,7 +35,7 @@ class UserController extends Controller
             ->addColumn('actions', function ($user) {
                 return (string) view('backends.pages.user.actions', ['user' => $user]);
             })->rawColumns(['actions','status'])->make();
-        } catch (\Throwable $th) {
+        } catch (\Exception $th) {
             // return back()->withErrors([
             //     'error'=>'Seek system administrator help',
             //     'error-dev'=> $th->getMessage()
@@ -70,7 +70,6 @@ class UserController extends Controller
             $user->password = Hash::make($request->input('password'));
             $user->active_fg = 1;
             $user->created_by = 1;
-            // $user->active_fg = $request->input('active_fg');
             // $user->created_by = session('user')->id;
             $is_saved = $user->save();
             if ($is_saved) {
@@ -80,7 +79,7 @@ class UserController extends Controller
                 // return redirect()->route('user.create')->with('error', 'User has not been added');
                 return back()->withErrors(['error'=>'User has not been added']);
             }
-        } catch (\Throwable $th) {
+        } catch (\Exception $th) {
             // return redirect()->route('user.create')->with('error-dev', $th->getMessage() )->with('error','Seek system administrator help' );
             return back()->withErrors([
                 'error'=>'Seek system administrator help',
@@ -143,7 +142,7 @@ class UserController extends Controller
             } else {
                 return back()->withErrors(['error'=>'User has not been deleted']);
             }
-        } catch (\Throwable $th) {
+        } catch (\Exception $th) {
             return back()->withErrors([
                 'error'=>'Seek system administrator help',
                 'error-dev'=> $th->getMessage()

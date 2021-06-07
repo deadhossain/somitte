@@ -22,33 +22,11 @@ class AuthController extends Controller
         ]);
 
         $credentials = $request->only('name', 'password');
-
+        $credentials['active_fg'] = 1;
         if (Auth::attempt($credentials)) {
-            // Authentication passed...
-            return redirect()->intended('dashboard');
+            return redirect()->intended();
         }else{
-            return redirect()->back()->with('error', 'Username or Password is not correct');
-        }
-    }
-
-    public function process_login(Request $request)
-    {
-        $request->validate([
-            'name' => 'required',
-            'password' => 'required'
-        ]);
-
-        $credentials = $request->except(['_token']);
-
-        $user = User::where('name',$request->name)->first();
-
-        if (auth()->attempt($credentials)) {
-
-            return redirect()->route('home');
-
-        }else{
-            session()->flash('message', 'Invalid credentials');
-            return redirect()->back();
+            return back()->withErrors(['error'=>'Username or Password is not correct']);
         }
     }
 

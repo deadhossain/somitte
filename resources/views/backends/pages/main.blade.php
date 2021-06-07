@@ -99,7 +99,8 @@
                 @include('backends.partials.sidebar')
                 <div class="pcoded-content">
                     <div class="pcoded-inner-content">
-                        @if ($errors->count()>0)
+                        @include('backends.partials.messages')
+                        {{-- @if ($errors->count()>0)
                             <div class="row">
                                 <div class="col-sm-12 col-md-12 col-xl-12">
                                     @foreach ($errors->all() as $error)
@@ -124,7 +125,7 @@
                                     </div>
                                 </div>
                             </div>
-                        @endif
+                        @endif --}}
                         <!-- Main-body start -->
                         @yield('main-body')
                         @include('backends.partials.style_selector')

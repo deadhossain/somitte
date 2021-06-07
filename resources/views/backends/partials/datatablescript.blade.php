@@ -101,6 +101,7 @@ $(document).ready(function() {
                 title: title,
                 decodeEntities: true,
                 exportOptions: {
+                    stripHtml : false,
                     columns: ':visible(:not(.not-excel-export-col))'
                 },
                 footer: true
