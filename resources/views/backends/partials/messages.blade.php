@@ -12,7 +12,7 @@
         </div>
     </div>
 @endif
-@if ($errors->count()>0 && !empty(session('user')) && session('user')->id==1)
+@if ($errors->count()>0)
     <div class="row">
         <div class="col-sm-12 col-md-12 col-xl-12">
             @foreach ($errors->get('error-dev') as $error)
