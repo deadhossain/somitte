@@ -9,6 +9,11 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('guest')->except('logout');
+    }
+
     public function showLoginForm()
     {
         return view('backends.pages.user.login');
@@ -21,10 +26,12 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
 
-        $credentials = $request->only('name', 'password');
-        $credentials['active_fg'] = 1;
-        if (Auth::attempt($credentials)) {
-            return redirect()->intended();
+        $user = $request->only('name', 'password');
+        $user['active_fg'] = 1;
+        if (Auth::attempt($user)) {
+            $request->session()->regenerate();
+            $request->session()->put('user',$user);
+            return redirect()->intended('/');
         }else{
             return back()->withErrors(['error'=>'Username or Password is not correct']);
         }
@@ -54,10 +61,24 @@ class AuthController extends Controller
         return redirect()->route('login');
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
         \Auth::logout();
-
+        $this->guard()->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerate();
+        $request->session()->regenerateToken();
+        $request->session()->forget('user');
         return redirect()->route('login');
+    }
+
+    /**
+     * Get the guard to be used during authentication.
+     *
+     * @return \Illuminate\Contracts\Auth\StatefulGuard
+     */
+    protected function guard()
+    {
+        return Auth::guard();
     }
 }

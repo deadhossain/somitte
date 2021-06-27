@@ -14,14 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Route::get('/', 'backends\user\AuthController@showLoginForm');
-
-Route::get('/test', function () {
-    return view('backends.pages.user.index_test');
-});
-
-Route::get('/', function () {
-    return view('backends.pages.main');
-});
+Route::resource('/home', 'backends\user\UserController');
+// Route::get('/', function () {
+//     return view('backends.pages.main');
+// });
 
 // Route::get('/login', function () {
 //     return view('backends.pages.user.login');
@@ -31,6 +27,7 @@ Route::get('user/data', 'backends\user\UserController@data')->name('user.data');
 Route::resource('user', 'backends\user\UserController');
 
 Route::namespace('backends\user')->group(function () {
+    Route::get('/','AuthController@showLoginForm');
     Route::get('/login','AuthController@showLoginForm')->name('login');
     Route::post('/login','AuthController@authenticate')->name('login');
     Route::get('/register','AuthController@show_signup_form')->name('register');

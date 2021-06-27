@@ -30,6 +30,13 @@ class StoreUserRequest extends FormRequest
     public function rules()
     {
         $rules = $this::VALIDATION_RULES;
+
+        if ($this->getMethod() == 'POST') {
+            $rules += ['password' => 'required|min:6'];
+        }else{
+
+        }
+
         return $rules;
     }
 }

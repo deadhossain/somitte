@@ -11,6 +11,12 @@ use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -69,18 +75,15 @@ class UserController extends Controller
             $user->email = $request->input('email');
             $user->password = Hash::make($request->input('password'));
             $user->active_fg = 1;
-            $user->created_by = 1;
-            // $user->created_by = session('user')->id;
+            // $user->created_by = 1;
+            $user->created_by = session('user')->id;
             $is_saved = $user->save();
             if ($is_saved) {
-                // return redirect()->route('user.create')->with('message', 'User has been added');
                 return back()->with('message', 'User has been added');
             } else {
-                // return redirect()->route('user.create')->with('error', 'User has not been added');
                 return back()->withErrors(['error'=>'User has not been added']);
             }
         } catch (\Exception $th) {
-            // return redirect()->route('user.create')->with('error-dev', $th->getMessage() )->with('error','Seek system administrator help' );
             return back()->withErrors([
                 'error'=>'Seek system administrator help',
                 'error-dev'=> $th->getMessage()
@@ -120,7 +123,25 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $user = User::findOrFail($id);
+            $user->name = $request->input('name');
+            $user->email = $request->input('email');
+            $user->password = Hash::make($request->input('password'));
+            // $user->updated_by = 1;
+            $user->updated_by = session('user')->id;
+            $is_saved = $user->save();
+            if ($is_saved) {
+                return back()->with('message', 'User has been deleted');
+            } else {
+                return back()->withErrors(['error'=>'User has not been deleted']);
+            }
+        } catch (\Exception $th) {
+            return back()->withErrors([
+                'error'=>'Seek system administrator help',
+                'error-dev'=> $th->getMessage()
+            ]);
+        }
     }
 
     /**
