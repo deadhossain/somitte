@@ -21,7 +21,7 @@ class CreateLookupDetailsTable extends Migration
             $table->tinyInteger('active_fg')->default(1);
             $table->string('value',50)->nullable();
 
-            $table->foreignId('lookup_id')->references('id')->on('lookups');
+            $table->foreignId('lookup_id')->references('id')->on('lookup');
             $table->foreignId('created_by')->default(1);
             $table->foreignId('updated_by')->default(1);
             $table->timestamps();

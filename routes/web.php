@@ -26,6 +26,9 @@ Route::resource('/home', 'backends\user\UserController');
 Route::get('user/data', 'backends\user\UserController@data')->name('user.data');
 Route::resource('user', 'backends\user\UserController');
 
+Route::resource('lookup', 'backends\setups\LookupController');
+Route::resource('lookup.lookupDetails' , 'backends\setups\LookupDetailsController')->shallow();
+
 Route::namespace('backends\user')->group(function () {
     Route::get('/','AuthController@showLoginForm');
     Route::get('/login','AuthController@showLoginForm')->name('login');

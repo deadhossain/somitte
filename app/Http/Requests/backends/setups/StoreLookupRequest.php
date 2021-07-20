@@ -1,16 +1,13 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\backends\setups;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreUserRequest extends FormRequest
+class StoreLookupRequest extends FormRequest
 {
     private const VALIDATION_RULES = [
-        'name' => 'required|unique:users|max:20',
-        'email' => 'required|email',
-        'password' => 'required|min:6',
-        'confirm_password' => 'required_with:password|same:password'
+        'name' => 'required|unique:lookups',
     ];
     /**
      * Determine if the user is authorized to make this request.
@@ -32,9 +29,9 @@ class StoreUserRequest extends FormRequest
         $rules = $this::VALIDATION_RULES;
 
         if ($this->getMethod() == 'POST') {
-            $rules += ['password' => 'required|min:6'];
-        }else{
 
+        }else if ($this->getMethod() == 'PUT'){
+            $rules['name'] = 'required|unique:lookups,name,'.$this->lookup->id;
         }
 
         return $rules;
@@ -49,9 +46,6 @@ class StoreUserRequest extends FormRequest
     {
         return [
             'name' => 'Name',
-            'email' => 'Email',
-            'password' => 'Password',
-            'confirm_password' => 'Confirm Password'
         ];
     }
 

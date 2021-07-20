@@ -146,6 +146,9 @@
 <script type="text/javascript" src="{{asset('bower_components/modernizr/js/modernizr.js')}}"></script>
 <script type="text/javascript" src="{{asset('bower_components/modernizr/js/css-scrollbars.js')}}"></script>
 
+<!-- Accordion js -->
+<script type="text/javascript" src="{{asset('assets/pages/accordion/accordion.js')}}"></script>
+
 <!-- data-table js -->
 <script src="{{asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('bower_components/datatables.net-buttons/js/dataTables.buttons.min.js')}}"></script>
