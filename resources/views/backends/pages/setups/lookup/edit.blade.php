@@ -4,15 +4,15 @@
 <!-- Tooltip Validation card start -->
 <div class="card">
     <div class="card-header">
-        <h5>Register New User</h5>
+        <h5>Update Lookup</h5>
     </div>
     <div class="card-block">
-        <form id="second" action="{{route('user.update',$user->id)}}" method="post" novalidate="">
+        <form id="second" action="{{route('lookup.update',$lookup->id)}}" method="post" novalidate="">
             @csrf
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Username</label>
+                <label class="col-sm-2 col-form-label">Name</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control @error('name') form-control-danger @enderror" name="name" placeholder="Enter Username" value="{{ $user->name }}">
+                    <input type="text" class="form-control @error('name') form-control-danger @enderror" name="name" placeholder="Enter Lookup Name" value="{{ $lookup->name }}">
                     <span class="messages popover-valid">
                         @error('name')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
@@ -22,47 +22,11 @@
             </div>
 
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Email-id</label>
+                <label class="col-sm-2 col-form-label">Remarks {{ $lookup->remarks }}</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control @error('email') form-control-danger @enderror" name="email" placeholder="Enter email id" value="{{ $user->email }}">
+                    <textarea rows="5" name="remakrs" class="form-control @error('remarks') form-control-danger @enderror" placeholder="Enter Remarks">{{ $lookup->remarks }}</textarea>
                     <span class="messages popover-valid">
-                        @error('email')
-                            <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
-                        @enderror
-                    </span>
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Old Password</label>
-                <div class="col-sm-10">
-                    <input type="password" class="form-control @error('password') form-control-danger @enderror" name="password" placeholder="Password input">
-                    <span class="messages popover-valid">
-                        @error('password')
-                            <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
-                        @enderror
-                    </span>
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Password</label>
-                <div class="col-sm-10">
-                    <input type="password" class="form-control @error('password') form-control-danger @enderror" name="password" placeholder="Password input">
-                    <span class="messages popover-valid">
-                        @error('password')
-                            <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
-                        @enderror
-                    </span>
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Confirm Password</label>
-                <div class="col-sm-10">
-                    <input type="password" class="form-control @error('confirm_password') form-control-danger @enderror" name="confirm_password" placeholder="Password input">
-                    <span class="messages popover-valid">
-                        @error('confirm_password')
+                        @error('remarks')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
                         @enderror
                     </span>
