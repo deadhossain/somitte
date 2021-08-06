@@ -23,13 +23,13 @@
                                     {{$lookup->name}} - ({{$id}})
                                 </a>
                                 <small style="float:right;">
-                                    <a href="#">
+                                    <a href="{{route('lookup.lookup_details.create',Crypt::encrypt($id))}}">
                                         <span class="label label-info">
                                             <i class="ace-icon fa fa-plus"></i>
                                             Add
                                         </span>
                                     </a>
-                                    <a href="{{route('lookup.edit',$id)}}" class="edit">
+                                    <a href="{{route('lookup.edit',Crypt::encrypt($id))}}" class="edit">
                                         <span class="label label-info">
                                             <i class="ace-icon fa fa-pencil"></i>
                                             Edit
@@ -42,7 +42,7 @@
                     <div id="collapse{{$id}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading{{$id}}">
                         <div class="accordion-content accordion-desc">
                             <div class="dt-responsive table-responsive">
-                                <table data-source="{{route('lookup.lookupDetails.index',$id)}}" class="table lookup-datatable compact table-hover table-bordered nowrap" style="width:100%">
+                                <table data-source="{{route('lookup.lookup_details.index',Crypt::encrypt($id))}}" class="table lookup-datatable compact table-hover table-bordered nowrap" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th>SL</th>
@@ -85,9 +85,11 @@
         {data: 'remarks', name: 'remarks'},
         {data: 'status', name: 'status'},
         {data: 'actions', name: 'actions'},
-    ]
+    ];
     $(document).ready(function(){
-        loadDatatableWithColumns($('.lookup-datatable'),columns);
+        $('.lookup-datatable').each(function(){
+            loadDatatableWithColumns($(this),columns);
+        });
     });
 </script>
 @endsection

@@ -38,7 +38,7 @@ $(document).ready(function() {
     var title  = table.closest('.card').find('.table-card-header').find('h5').text();
     $('.basic-datatable').DataTable({
         responsive: true,
-        dom : "<'row'<'col-sm-3'l><'col-sm-6 d-flex justify-content-center'B><'col-sm-3'f>>" +
+        dom : "<'row'<'col-sm-4'l><'col-sm-5 d-flex justify-content-center'B><'col-sm-3'f>>" +
                 "<'row'tr>" +
                 "<'row'<'col-sm-5'i><'col-sm-7'p>>",
         // buttons: ['colvis', 'csv', 'excel', 'pdf', 'print'],
@@ -132,7 +132,7 @@ function loadDatatableWithColumns(table,columns){
     // alert(source_data);
     var title  = table.closest('.card').find('.table-card-header').find('h5').text();
     let thisTable = table.DataTable({
-        "dom" : "<'row'<'col-sm-3'l><'col-sm-6'B><'col-sm-3'f>>" +
+        "dom" : "<'row'<'col-sm-4'l><'col-sm-5'B><'col-sm-3'f>>" +
                 "<'row'tr>" +
                 "<'row'<'col-sm-5'i><'col-sm-7'p>>",
         // buttons: ['colvis', 'csv', 'excel', 'pdf', 'print'],

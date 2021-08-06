@@ -27,11 +27,10 @@ class StoreLookupRequest extends FormRequest
     public function rules()
     {
         $rules = $this::VALIDATION_RULES;
-
         if ($this->getMethod() == 'POST') {
 
-        }else if ($this->getMethod() == 'PUT'){
-            $rules['name'] = 'required|unique:lookups,name,'.$this->lookup->id;
+        }else if ($this->getMethod() == 'PATCH'){
+            $rules['name'] = 'required|unique:lookups,name,'.$this->lookup;
         }
 
         return $rules;

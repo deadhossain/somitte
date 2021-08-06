@@ -3,12 +3,20 @@
 namespace App\Http\Controllers\backends\setups;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Crypt;
+use App\Http\Requests\backends\setups\StoreLookupDetailRequest;
 use Illuminate\Http\Request;
 use App\models\setups\LookupDetails;
 use Yajra\DataTables\Facades\DataTables;
 
 class LookupDetailsController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -17,11 +25,11 @@ class LookupDetailsController extends Controller
     public function index($lookupId)
     {
         // dd($request->all());
+        $lookupId = Crypt::decrypt($lookupId);
         $key['lookup_id'] = $lookupId;
         $lookupDetails = LookupDetails::where($key);
         return Datatables::of($lookupDetails)->addIndexColumn()
         ->editColumn('name', function ($lookupDetails) {
-
             return $lookupDetails->name. ' - '. $lookupDetails->id;
         })
         ->addColumn('status', function ($lookupDetails) {
@@ -29,8 +37,9 @@ class LookupDetailsController extends Controller
             return '<label class="label label-danger label-white middle">INACTIVE</label>';
         })
         ->addColumn('actions', function ($lookupDetails) {
-            return '<a href="#" data-modal-url="'.route('lookupDetails.edit',$lookupDetails->id).'" data-modal-title="Update Lookup Detail Form" class="btn btn-xs btn-primary showModal"><i class="glyphicon glyphicon-edit"></i> Edit</a>
-            <a href="#" data-modal-url="'.route('lookupDetails.destroy',$lookupDetails->id).'"   class="btn btn-xs btn-danger deleteDTRow"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
+            return (string) view('backends.pages.setups.lookup_detail.actions', ['lookupDetails' => $lookupDetails]);
+            // return '<a href="#" data-modal-url="'.route('lookup_details.edit',$lookupDetails->id).'" data-modal-title="Update Lookup Detail Form" class="btn btn-xs btn-primary showModal"><i class="glyphicon glyphicon-edit"></i> Edit</a>
+            // <a href="#" data-modal-url="'.route('lookup_details.destroy',$lookupDetails->id).'"   class="btn btn-xs btn-danger deleteDTRow"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
         })->rawColumns(['actions','status'])->make();
     }
 
@@ -41,7 +50,7 @@ class LookupDetailsController extends Controller
      */
     public function create($id)
     {
-        return view('backends.layouts.setups.lookup_detail.create',compact('id'));
+        return view('backends.pages.setups.lookup_detail.create',compact('id'));
     }
 
     /**
@@ -50,37 +59,27 @@ class LookupDetailsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,$id)
+    public function store(StoreLookupDetailRequest $request,LookupDetails $lookupDetail)
     {
         try {
-            $rules = [
-                'name' => ['required',
-                    Rule::unique('lookup_details')->where(function ($query) use ($id) {
-                        return $query->where('active_fg', 1)->where('lookup_id', $id);
-                    }),
-                ],
-            ];
-
-            $customAttributes = [ 'name' =>'Name' ];
-            $message = array();
-            $validator = Validator::make($request->all(),$rules,$message,$customAttributes);
-            if ($validator->fails()) return response()->json(['error'=>$validator->errors()]);
-
-            $lookupDetail = new LookupDetail;
-            $lookupDetail->lookup_id = $id;
+            $lookupDetail = new LookupDetails;
+            $lookupDetail->lookup_id = $lookupDetail->id;
             $lookupDetail->name = $request->input('name');
             $lookupDetail->value = $request->input('value');
             $lookupDetail->remarks = $request->input('remarks');
-            $lookupDetail->active_fg = $request->input('status');
+            $lookupDetail->active_fg = 1;
             $lookupDetail->created_by = session('user')->id;
-            $result = $lookupDetail->save();
-            if ($result) return response()->json(['success'=>$lookupDetail->name.' is saved']);
-            return response()->json(['error'=>'Fail to save '.$lookupDetail->name]);
-        } catch (Exception $e) {
-            return response()->json([
-                'success' => 'false',
-                'errors'  => $e->getMessage(),
-            ], 400);
+            $is_saved = $lookupDetail->save();
+            if ($is_saved) {
+                return back()->with('message', 'Lookup has been updated');
+            } else {
+                return back()->withErrors(['error'=>'Lookup has not been updated']);
+            }
+        } catch (\Exception $th) {
+            return back()->withErrors([
+                'error'=>'Seek system administrator help',
+                'error-dev'=> $th->getMessage()
+            ]);
         }
     }
 
@@ -103,8 +102,8 @@ class LookupDetailsController extends Controller
      */
     public function edit($id)
     {
-        $lookupDetail = LookupDetail::findorFail($id);
-        return view('backends.layouts.setups.lookup_detail.edit',compact('lookupDetail','id'));
+        $lookupDetail = LookupDetails::findorFail($id);
+        return view('backends.pages.setups.lookup_detail.edit',compact('lookupDetail','id'));
     }
 
     /**
@@ -114,29 +113,26 @@ class LookupDetailsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreLookupDetailRequest $request, LookupDetails $lookupDetail)
     {
         try {
-            $rules = [ 'name' => 'required|unique:lookup_details,name,'.$id];
-            $customAttributes = [ 'name' =>'Name' ];
-            $message = array();
-            $validator = Validator::make($request->all(),$rules,$message,$customAttributes);
-            if ($validator->fails()) return response()->json(['error'=>$validator->errors()]);
-
-            $lookupDetail = LookupDetail::findOrFail($id);
+            $lookupDetail = LookupDetails::findOrFail($lookupDetail->id);
             $lookupDetail->name = $request->input('name');
             $lookupDetail->value = $request->input('value');
             $lookupDetail->remarks = $request->input('remarks');
-            $lookupDetail->active_fg = $request->input('status');
+            $lookupDetail->active_fg = $request->input('active_fg');
             $lookupDetail->updated_by = session('user')->id;
-            $result = $lookupDetail->save();
-            if ($result) return response()->json(['success'=>$lookupDetail->name.' is saved']);
-            return response()->json(['error'=>'Fail to save '.$lookupDetail->name]);
-        } catch (Exception $e) {
-            return response()->json([
-                'success' => 'false',
-                'errors'  => $e->getMessage(),
-            ], 400);
+            $is_saved = $lookupDetail->save();
+            if ($is_saved) {
+                return back()->with('message', 'Lookup Detail has been updated');
+            } else {
+                return back()->withErrors(['error'=>'Lookup Detail has not been updated']);
+            }
+        } catch (\Exception $th) {
+            return back()->withErrors([
+                'error'=>'Seek system administrator help',
+                'error-dev'=> $th->getMessage()
+            ]);
         }
     }
 
@@ -149,7 +145,7 @@ class LookupDetailsController extends Controller
     public function destroy($id)
     {
         try{
-            $lookupDetail = LookupDetail::findOrFail($id);
+            $lookupDetail = LookupDetails::findOrFail($id);
             $lookupDetail->active_fg=0;
             $lookupDetail->updated_by = session('user')->id;
             $result = $lookupDetail->save();

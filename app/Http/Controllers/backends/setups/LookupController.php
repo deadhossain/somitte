@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\models\setups\Lookup;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Crypt;
 
 use App\Http\Requests\backends\setups\StoreLookupRequest;
 
@@ -51,7 +52,7 @@ class LookupController extends Controller
             $lookup->name = $request->input('name');
             $lookup->remarks = $request->input('remarks');
             $lookup->active_fg = 1;
-            // $lookup->created_by = session('user')->id;
+            $lookup->created_by = session('user')->id;
             $is_saved = $lookup->save();
             if ($is_saved) {
                 return back()->with('message', 'Lookup has been added');
@@ -85,6 +86,7 @@ class LookupController extends Controller
      */
     public function edit($id)
     {
+        $id = Crypt::decrypt($id);
         $lookup = Lookup::findorFail($id);
         return view('backends.pages.setups.lookup.edit',compact('lookup','id'));
     }
@@ -96,28 +98,25 @@ class LookupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreLookupRequest $request, $id)
+    public function update(StoreLookupRequest $request,$id)
     {
         try {
-            $rules = [ 'name' => 'required|unique:lookup,name,'.$id ];
-            $customAttributes = [ 'name' =>'Name' ];
-            $message = array();
-            $validator = Validator::make($request->all(),$rules,$message,$customAttributes);
-            if ($validator->fails()) return response()->json(['error'=>$validator->errors()]);
-
             $lookup = Lookup::findorFail($id);
             $lookup->name = $request->input('name');
             $lookup->remarks = $request->input('remarks');
-            $lookup->active_fg = $request->input('status');
+            $lookup->active_fg = 1;
             $lookup->updated_by = session('user')->id;
-            $result = $lookup->save();
-            if ($result) return response()->json(['success'=>$lookup->name.' is saved']);
-            return response()->json(['error'=>'Fail to save '.$lookup->name]);
-        } catch (Exception $e) {
-            return response()->json([
-                'success' => 'false',
-                'errors'  => $e->getMessage(),
-            ], 400);
+            $is_saved = $lookup->save();
+            if ($is_saved) {
+                return back()->with('message', 'Lookup has been updated');
+            } else {
+                return back()->withErrors(['error'=>'Lookup has not been updated']);
+            }
+        } catch (\Exception $th) {
+            return back()->withErrors([
+                'error'=>'Seek system administrator help',
+                'error-dev'=> $th->getMessage()
+            ]);
         }
     }
 
