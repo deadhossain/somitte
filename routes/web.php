@@ -26,8 +26,13 @@ Route::resource('/home', 'backends\user\UserController');
 Route::get('user/data', 'backends\user\UserController@data')->name('user.data');
 Route::resource('user', 'backends\user\UserController');
 
+Route::patch('lookup_detail/{lookup_detail}','backends\setups\LookupDetailController@update')->name('lookup_detail.update');;
+// Route::resource('lookup.lookup_detail' , 'backends\setups\LookupDetailController')->shallow()->except([
+//     'update'
+// ]);;
+Route::resource('lookup.lookup_detail' , 'backends\setups\LookupDetailController')->shallow();
 Route::resource('lookup', 'backends\setups\LookupController');
-Route::resource('lookup.lookup_details' , 'backends\setups\LookupDetailsController')->shallow();
+
 
 Route::namespace('backends\user')->group(function () {
     Route::get('/','AuthController@showLoginForm');
@@ -37,3 +42,13 @@ Route::namespace('backends\user')->group(function () {
     Route::post('/register','AuthController@process_signup');
     Route::post('/logout','AuthController@logout')->name('logout');
 });
+
+
+
+
+// Route::group(['middleware'=>'auth'],function () {
+
+
+// });
+Route::get('savings/scheme/data', 'backends\savings\SavingsSchemeController@data')->name('scheme.data');
+Route::resource('savings/scheme', 'backends\savings\SavingsSchemeController')->middleware(['web', 'auth']);

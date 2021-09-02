@@ -6,7 +6,7 @@
                 <div class="chat-inner-header">
                     <div class="back_chatBox">
                         <div class="right-icon-control">
-                            <input type="text" class="form-control  search-text" placeholder="Search Friend" id="search-friends">
+                            <input autocomplete="off" type="text" class="form-control  search-text" placeholder="Search Friend" id="search-friends">
                             <div class="form-icon">
                                 <i class="icofont icofont-search"></i>
                             </div>
@@ -97,7 +97,7 @@
     </div>
     <div class="chat-reply-box p-b-20">
         <div class="right-icon-control">
-            <input type="text" class="form-control search-text" placeholder="Share Your Thoughts">
+            <input autocomplete="off" type="text" class="form-control search-text" placeholder="Share Your Thoughts">
             <div class="form-icon">
                 <i class="feather icon-navigation"></i>
             </div>

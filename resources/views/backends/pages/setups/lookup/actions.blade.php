@@ -11,8 +11,8 @@
             <i class="ti-trash"></i>
             Delete
             <form action="{{ route('user.destroy', $user->id) }}" method="POST">
-                <input type="hidden" name="_method" value="DELETE">
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <input autocomplete="off" type="hidden" name="_method" value="DELETE">
+                <input autocomplete="off" type="hidden" name="_token" value="{{ csrf_token() }}">
             </form>
         </a>
     </div>

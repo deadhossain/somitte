@@ -15,7 +15,7 @@ class Lookup extends Model
 
     public function lookupDetails()
     {
-        // return $this->hasMany('LookupDetails');
-        return $this->hasMany(LookupDetails::class, 'lookup_id', 'id');
+        // return $this->hasMany('LookupDetail');
+        return $this->hasMany(LookupDetail::class, 'lookup_id', 'id');
     }
 }

@@ -1,15 +1,11 @@
 <?php
 
-namespace App\Http\Requests\backends\setups;
+namespace App\Http\Requests\backends\savings;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Crypt;
 
-class StoreLookupRequest extends FormRequest
+class SavingsSchemeRequest extends FormRequest
 {
-    private const VALIDATION_RULES = [
-        'name' => 'required|unique:lookups',
-    ];
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -27,14 +23,10 @@ class StoreLookupRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = $this::VALIDATION_RULES;
-        if ($this->getMethod() == 'POST') {
-
-        }else if ($this->getMethod() == 'PATCH'){
-            $rules['name'] = 'required|unique:lookups,name,'.Crypt::decrypt($this->lookup);
-        }
-
-        return $rules;
+        dd("request");
+        return [
+            //
+        ];
     }
 
     /**
@@ -46,6 +38,9 @@ class StoreLookupRequest extends FormRequest
     {
         return [
             'name' => 'Name',
+            'email' => 'Email',
+            'password' => 'Password',
+            'confirm_password' => 'Confirm Password'
         ];
     }
 

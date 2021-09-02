@@ -6,15 +6,19 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
 use App\Http\Requests\backends\setups\StoreLookupDetailRequest;
 use Illuminate\Http\Request;
-use App\models\setups\LookupDetails;
+use App\models\setups\LookupDetail;
 use Yajra\DataTables\Facades\DataTables;
 
-class LookupDetailsController extends Controller
+class LookupDetailController extends Controller
 {
 
     public function __construct()
     {
+        // dd(empty(session('user')->id));
         $this->middleware('auth');
+        // if (empty(session('user')->id)) {
+        //     return redirect()->route('login');
+        // }
     }
 
     /**
@@ -24,10 +28,10 @@ class LookupDetailsController extends Controller
      */
     public function index($lookupId)
     {
-        // dd($request->all());
         $lookupId = Crypt::decrypt($lookupId);
         $key['lookup_id'] = $lookupId;
-        $lookupDetails = LookupDetails::where($key);
+        $lookupDetails = LookupDetail::where($key);
+        // dd($lookupDetails->id);
         return Datatables::of($lookupDetails)->addIndexColumn()
         ->editColumn('name', function ($lookupDetails) {
             return $lookupDetails->name. ' - '. $lookupDetails->id;
@@ -38,8 +42,6 @@ class LookupDetailsController extends Controller
         })
         ->addColumn('actions', function ($lookupDetails) {
             return (string) view('backends.pages.setups.lookup_detail.actions', ['lookupDetails' => $lookupDetails]);
-            // return '<a href="#" data-modal-url="'.route('lookup_details.edit',$lookupDetails->id).'" data-modal-title="Update Lookup Detail Form" class="btn btn-xs btn-primary showModal"><i class="glyphicon glyphicon-edit"></i> Edit</a>
-            // <a href="#" data-modal-url="'.route('lookup_details.destroy',$lookupDetails->id).'"   class="btn btn-xs btn-danger deleteDTRow"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
         })->rawColumns(['actions','status'])->make();
     }
 
@@ -59,11 +61,11 @@ class LookupDetailsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreLookupDetailRequest $request,LookupDetails $lookupDetail)
+    public function store(StoreLookupDetailRequest $request,$lookup_id)
     {
         try {
-            $lookupDetail = new LookupDetails;
-            $lookupDetail->lookup_id = $lookupDetail->id;
+            $lookupDetail = new LookupDetail;
+            $lookupDetail->lookup_id = Crypt::decrypt($lookup_id);
             $lookupDetail->name = $request->input('name');
             $lookupDetail->value = $request->input('value');
             $lookupDetail->remarks = $request->input('remarks');
@@ -102,8 +104,9 @@ class LookupDetailsController extends Controller
      */
     public function edit($id)
     {
-        $lookupDetail = LookupDetails::findorFail($id);
-        return view('backends.pages.setups.lookup_detail.edit',compact('lookupDetail','id'));
+        $id = Crypt::decrypt($id);
+        $lookupDetail = LookupDetail::findorFail($id);
+        return view('backends.pages.setups.lookup_detail.edit',compact('lookupDetail'));
     }
 
     /**
@@ -113,10 +116,10 @@ class LookupDetailsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreLookupDetailRequest $request, LookupDetails $lookupDetail)
+    public function update(StoreLookupDetailRequest $request, LookupDetail $lookupDetail)
     {
         try {
-            $lookupDetail = LookupDetails::findOrFail($lookupDetail->id);
+            $lookupDetail = LookupDetail::findOrFail($lookupDetail->id);
             $lookupDetail->name = $request->input('name');
             $lookupDetail->value = $request->input('value');
             $lookupDetail->remarks = $request->input('remarks');
@@ -142,10 +145,33 @@ class LookupDetailsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function destroy1($id)
+    {
+        try {
+            $id = Crypt::decrypt($id);
+            $lookupDetail = LookupDetail::findOrFail($id);
+            $lookupDetail->active_fg = 0;
+            $lookupDetail->updated_by = session('user')->id;
+            $is_saved = $lookupDetail->save();
+            if ($is_saved) {
+                return back()->with('message', 'Lookup Detail has been deleted');
+            } else {
+                return back()->withErrors(['error'=>'Lookup Detail has not been deleted']);
+            }
+        } catch (\Exception $th) {
+            return back()->withErrors([
+                'error'=>'Seek system administrator help',
+                'error-dev'=> $th->getMessage()
+            ]);
+        }
+    }
+
+
     public function destroy($id)
     {
         try{
-            $lookupDetail = LookupDetails::findOrFail($id);
+            $id = Crypt::decrypt($id);
+            $lookupDetail = LookupDetail::findOrFail($id);
             $lookupDetail->active_fg=0;
             $lookupDetail->updated_by = session('user')->id;
             $result = $lookupDetail->save();

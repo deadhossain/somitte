@@ -4,6 +4,7 @@ namespace App\Http\Requests\backends\setups;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Crypt;
 
 class StoreLookupDetailRequest extends FormRequest
 {
@@ -27,11 +28,13 @@ class StoreLookupDetailRequest extends FormRequest
      */
     public function rules()
     {
+        $rules = [];
         if ($this->getMethod() == 'POST') {
+            $id = Crypt::decrypt($this->lookup);
             $rules = [
                 'name' => ['required',
-                    Rule::unique('lookup_details')->where(function ($query){
-                        return $query->where('active_fg', 1)->where('lookup_id', $this->lookup_id);
+                    Rule::unique('lookup_details')->where(function ($query) use ($id){
+                        return $query->where('active_fg', 1)->where('lookup_id', $id);
                     }),
                 ],
             ];

@@ -15,5 +15,14 @@
                 </a>
             </li>
         </ul>
+        <div class="pcoded-navigatio-lavel">Saving</div>
+        <ul class="pcoded-item pcoded-left-item">
+            <li class="active">
+                <a href="{{route('scheme.index')}}">
+                    <span class="pcoded-micon"><i class="feather icon-users"></i></span>
+                    <span class="pcoded-mtext">Scheme</span>
+                </a>
+            </li>
+        </ul>
     </div>
 </nav>

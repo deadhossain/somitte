@@ -23,7 +23,7 @@
                                     {{$lookup->name}} - ({{$id}})
                                 </a>
                                 <small style="float:right;">
-                                    <a href="{{route('lookup.lookup_details.create',Crypt::encrypt($id))}}">
+                                    <a href="{{route('lookup.lookup_detail.create',Crypt::encrypt($id))}}">
                                         <span class="label label-info">
                                             <i class="ace-icon fa fa-plus"></i>
                                             Add
@@ -42,7 +42,7 @@
                     <div id="collapse{{$id}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading{{$id}}">
                         <div class="accordion-content accordion-desc">
                             <div class="dt-responsive table-responsive">
-                                <table data-source="{{route('lookup.lookup_details.index',Crypt::encrypt($id))}}" class="table lookup-datatable compact table-hover table-bordered nowrap" style="width:100%">
+                                <table data-source="{{route('lookup.lookup_detail.index',Crypt::encrypt($id))}}" class="table lookup-datatable compact table-hover table-bordered nowrap" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th>SL</th>
@@ -54,10 +54,10 @@
                                         </tr>
                                         <tr>
                                             <th></th>
-                                            <th><input style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
-                                            <th><input style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
-                                            <th><input style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
-                                            <th><input style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
+                                            <th><input autocomplete="off" style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
+                                            <th><input autocomplete="off" style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
+                                            <th><input autocomplete="off" style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
+                                            <th><input autocomplete="off" style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
                                             <th></th>
                                         </tr>
                                     </thead>

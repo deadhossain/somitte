@@ -3,6 +3,7 @@
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                // 'X-CSRF-TOKEN': "{{ csrf_token() }}"
             }
         });
 
@@ -11,7 +12,6 @@
             if(!url || url == "")return false;
             let datatable = $(this).closest('.dataTable');
             let tr = $(this).closest('tr');
-            // let csrf_token = $('meta[name="csrf_token"]').attr('content');
             e.preventDefault();
             Swal.fire({
             title: 'Are you sure?',

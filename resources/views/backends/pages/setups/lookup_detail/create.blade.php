@@ -7,12 +7,12 @@
         <h5>Add Lookup</h5>
     </div>
     <div class="card-block">
-        <form id="second" action="{{route('lookup.lookup_details.store',$id)}}" method="post" novalidate="">
+        <form id="second" action="{{route('lookup.lookup_detail.store',$id)}}" method="post" novalidate="">
             @csrf
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Name</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control @error('name') form-control-danger @enderror" name="name" placeholder="Enter Lookup Name" value="{{ old('name') }}">
+                    <input autocomplete="off" type="text" class="form-control @error('name') form-control-danger @enderror" name="name" placeholder="Enter Lookup Name" value="{{ old('name') }}">
                     <span class="messages popover-valid">
                         @error('name')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
@@ -24,7 +24,7 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Value</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control @error('value') form-control-danger @enderror" name="value" placeholder="Enter Lookup value" value="{{ old('value') }}">
+                    <input autocomplete="off" type="text" class="form-control @error('value') form-control-danger @enderror" name="value" placeholder="Enter Lookup value" value="{{ old('value') }}">
                     <span class="messages popover-valid">
                         @error('value')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
@@ -36,7 +36,7 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Remarks</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control @error('remarks') form-control-danger @enderror" name="remarks" placeholder="Enter Lookup Remarks" value="{{ old('remarks') }}">
+                    <input autocomplete="off" type="text" class="form-control @error('remarks') form-control-danger @enderror" name="remarks" placeholder="Enter Lookup Remarks" value="{{ old('remarks') }}">
                     <span class="messages popover-valid">
                         @error('remarks')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>

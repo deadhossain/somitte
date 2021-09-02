@@ -100,6 +100,7 @@ class LookupController extends Controller
      */
     public function update(StoreLookupRequest $request,$id)
     {
+        $id = Crypt::decrypt($id);
         try {
             $lookup = Lookup::findorFail($id);
             $lookup->name = $request->input('name');

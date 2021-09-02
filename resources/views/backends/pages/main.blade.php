@@ -29,6 +29,12 @@
     <link rel="stylesheet" type="text/css" href="{{asset('assets/icon/icofont/css/icofont.css')}}">
     <!-- feather Awesome -->
     <link rel="stylesheet" type="text/css" href="{{asset('assets/icon/feather/css/feather.css')}}">
+    <!-- Date-time picker css -->
+    <link rel="stylesheet" type="text/css" href="{{asset('assets\pages\advance-elements\css\bootstrap-datetimepicker.css')}}">
+    <!-- Date-range picker css  -->
+    <link rel="stylesheet" type="text/css" href="{{asset('bower_components\bootstrap-daterangepicker\css\daterangepicker.css')}}">
+    <!-- Date-Dropper css -->
+    <link rel="stylesheet" type="text/css" href="{{asset('bower_components\datedropper\css\datedropper.min.css')}}">
 
     <!-- sweetalert2 Css -->
     <link rel="stylesheet" href="{{asset('assets/css/sweetalert2.min.css')}}" />
@@ -146,6 +152,21 @@
 <script type="text/javascript" src="{{asset('bower_components/modernizr/js/modernizr.js')}}"></script>
 <script type="text/javascript" src="{{asset('bower_components/modernizr/js/css-scrollbars.js')}}"></script>
 
+<!-- Masking js -->
+<script src="{{asset('assets\pages\form-masking\inputmask.js')}}"></script>
+<script src="{{asset('assets\pages\form-masking\jquery.inputmask.js')}}"></script>
+<script src="{{asset('assets\pages\form-masking\autoNumeric.js')}}"></script>
+<script src="{{asset('assets\pages\form-masking\form-mask.js')}}"></script>
+
+<!-- Bootstrap date-time-picker js -->
+<script type="text/javascript" src="{{asset('assets\pages\advance-elements\moment-with-locales.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bower_components\bootstrap-datepicker\js\bootstrap-datepicker.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets\pages\advance-elements\bootstrap-datetimepicker.min.js')}}"></script>
+<!-- Date-range picker js -->
+<script type="text/javascript" src="{{asset('bower_components\bootstrap-daterangepicker\js\daterangepicker.js')}}"></script>
+<!-- Date-dropper js -->
+<script type="text/javascript" src="{{asset('bower_components\datedropper\js\datedropper.min.js')}}"></script>
+
 <!-- Accordion js -->
 <script type="text/javascript" src="{{asset('assets/pages/accordion/accordion.js')}}"></script>
 
@@ -180,10 +201,14 @@
 <script src="{{asset('assets/js/sweetalert2.min.js')}}"></script>
 
 <!-- Custom js -->
+<script type="text/javascript" src="{{asset('assets/pages/advance-elements/custom-picker.js')}}"></script>
 <script src="{{asset('assets/js/pcoded.min.js')}}"></script>
 <script src="{{asset('assets/js/vartical-layout.min.js')}}"></script>
 <script src="{{asset('assets/js/jquery.mCustomScrollbar.concat.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/js/script.js')}}"></script>
+
+
+
 
 @include('backends.partials.globalJSScript')
 </body>

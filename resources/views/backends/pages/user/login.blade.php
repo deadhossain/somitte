@@ -69,11 +69,11 @@
                                     </div>
                                 </div>
                                 <div class="form-group form-primary">
-                                    <input type="text" name="name" class="form-control" required="" placeholder="Your Email Address">
+                                    <input autocomplete="off" type="text" name="name" class="form-control" required="" placeholder="Your Email Address">
                                     <span class="form-bar"></span>
                                 </div>
                                 <div class="form-group form-primary">
-                                    <input type="password" name="password" class="form-control" required="" placeholder="Password">
+                                    <input autocomplete="off" type="password" name="password" class="form-control" required="" placeholder="Password">
                                     <span class="form-bar"></span>
                                 </div>
                                 <div class="row m-t-30">
