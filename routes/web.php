@@ -26,10 +26,10 @@ Route::resource('/home', 'backends\user\UserController');
 Route::get('user/data', 'backends\user\UserController@data')->name('user.data');
 Route::resource('user', 'backends\user\UserController');
 
+Route::get('customer/data', 'backends\person\CustomerController@data')->name('customer.data');
+Route::resource('customer', 'backends\person\CustomerController');
+
 Route::patch('lookup_detail/{lookup_detail}','backends\setups\LookupDetailController@update')->name('lookup_detail.update');;
-// Route::resource('lookup.lookup_detail' , 'backends\setups\LookupDetailController')->shallow()->except([
-//     'update'
-// ]);;
 Route::resource('lookup.lookup_detail' , 'backends\setups\LookupDetailController')->shallow();
 Route::resource('lookup', 'backends\setups\LookupController');
 

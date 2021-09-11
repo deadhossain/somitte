@@ -48,7 +48,6 @@ class SavingsSchemeController extends Controller
                 'error-dev'=> $th->getMessage()
             ]);
         }
-
     }
 
     /**
