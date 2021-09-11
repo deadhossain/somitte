@@ -5,14 +5,18 @@
             <i class="ti-pencil-alt"></i>
             Edit
         </a>
-        <a href="#" class="dropdown-item waves-light waves-effect" onclick="$(this).find('form').submit()">
+        <a href="#" class="dropdown-item waves-light waves-effect deleteDTRow"
+            data-modal-url="{{ route('scheme.destroy',$savingsScheme->id)}}">
+            <i class="ti-trash"></i> Delete
+        </a>
+        {{-- <a href="#" class="dropdown-item waves-light waves-effect" onclick="$(this).find('form').submit()">
             <i class="ti-trash"></i>
             Delete
             <form action="{{ route('scheme.destroy', $savingsScheme->id) }}" method="POST">
                 <input autocomplete="off" type="hidden" name="_method" value="DELETE">
                 <input autocomplete="off" type="hidden" name="_token" value="{{ csrf_token() }}">
             </form>
-        </a>
+        </a> --}}
     </div>
 </div>
 

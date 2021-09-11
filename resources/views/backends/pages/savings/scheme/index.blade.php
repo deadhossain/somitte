@@ -15,7 +15,7 @@
                         <th>SL</th>
                         <th>Name</th>
                         <th>Amount</th>
-                        <th>Profit</th>
+                        <th>Profit(%)</th>
                         <th>Late Fee</th>
                         <th>Status</th>
                         <th>Action</th>

@@ -143,15 +143,28 @@ $(document).ready(function(){
 
     $('input[name="daterange"]').daterangepicker();
     $(function() {
+
         $('input.single-datepicker').daterangepicker({
             singleDatePicker: true,
-            autoUpdateInput: false,
-            showDropdowns: true
+            showDropdowns: true,
+            autoUpdateInput:false,
+            "autoApply": true,
+            locale: {
+                format: 'DD-MM-YYYY'
+            }
+        });
+
+        $('input.single-datepicker').on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format('DD-MM-YYYY'));
         });
 
         $('input.today-datepicker').daterangepicker({
             singleDatePicker: true,
-            showDropdowns: true
+            "autoApply": true,
+            showDropdowns: true,
+            locale: {
+                format: 'DD-MM-YYYY'
+            }
         });
 
         $('input[name="datefilter"]').daterangepicker({

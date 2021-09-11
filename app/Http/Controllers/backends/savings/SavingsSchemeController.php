@@ -37,16 +37,16 @@ class SavingsSchemeController extends Controller
     public function data()
     {
         try {
-            $savingsSchemes = SavingsScheme::with('user')->get();
+            $savingsSchemes = SavingsScheme::get();
             return Datatables::of($savingsSchemes)->addIndexColumn()
             ->addColumn('actions', function ($savingsScheme) {
                 return (string) view('backends.pages.savings.scheme.actions', ['savingsScheme' => $savingsScheme]);
             })->rawColumns(['actions','status'])->make();
         } catch (\Exception $th) {
-            // return back()->withErrors([
-            //     'error'=>'Seek system administrator help',
-            //     'error-dev'=> $th->getMessage()
-            // ]);
+            return back()->withErrors([
+                'error'=>'Seek system administrator help',
+                'error-dev'=> $th->getMessage()
+            ]);
         }
 
     }
@@ -75,8 +75,8 @@ class SavingsSchemeController extends Controller
             $savingsScheme->amount = $request->input('amount');
             $savingsScheme->late_fee = $request->input('late_fee');
             $savingsScheme->profit = $request->input('profit');
-            $savingsScheme->start_date = $request->input('start_date');
-            $savingsScheme->end_date = $request->input('end_date');
+            $savingsScheme->start_date = insertDateFormat($request->input('start_date'));
+            $savingsScheme->end_date = insertDateFormat($request->input('end_date'));
             $savingsScheme->remarks = $request->input('remarks');
             $savingsScheme->active_fg = 1;
             $savingsScheme->created_by = session('user')->id;
@@ -111,11 +111,12 @@ class SavingsSchemeController extends Controller
      * @param  \App\Models\savings\SavingsScheme  $savingsScheme
      * @return \Illuminate\Http\Response
      */
-    public function edit(SavingsScheme $savingsScheme)
+    public function edit($id)
     {
-        $id = Crypt::decrypt($savingsScheme);
+        $id = Crypt::decrypt($id);
         $savingsScheme = SavingsScheme::findorFail($id);
-        return view('backends.pages.savings.scheme.edit',compact('savingsScheme','id'));
+        // dd($savingsScheme);
+        return view('backends.pages.savings.scheme.edit',compact('savingsScheme'));
     }
 
     /**
@@ -125,17 +126,19 @@ class SavingsSchemeController extends Controller
      * @param  \App\Models\savings\SavingsScheme  $savingsScheme
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SavingsScheme $savingsScheme)
+    public function update(SavingsSchemeRequest $request, SavingsScheme $savingsScheme)
     {
         try {
-            $savingsScheme = SavingsScheme::findOrFail($savingsScheme->id);
+            $id = Crypt::decrypt($request->scheme);
+            $savingsScheme = SavingsScheme::findOrFail($id);
             $savingsScheme->name = $request->input('name');
             $savingsScheme->amount = $request->input('amount');
             $savingsScheme->late_fee = $request->input('late_fee');
             $savingsScheme->profit = $request->input('profit');
-            $savingsScheme->start_date = $request->input('start_date');
-            $savingsScheme->end_date = $request->input('end_date');
+            $savingsScheme->start_date = insertDateFormat($request->input('start_date'));
+            $savingsScheme->end_date = insertDateFormat($request->input('end_date'));
             $savingsScheme->remarks = $request->input('remarks');
+            $savingsScheme->active_fg = $request->input('active_fg');
             $savingsScheme->updated_by = session('user')->id;
             $is_saved = $savingsScheme->save();
             if ($is_saved) {
@@ -157,10 +160,10 @@ class SavingsSchemeController extends Controller
      * @param  \App\Models\savings\SavingsScheme  $savingsScheme
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SavingsScheme $savingsScheme)
+    public function destroy($id)
     {
         try{
-            $id = Crypt::decrypt($savingsScheme->id);
+            $id = Crypt::decrypt($id);
             $savingsScheme = SavingsScheme::findOrFail($id);
             $savingsScheme->active_fg=0;
             $savingsScheme->updated_by = session('user')->id;

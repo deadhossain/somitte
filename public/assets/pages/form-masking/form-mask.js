@@ -1,6 +1,6 @@
   'use strict';
 $(function() {
-    
+
     /*date*/
     $(".date").inputmask({ mask: "99/99/9999"});
     $(".date2").inputmask({ mask: "99-99-9999"});
@@ -21,5 +21,5 @@ $(function() {
     $(".ipv6").inputmask({ mask: "9999:9999:9999:9:999:9999:9999:9999"});
 
     /*numbers*/
-    $('.autonumber').autoNumeric('init');
+    $('.autonumber').autoNumeric('init',{aSep: ''});
   });
