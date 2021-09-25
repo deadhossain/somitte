@@ -104,6 +104,4 @@
 </div>
 <!-- Tooltip Validation card end -->
 
-
-
 @endsection

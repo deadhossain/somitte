@@ -29,12 +29,21 @@
     <link rel="stylesheet" type="text/css" href="{{asset('assets/icon/icofont/css/icofont.css')}}">
     <!-- feather Awesome -->
     <link rel="stylesheet" type="text/css" href="{{asset('assets/icon/feather/css/feather.css')}}">
+    <!-- Select 2 css -->
+    <link rel="stylesheet" href="{{asset('bower_components/select2/css/select2.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/pages/chosen/css/chosen.min.css')}}">
+    {{-- <link rel="stylesheet" type="text/css" href="{{asset('assets/pages/advance-elements/css/bootstrap-datetimepicker.css')}}"> --}}
+    <!-- Multi Select css -->
+    <link rel="stylesheet" type="text/css" href="{{asset('bower_components/bootstrap-multiselect/css/bootstrap-multiselect.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('bower_components/multiselect/css/multi-select.css')}}">
+    <!--forms-wizard css-->
+    <link rel="stylesheet" type="text/css" href="{{asset('bower_components/jquery.steps/css/jquery.steps.css')}}">
     <!-- Date-time picker css -->
-    <link rel="stylesheet" type="text/css" href="{{asset('assets\pages\advance-elements\css\bootstrap-datetimepicker.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/pages/advance-elements/css/bootstrap-datetimepicker.css')}}">
     <!-- Date-range picker css  -->
-    <link rel="stylesheet" type="text/css" href="{{asset('bower_components\bootstrap-daterangepicker\css\daterangepicker.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('bower_components/bootstrap-daterangepicker/css/daterangepicker.css')}}">
     <!-- Date-Dropper css -->
-    <link rel="stylesheet" type="text/css" href="{{asset('bower_components\datedropper\css\datedropper.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('bower_components/datedropper/css/datedropper.min.css')}}">
 
     <!-- sweetalert2 Css -->
     <link rel="stylesheet" href="{{asset('assets/css/sweetalert2.min.css')}}" />
@@ -51,8 +60,10 @@
 
     <!-- Required Jquery -->
     <script type="text/javascript" src="{{asset('bower_components/jquery/js/jquery.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('bower_components/jquery-ui/js/jquery-ui.min.js')}}"></script>
 
+    <script type="text/javascript" src="{{asset('bower_components/jquery-ui/js/jquery-ui.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('bower_components/select2/js/select2.full.min.js')}}"></script>
+{{-- <script type="text/javascript" src="{{asset('assets/pages/advance-elements/select2-custom.js')}}"></script> --}}
 </head>
 
 <body>
@@ -152,20 +163,23 @@
 <script type="text/javascript" src="{{asset('bower_components/modernizr/js/modernizr.js')}}"></script>
 <script type="text/javascript" src="{{asset('bower_components/modernizr/js/css-scrollbars.js')}}"></script>
 
+<link rel="stylesheet" href="{{asset('assets/pages/chosen/css/chosen.min.css')}}">
+<script src="{{asset('assets/pages/chosen/js/chosen.jquery.min.js')}}"></script>
+
 <!-- Masking js -->
-<script src="{{asset('assets\pages\form-masking\inputmask.js')}}"></script>
-<script src="{{asset('assets\pages\form-masking\jquery.inputmask.js')}}"></script>
-<script src="{{asset('assets\pages\form-masking\autoNumeric.js')}}"></script>
-<script src="{{asset('assets\pages\form-masking\form-mask.js')}}"></script>
+<script src="{{asset('assets/pages/form-masking/inputmask.js')}}"></script>
+<script src="{{asset('assets/pages/form-masking/jquery.inputmask.js')}}"></script>
+<script src="{{asset('assets/pages/form-masking/autoNumeric.js')}}"></script>
+<script src="{{asset('assets/pages/form-masking/form-mask.js')}}"></script>
 
 <!-- Bootstrap date-time-picker js -->
-<script type="text/javascript" src="{{asset('assets\pages\advance-elements\moment-with-locales.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('bower_components\bootstrap-datepicker\js\bootstrap-datepicker.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('assets\pages\advance-elements\bootstrap-datetimepicker.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/pages/advance-elements/moment-with-locales.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bower_components/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/pages/advance-elements/bootstrap-datetimepicker.min.js')}}"></script>
 <!-- Date-range picker js -->
-<script type="text/javascript" src="{{asset('bower_components\bootstrap-daterangepicker\js\daterangepicker.js')}}"></script>
+<script type="text/javascript" src="{{asset('bower_components/bootstrap-daterangepicker/js/daterangepicker.js')}}"></script>
 <!-- Date-dropper js -->
-<script type="text/javascript" src="{{asset('bower_components\datedropper\js\datedropper.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bower_components/datedropper/js/datedropper.min.js')}}"></script>
 
 <!-- Accordion js -->
 <script type="text/javascript" src="{{asset('assets/pages/accordion/accordion.js')}}"></script>
@@ -197,10 +211,29 @@
 <script type="text/javascript" src="{{asset('bower_components/i18next-browser-languagedetector/js/i18nextBrowserLanguageDetector.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('bower_components/jquery-i18next/js/jquery-i18next.min.js')}}"></script>
 
+<!-- Select 2 js -->
+
+<!-- Multiselect js -->
+<script type="text/javascript" src="{{asset('bower_components/bootstrap-multiselect/js/bootstrap-multiselect.js')}}"></script>
+<script type="text/javascript" src="{{asset('bower_components/multiselect/js/jquery.multi-select.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/js/jquery.quicksearch.js')}}"></script>
+
+
+
+<!--Forms - Wizard js-->
+<script src="{{asset('bower_components/jquery.cookie/js/jquery.cookie.js')}}"></script>
+<script src="{{asset('bower_components/jquery.steps/js/jquery.steps.js')}}"></script>
+<script src="{{asset('bower_components/jquery-validation/js/jquery.validate.js')}}"></script>
+<!-- Validation js -->
+<script type="text/javascript" src="{{asset('assets/pages/form-validation/validate.js')}}"></script>
+
+
 <!-- sweetalert2.min.js -->
 <script src="{{asset('assets/js/sweetalert2.min.js')}}"></script>
 
 <!-- Custom js -->
+
+<script src="{{asset('assets/pages/forms-wizard-validation/form-wizard.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/pages/advance-elements/custom-picker.js')}}"></script>
 <script src="{{asset('assets/js/pcoded.min.js')}}"></script>
 <script src="{{asset('assets/js/vartical-layout.min.js')}}"></script>

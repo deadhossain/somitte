@@ -3,6 +3,7 @@ namespace App\Http\Controllers\backends\person;
 
 use App\Http\Controllers\Controller;
 use App\Models\person\Customer;
+use App\Models\setups\LookupDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Yajra\DataTables\Facades\DataTables;
@@ -55,7 +56,8 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        return view('backends.pages.person.customer.create');
+        $genders = LookupDetail::where('active_fg',1)->where('lookup_id',1)->get();
+        return view('backends.pages.person.customer.create',compact('genders'));
     }
 
     /**
