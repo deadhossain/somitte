@@ -16,6 +16,7 @@
           transitionEffect: "slideLeft",
           autoFocus: true
       });
+      $('.gender-select').select2();
       $("#verticle-wizard").steps({
           headerTag: "h3",
           bodyTag: "fieldset",

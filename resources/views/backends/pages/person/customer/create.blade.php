@@ -18,7 +18,7 @@
             <div class="col-md-12">
                 <div id="wizard">
                     <section>
-                        <form class="wizard-form" id="example-advanced-form" action="#">
+                        <form class="wizard-form" id="basic-forms" action="#">
                             <h3> Registration </h3>
                             <fieldset>
                                 <div class="form-group row">
