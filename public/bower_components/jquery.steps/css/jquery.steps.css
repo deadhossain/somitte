@@ -1,5 +1,5 @@
 ﻿/*
-    Common 
+    Common
 */
 
 .wizard,
@@ -142,8 +142,8 @@
     background: #eee;
     display: block;
     margin: 0.5em;
-    min-height: 35em;
-    overflow: hidden;
+    min-height: 40em;
+    overflow: scroll;
     position: relative;
     width: auto;
 

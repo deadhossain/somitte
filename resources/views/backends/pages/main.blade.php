@@ -17,8 +17,6 @@
 
     <!-- Favicon icon -->
     <link rel="icon" href="{{asset('assets/images/favicon.ico')}}" type="image/x-icon">
-    <!-- Google font-->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
     <!-- Required Fremwork -->
     <link rel="stylesheet" type="text/css" href="{{asset('bower_components/bootstrap/css/bootstrap.min.css')}}">
     <!-- themify-icons line icon -->
@@ -31,7 +29,6 @@
     <link rel="stylesheet" type="text/css" href="{{asset('assets/icon/feather/css/feather.css')}}">
     <!-- Select 2 css -->
     <link rel="stylesheet" href="{{asset('bower_components/select2/css/select2.min.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/pages/chosen/css/chosen.min.css')}}">
     {{-- <link rel="stylesheet" type="text/css" href="{{asset('assets/pages/advance-elements/css/bootstrap-datetimepicker.css')}}"> --}}
     <!-- Multi Select css -->
     <link rel="stylesheet" type="text/css" href="{{asset('bower_components/bootstrap-multiselect/css/bootstrap-multiselect.css')}}">
@@ -162,9 +159,6 @@
 <!-- modernizr js -->
 <script type="text/javascript" src="{{asset('bower_components/modernizr/js/modernizr.js')}}"></script>
 <script type="text/javascript" src="{{asset('bower_components/modernizr/js/css-scrollbars.js')}}"></script>
-
-<link rel="stylesheet" href="{{asset('assets/pages/chosen/css/chosen.min.css')}}">
-<script src="{{asset('assets/pages/chosen/js/chosen.jquery.min.js')}}"></script>
 
 <!-- Masking js -->
 <script src="{{asset('assets/pages/form-masking/inputmask.js')}}"></script>
