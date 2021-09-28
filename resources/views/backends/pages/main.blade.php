@@ -19,6 +19,9 @@
     <link rel="icon" href="{{asset('assets/images/favicon.ico')}}" type="image/x-icon">
     <!-- Required Fremwork -->
     <link rel="stylesheet" type="text/css" href="{{asset('bower_components/bootstrap/css/bootstrap.min.css')}}">
+    <!-- jquery file upload Frame work -->
+    <link href="{{asset('assets/pages/jquery.filer/css/jquery.filer.css')}}" type="text/css" rel="stylesheet">
+    <link href="{{asset('assets/pages/jquery.filer/css/themes/jquery.filer-dragdropbox-theme.css')}}" type="text/css" rel="stylesheet">
     <!-- themify-icons line icon -->
     <link rel="stylesheet" type="text/css" href="{{asset('assets/icon/themify-icons/themify-icons.css')}}">
     <!-- Font Awesome -->
@@ -160,6 +163,11 @@
 <script type="text/javascript" src="{{asset('bower_components/modernizr/js/modernizr.js')}}"></script>
 <script type="text/javascript" src="{{asset('bower_components/modernizr/js/css-scrollbars.js')}}"></script>
 
+<!-- jquery file upload js -->
+<script src="{{asset('assets/pages/jquery.filer/js/jquery.filer.min.js')}}"></script>
+<script src="{{asset('assets/pages/filer/custom-filer.js')}}"></script>
+<script src="{{asset('assets/pages/filer/jquery.fileuploads.init.js')}}"></script>
+
 <!-- Masking js -->
 <script src="{{asset('assets/pages/form-masking/inputmask.js')}}"></script>
 <script src="{{asset('assets/pages/form-masking/jquery.inputmask.js')}}"></script>
@@ -212,8 +220,6 @@
 <script type="text/javascript" src="{{asset('bower_components/multiselect/js/jquery.multi-select.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/js/jquery.quicksearch.js')}}"></script>
 
-
-
 <!--Forms - Wizard js-->
 <script src="{{asset('bower_components/jquery.cookie/js/jquery.cookie.js')}}"></script>
 <script src="{{asset('bower_components/jquery.steps/js/jquery.steps.js')}}"></script>
@@ -221,12 +227,10 @@
 <!-- Validation js -->
 <script type="text/javascript" src="{{asset('assets/pages/form-validation/validate.js')}}"></script>
 
-
 <!-- sweetalert2.min.js -->
 <script src="{{asset('assets/js/sweetalert2.min.js')}}"></script>
 
 <!-- Custom js -->
-
 <script src="{{asset('assets/pages/forms-wizard-validation/form-wizard.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/pages/advance-elements/custom-picker.js')}}"></script>
 <script src="{{asset('assets/js/pcoded.min.js')}}"></script>
