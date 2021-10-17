@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\backends\person\StoreCustomerRequest;
+use DB;
 
 class CustomerController extends Controller
 {
@@ -68,24 +69,49 @@ class CustomerController extends Controller
      */
     public function store(StoreCustomerRequest $request)
     {
+
         try {
+            DB::beginTransaction();
             $customer = new Customer;
             $customer->name = $request->input('name');
-            $customer->amount = $request->input('amount');
-            $customer->late_fee = $request->input('late_fee');
-            $customer->profit = $request->input('profit');
+            $customer->nid_no = $request->input('nid_no');
+            $customer->gender_id = $request->input('gender_id');
+            $customer->phone = $request->input('phone');
             $customer->start_date = insertDateFormat($request->input('start_date'));
             $customer->end_date = insertDateFormat($request->input('end_date'));
+            $customer->address = $request->input('address');
             $customer->remarks = $request->input('remarks');
             $customer->active_fg = 1;
             $customer->created_by = session('user')->id;
             $is_saved = $customer->save();
-            if ($is_saved) {
-                return back()->with('message', 'Savings Scheme has been added');
-            } else {
-                return back()->withErrors(['error'=>'Savings Scheme has not been added']);
+
+            if ($is_saved){
+                $id = Crypt::decrypt($customer->id);
+                $customer = customer::findorFail($id);
+                if($request->hasFile('nid_attachment')){
+
+                    $customer->nid_attachment = 'nid_'.$id .'.'.$request->file('nid_attachment')->extension();
+                    $request->file('nid_attachment')->storeAs('customers/nids', $customer->nid_attachment,'public');
+                }
+                if($request->hasFile('image')){
+
+                    $customer->image = 'image_'.$id .'.'.$request->file('image')->extension();
+                    $request->file('image')->storeAs('customers/images', $customer->image,'public');
+
+                }
+                // dd($customer,$request->all(),$request->file('nid_attachment'),$request->file('image'));
+                if($customer->save()){
+                    DB::commit();
+                    return back()->with('message', 'Customer has been added');
+                }else{
+                    DB::rollBack();
+                    return back()->withErrors(['error'=>'Customer Attachment has not been added']);
+                }
             }
+            return back()->withErrors(['error'=>'Customer has not been added']);
+
         } catch (\Exception $th) {
+            DB::rollBack();
             return back()->withErrors([
                 'error'=>'Seek system administrator help',
                 'error-dev'=> $th->getMessage()

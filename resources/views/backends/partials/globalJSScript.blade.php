@@ -7,6 +7,10 @@
             }
         });
 
+        $(document).on("input", ".numeric", function() {
+            this.value = this.value.replace(/\D/g,'');
+        });
+
         $(document).off('click','a.deleteDTRow').on('click','a.deleteDTRow',function(e){
             let url = $(this).attr('data-modal-url');
             if(!url || url == "")return false;

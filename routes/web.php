@@ -13,26 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', 'backends\user\AuthController@showLoginForm');
-Route::resource('/home', 'backends\user\UserController');
-// Route::get('/', function () {
-//     return view('backends.pages.main');
-// });
-
-// Route::get('/login', function () {
-//     return view('backends.pages.user.login');
-// });
-
-Route::get('user/data', 'backends\user\UserController@data')->name('user.data');
-Route::resource('user', 'backends\user\UserController');
-
-Route::get('customer/data', 'backends\person\CustomerController@data')->name('customer.data');
-Route::resource('customer', 'backends\person\CustomerController');
-
-Route::patch('lookup_detail/{lookup_detail}','backends\setups\LookupDetailController@update')->name('lookup_detail.update');;
-Route::resource('lookup.lookup_detail' , 'backends\setups\LookupDetailController')->shallow();
-Route::resource('lookup', 'backends\setups\LookupController');
-
 
 Route::namespace('backends\user')->group(function () {
     Route::get('/','AuthController@showLoginForm');
@@ -46,9 +26,25 @@ Route::namespace('backends\user')->group(function () {
 
 
 
-// Route::group(['middleware'=>'auth'],function () {
 
 
-// });
-Route::get('savings/scheme/data', 'backends\savings\SavingsSchemeController@data')->name('scheme.data');
-Route::resource('savings/scheme', 'backends\savings\SavingsSchemeController')->middleware(['web', 'auth']);
+Route::group(['middleware'=>'auth'],function () {
+
+
+    Route::get('user/data', 'backends\user\UserController@data')->name('user.data');
+    Route::resource('user', 'backends\user\UserController');
+
+    Route::get('customer/data', 'backends\person\CustomerController@data')->name('customer.data');
+    Route::resource('customer', 'backends\person\CustomerController');
+
+    Route::patch('lookup_detail/{lookup_detail}','backends\setups\LookupDetailController@update')->name('lookup_detail.update');;
+    Route::resource('lookup.lookup_detail' , 'backends\setups\LookupDetailController')->shallow();
+    Route::resource('lookup', 'backends\setups\LookupController');
+
+    Route::get('savings/scheme/data', 'backends\savings\SavingsSchemeController@data')->name('scheme.data');
+    Route::resource('savings/scheme', 'backends\savings\SavingsSchemeController');
+
+    Route::resource('/home', 'backends\user\UserController');
+
+});
+

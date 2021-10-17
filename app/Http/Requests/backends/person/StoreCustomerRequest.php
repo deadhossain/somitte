@@ -9,7 +9,7 @@ class StoreCustomerRequest extends FormRequest
 {
     private const VALIDATION_RULES = [
         'name' => 'required|max:50|unique:customers',
-        'nid_no' => 'required|max:50|unique:savings_schemes',
+        'nid_no' => 'required|max:50|unique:customers',
         'gender_id' => 'required',
         'phone' => 'required',
         'start_date' => ['required','date'],
@@ -41,7 +41,7 @@ class StoreCustomerRequest extends FormRequest
         if ($this->getMethod() == 'POST') {
 
         }else if ($this->getMethod() == 'PATCH'){
-            $rules['name'] = 'required|unique:users,name,'.Crypt::decrypt($this->scheme);
+            // $rules['name'] = 'required|unique:users,name,'.Crypt::decrypt($this->scheme);
         }
         return $rules;
     }

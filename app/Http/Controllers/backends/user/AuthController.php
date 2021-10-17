@@ -47,6 +47,7 @@ class AuthController extends Controller
         if ($this->guard()->attempt($user, true)) {
             $request->session()->regenerate();
             $request->session()->put('user',$this->guard()->user());
+            // dd(session('user'));
             return redirect()->intended('/');
         }else{
             return back()->withErrors(['error'=>'Username or Password is not correct']);

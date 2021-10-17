@@ -17,6 +17,15 @@
           autoFocus: true
       });
       $('.gender-select').select2();
+      //Example 2
+    $('.filer_input').filer({
+        limit: 3,
+        maxSize: 3,
+        extensions: ['jpg', 'jpeg', 'png', 'gif', 'psd'],
+        changeInput: true,
+        showThumbs: true,
+        addMore: true
+    });
       $("#verticle-wizard").steps({
           headerTag: "h3",
           bodyTag: "fieldset",
