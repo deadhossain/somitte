@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\backends\savings\StoreSavingsAccountRequest;
+use Auth;
 
 class SavingsAccountController extends Controller
 {
@@ -78,7 +79,7 @@ class SavingsAccountController extends Controller
             $savingsAccount->end_date = insertDateFormat($request->input('end_date'));
             $savingsAccount->remarks = $request->input('remarks');
             $savingsAccount->active_fg = 1;
-            $savingsAccount->created_by = session('user')->id;
+            $savingsAccount->created_by = Auth::user()->id;
             $is_saved = $savingsAccount->save();
             if ($is_saved) {
                 return back()->with('message', 'Savings Scheme has been added');
@@ -137,7 +138,7 @@ class SavingsAccountController extends Controller
             $savingsAccount->end_date = insertDateFormat($request->input('end_date'));
             $savingsAccount->remarks = $request->input('remarks');
             $savingsAccount->active_fg = $request->input('active_fg');
-            $savingsAccount->updated_by = session('user')->id;
+            $savingsAccount->updated_by = Auth::user()->id;
             $is_saved = $savingsAccount->save();
             if ($is_saved) {
                 return back()->with('message', 'Savings Scheme has been updated');
@@ -164,7 +165,7 @@ class SavingsAccountController extends Controller
             $id = Crypt::decrypt($id);
             $savingsAccount = SavingsAccount::findOrFail($id);
             $savingsAccount->active_fg=0;
-            $savingsAccount->updated_by = session('user')->id;
+            $savingsAccount->updated_by = Auth::user()->id;
             $result = $savingsAccount->save();
             if ($result) return response()->json(['type'=>'success', 'title'=>'Deleted!', 'msg'=>$savingsAccount->name.' has been deleted']);
             return response()->json(['type'=>'error', 'title'=>'Sorry!', 'msg'=>'Failed to delete '.$savingsAccount->name]);

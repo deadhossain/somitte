@@ -9,14 +9,6 @@
             data-modal-url="{{ route('customer.destroy',$customer->id)}}">
             <i class="ti-trash"></i> Delete
         </a>
-        {{-- <a href="#" class="dropdown-item waves-light waves-effect" onclick="$(this).find('form').submit()">
-            <i class="ti-trash"></i>
-            Delete
-            <form action="{{ route('customer.destroy', $customer->id) }}" method="POST">
-                <input autocomplete="off" type="hidden" name="_method" value="DELETE">
-                <input autocomplete="off" type="hidden" name="_token" value="{{ csrf_token() }}">
-            </form>
-        </a> --}}
     </div>
 </div>
 

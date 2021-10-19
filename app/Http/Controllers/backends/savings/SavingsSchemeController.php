@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\backends\savings\SavingsSchemeRequest;
+use Auth;
 
 class SavingsSchemeController extends Controller
 {
@@ -78,7 +79,7 @@ class SavingsSchemeController extends Controller
             $savingsScheme->end_date = insertDateFormat($request->input('end_date'));
             $savingsScheme->remarks = $request->input('remarks');
             $savingsScheme->active_fg = 1;
-            $savingsScheme->created_by = session('user')->id;
+            $savingsScheme->created_by = Auth::user()->id;
             $is_saved = $savingsScheme->save();
             if ($is_saved) {
                 return back()->with('message', 'Savings Scheme has been added');
@@ -138,7 +139,7 @@ class SavingsSchemeController extends Controller
             $savingsScheme->end_date = insertDateFormat($request->input('end_date'));
             $savingsScheme->remarks = $request->input('remarks');
             $savingsScheme->active_fg = $request->input('active_fg');
-            $savingsScheme->updated_by = session('user')->id;
+            $savingsScheme->updated_by = Auth::user()->id;
             $is_saved = $savingsScheme->save();
             if ($is_saved) {
                 return back()->with('message', 'Savings Scheme has been updated');
@@ -165,7 +166,7 @@ class SavingsSchemeController extends Controller
             $id = Crypt::decrypt($id);
             $savingsScheme = SavingsScheme::findOrFail($id);
             $savingsScheme->active_fg=0;
-            $savingsScheme->updated_by = session('user')->id;
+            $savingsScheme->updated_by = Auth::user()->id;
             $result = $savingsScheme->save();
             if ($result) return response()->json(['type'=>'success', 'title'=>'Deleted!', 'msg'=>$savingsScheme->name.' has been deleted']);
             return response()->json(['type'=>'error', 'title'=>'Sorry!', 'msg'=>'Failed to delete '.$savingsScheme->name]);

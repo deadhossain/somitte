@@ -8,17 +8,14 @@ use App\Http\Requests\backends\setups\StoreLookupDetailRequest;
 use Illuminate\Http\Request;
 use App\models\setups\LookupDetail;
 use Yajra\DataTables\Facades\DataTables;
+use Auth;
 
 class LookupDetailController extends Controller
 {
 
     public function __construct()
     {
-        // dd(empty(session('user')->id));
         $this->middleware('auth');
-        // if (empty(session('user')->id)) {
-        //     return redirect()->route('login');
-        // }
     }
 
     /**
@@ -70,7 +67,7 @@ class LookupDetailController extends Controller
             $lookupDetail->value = $request->input('value');
             $lookupDetail->remarks = $request->input('remarks');
             $lookupDetail->active_fg = 1;
-            $lookupDetail->created_by = session('user')->id;
+            $lookupDetail->created_by = Auth::user()->id;
             $is_saved = $lookupDetail->save();
             if ($is_saved) {
                 return back()->with('message', 'Lookup has been updated');
@@ -124,7 +121,7 @@ class LookupDetailController extends Controller
             $lookupDetail->value = $request->input('value');
             $lookupDetail->remarks = $request->input('remarks');
             $lookupDetail->active_fg = $request->input('active_fg');
-            $lookupDetail->updated_by = session('user')->id;
+            $lookupDetail->updated_by = Auth::user()->id;
             $is_saved = $lookupDetail->save();
             if ($is_saved) {
                 return back()->with('message', 'Lookup Detail has been updated');
@@ -151,7 +148,7 @@ class LookupDetailController extends Controller
             $id = Crypt::decrypt($id);
             $lookupDetail = LookupDetail::findOrFail($id);
             $lookupDetail->active_fg = 0;
-            $lookupDetail->updated_by = session('user')->id;
+            $lookupDetail->updated_by = Auth::user()->id;
             $is_saved = $lookupDetail->save();
             if ($is_saved) {
                 return back()->with('message', 'Lookup Detail has been deleted');
@@ -173,7 +170,7 @@ class LookupDetailController extends Controller
             $id = Crypt::decrypt($id);
             $lookupDetail = LookupDetail::findOrFail($id);
             $lookupDetail->active_fg=0;
-            $lookupDetail->updated_by = session('user')->id;
+            $lookupDetail->updated_by = Auth::user()->id;
             $result = $lookupDetail->save();
             if ($result) return response()->json(['type'=>'success', 'title'=>'Deleted!', 'msg'=>$lookupDetail->name.' has been deleted']);
             return response()->json(['type'=>'error', 'title'=>'Sorry!', 'msg'=>'Failed to delete '.$lookupDetail->name]);

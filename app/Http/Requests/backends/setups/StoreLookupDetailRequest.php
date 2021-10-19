@@ -39,7 +39,6 @@ class StoreLookupDetailRequest extends FormRequest
                 ],
             ];
         }else if ($this->getMethod() == 'PATCH'){
-            dd($this->lookup_detail);
             $rules = [
                 'name' => ['required',
                     Rule::unique('lookup_details')->where(function ($query){

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\models\setups\Lookup;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Crypt;
-
+use Auth;
 use App\Http\Requests\backends\setups\StoreLookupRequest;
 
 class LookupController extends Controller
@@ -52,7 +52,7 @@ class LookupController extends Controller
             $lookup->name = $request->input('name');
             $lookup->remarks = $request->input('remarks');
             $lookup->active_fg = 1;
-            $lookup->created_by = session('user')->id;
+            $lookup->created_by = Auth::user()->id;
             $is_saved = $lookup->save();
             if ($is_saved) {
                 return back()->with('message', 'Lookup has been added');
@@ -106,7 +106,7 @@ class LookupController extends Controller
             $lookup->name = $request->input('name');
             $lookup->remarks = $request->input('remarks');
             $lookup->active_fg = 1;
-            $lookup->updated_by = session('user')->id;
+            $lookup->updated_by = Auth::user()->id;
             $is_saved = $lookup->save();
             if ($is_saved) {
                 return back()->with('message', 'Lookup has been updated');

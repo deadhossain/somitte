@@ -7,6 +7,25 @@
             }
         });
 
+        function readURL(input) {
+            var url = input.value;
+            var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+            if (input.files && input.files[0]&& (ext == "bmp" || ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg")) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('.image-preview').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }else{
+                $('.image-preview').attr('src', "{{asset('assets/images/customer-default.png')}}");
+
+            }
+        }
+
+        $(document).on('change','input.image',function(){
+            readURL(this);
+        });
+
         $(document).on("input", ".numeric", function() {
             this.value = this.value.replace(/\D/g,'');
         });

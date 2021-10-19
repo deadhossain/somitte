@@ -13,6 +13,7 @@
                 <thead>
                     <tr>
                         <th>SL</th>
+                        <th>Image</th>
                         <th>Name</th>
                         <th>NID No</th>
                         <th>Phone</th>
@@ -21,6 +22,7 @@
                         <th>Action</th>
                     </tr>
                     <tr>
+                        <th></th>
                         <th></th>
                         <th><input autocomplete="off" style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
                         <th><input autocomplete="off" style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
@@ -45,6 +47,7 @@
             orderable: false,
             searchable: false
         },
+        {data: 'image_path', name: 'image_path'},
         {data: 'name', name: 'name'},
         {data: 'nid_no', name: 'nid_no'},
         {data: 'phone', name: 'phone'},

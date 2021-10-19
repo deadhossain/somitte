@@ -15,21 +15,22 @@
         <div id="accordion" role="tablist" aria-multiselectable="true">
             @foreach ($lookups as $lookup)
                 @php $id = $lookup->id; @endphp
+                @php $did = Crypt::decrypt($lookup->id); @endphp
                 <div class="accordion-panel">
-                    <div class="accordion-heading" role="tab" id="heading{{$id}}">
+                    <div class="accordion-heading" role="tab" id="heading{{$did}}">
                         <h5 class="card-title accordion-title" >
                             <div class="accordion-msg">
                                 <a style="color: white;font-size: inherit;" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$id}}" aria-expanded="true" aria-controls="collapse{{$lookup->id}}">
-                                    {{$lookup->name}} - ({{$id}})
+                                    {{$lookup->name}} - ({{$did}})
                                 </a>
                                 <small style="float:right;">
-                                    <a href="{{route('lookup.lookup_detail.create',Crypt::encrypt($id))}}">
+                                    <a href="{{route('lookup.lookup_detail.create',$id)}}">
                                         <span class="label label-info">
                                             <i class="ace-icon fa fa-plus"></i>
                                             Add
                                         </span>
                                     </a>
-                                    <a href="{{route('lookup.edit',Crypt::encrypt($id))}}" class="edit">
+                                    <a href="{{route('lookup.edit',$id)}}" class="edit">
                                         <span class="label label-info">
                                             <i class="ace-icon fa fa-pencil"></i>
                                             Edit
@@ -39,10 +40,10 @@
                             </div>
                         </h5>
                     </div>
-                    <div id="collapse{{$id}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading{{$id}}">
+                    <div id="collapse{{$id}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading{{$did}}">
                         <div class="accordion-content accordion-desc">
                             <div class="dt-responsive table-responsive">
-                                <table data-source="{{route('lookup.lookup_detail.index',Crypt::encrypt($id))}}" class="table lookup-datatable compact table-hover table-bordered nowrap" style="width:100%">
+                                <table data-source="{{route('lookup.lookup_detail.index',$id)}}" class="table lookup-datatable compact table-hover table-bordered nowrap" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th>SL</th>

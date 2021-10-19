@@ -30,6 +30,11 @@ class Customer extends Model
         return Crypt::encrypt($this->attributes['id']);
     }
 
+    public function getImagePathAttribute()
+    {
+        return $this->image?asset('/storage/customers/images/'.$this->image):asset('assets/images/customer-default.png');
+    }
+
     public function getStatusAttribute()
     {
         if ($this->attributes['active_fg'] == 1) return '<label class="label label-success">ACTIVE</label>';

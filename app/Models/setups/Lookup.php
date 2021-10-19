@@ -4,6 +4,7 @@ namespace App\Models\setups;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Crypt;
 
 class Lookup extends Model
 {
@@ -12,6 +13,11 @@ class Lookup extends Model
     protected $fillable = [
         'name','remarks','active_fg'
     ];
+
+    public function getIdAttribute()
+    {
+        return Crypt::encrypt($this->attributes['id']);
+    }
 
     public function lookupDetails()
     {

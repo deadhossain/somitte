@@ -7,7 +7,7 @@
         <h5>Update Lookup</h5>
     </div>
     <div class="card-block">
-        <form id="second" action="{{route('lookup.update',Crypt::encrypt($lookup->id))}}" method="post" novalidate="">
+        <form action="{{route('lookup.update',$lookup->id)}}" method="post" novalidate="">
             @csrf
             @method('patch')
             <div class="form-group row">

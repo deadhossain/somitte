@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
+use Auth;
 
 class UserController extends Controller
 {
@@ -76,7 +77,7 @@ class UserController extends Controller
             $user->password = Hash::make($request->input('password'));
             $user->active_fg = 1;
             // $user->created_by = 1;
-            $user->created_by = session('user')->id;
+            $user->created_by = Auth::user()->id;
             $is_saved = $user->save();
             if ($is_saved) {
                 return back()->with('message', 'User has been added');
@@ -129,7 +130,7 @@ class UserController extends Controller
             $user->email = $request->input('email');
             $user->password = Hash::make($request->input('password'));
             // $user->updated_by = 1;
-            $user->updated_by = session('user')->id;
+            $user->updated_by = Auth::user()->id;
             $is_saved = $user->save();
             if ($is_saved) {
                 return back()->with('message', 'User has been deleted');
@@ -155,7 +156,7 @@ class UserController extends Controller
         try {
             $user = User::findOrFail($id);
             $user->active_fg = 0;
-            // $user->updated_by = session('user')->id;
+            // $user->updated_by = Auth::user()->id;
             $user->updated_by = 1;
             $is_saved = $user->save();
             if ($is_saved) {

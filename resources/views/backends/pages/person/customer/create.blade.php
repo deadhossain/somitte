@@ -116,8 +116,8 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="col-form-label">Picture</label>
-                        <img src="{{asset('assets/images/customer-default.png')}}" alt="customer-default-pic" class="img-thumbnail">
-                        <input type="file" class="form-control @error('image') form-control-danger @enderror" name="image">
+                        <img style="width: 260px;height: 300px;margin: auto;" src="{{asset('assets/images/customer-default.png')}}" alt="customer-default-pic" class="img-thumbnail image-preview">
+                        <input type="file" class="form-control image @error('image') form-control-danger @enderror" name="image">
                         <span class="messages popover-valid">
                             @error('image')
                                 <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
