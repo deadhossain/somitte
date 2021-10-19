@@ -149,28 +149,43 @@ class CustomerController extends Controller
      * @param  \App\Models\person\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreCustomerRequest $request, Customer $customer)
+    public function update(StoreCustomerRequest $request, $id)
     {
-        dd("controller");
         try {
-            $id = Crypt::decrypt($request->customer);
+            DB::beginTransaction();
+            $id = Crypt::decrypt($id);
             $customer = Customer::findOrFail($id);
             $customer->name = $request->input('name');
-            $customer->amount = $request->input('amount');
-            $customer->late_fee = $request->input('late_fee');
-            $customer->profit = $request->input('profit');
+            $customer->nid_no = $request->input('nid_no');
+            $customer->gender_id = $request->input('gender_id');
+            $customer->phone = $request->input('phone');
             $customer->start_date = insertDateFormat($request->input('start_date'));
             $customer->end_date = insertDateFormat($request->input('end_date'));
+            $customer->address = $request->input('address');
             $customer->remarks = $request->input('remarks');
-            $customer->active_fg = $request->input('active_fg');
+            $customer->active_fg = $request->input('active_fg');;
             $customer->updated_by = Auth::user()->id;
             $is_saved = $customer->save();
-            if ($is_saved) {
-                return back()->with('message', 'Savings Scheme has been updated');
-            } else {
-                return back()->withErrors(['error'=>'Savings Scheme has not been updated']);
+            if ($is_saved){
+                if($request->hasFile('nid_attachment')){
+                    $customer->nid_attachment = 'nid_'.$id .'.'.$request->file('nid_attachment')->extension();
+                    $request->file('nid_attachment')->storeAs('customers/nids', $customer->nid_attachment,'public');
+                }
+                if($request->hasFile('image')){
+                    $customer->image = 'image_'.$id .'.'.$request->file('image')->extension();
+                    $request->file('image')->storeAs('customers/images', $customer->image,'public');
+                }
+                if($customer->save()){
+                    DB::commit();
+                    return back()->with('message', 'Customer has been Update');
+                }else{
+                    DB::rollBack();
+                    return back()->withErrors(['error'=>'Customer Attachment has not been Update']);
+                }
             }
+            return back()->withErrors(['error'=>'Customer has not been Update']);
         } catch (\Exception $th) {
+            DB::rollBack();
             return back()->withErrors([
                 'error'=>'Seek system administrator help',
                 'error-dev'=> $th->getMessage()

@@ -93,11 +93,10 @@
                             </span>
                         </div>
                     </div>
-
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Remarks</label>
                         <div class="col-sm-10">
-                            <textarea rows="5" name="remakrs" class="form-control @error('remarks') form-control-danger @enderror" placeholder="Enter Remarks">{{old('remarks')}}</textarea>
+                            <textarea rows="5" name="remarks" class="form-control @error('remarks') form-control-danger @enderror" placeholder="Enter Remarks">{{old('remarks')}}</textarea>
                             <span class="messages popover-valid">
                                 @error('remarks')
                                     <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
@@ -105,19 +104,12 @@
                             </span>
                         </div>
                     </div>
-
-                    <div class="row">
-                        <label class="col-sm-2"></label>
-                        <div class="col-sm-10">
-                            <button type="submit" class="btn btn-primary m-b-0">Submit</button>
-                        </div>
-                    </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="col-form-label">Picture</label>
-                        <img style="width: 260px;height: 300px;margin: auto;" src="{{asset('assets/images/customer-default.png')}}" alt="customer-default-pic" class="img-thumbnail image-preview">
-                        <input type="file" class="form-control image @error('image') form-control-danger @enderror" name="image">
+                        <img style="width: 280px;height: 300px;margin: auto;" src="{{asset('assets/images/customer-default.png')}}" alt="customer-default-pic" class="img-thumbnail image-preview">
+                        <input style="width: 280px;margin: auto;" type="file" class="form-control image @error('image') form-control-danger @enderror" name="image">
                         <span class="messages popover-valid">
                             @error('image')
                                 <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
@@ -136,12 +128,18 @@
                     </div>
                 </div>
 
+                <div class="col-md-9">
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-10">
+                            <button type="submit" class="btn btn-primary m-b-0">Submit</button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </form>
     </div>
 </div>
 <!-- Tooltip Validation card end -->
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.full.min.js" integrity="sha512-RtZU3AyMVArmHLiW0suEZ9McadTdegwbgtiQl5Qqo9kunkVg1ofwueXD8/8wv3Af8jkME3DDe3yLfR8HSJfT2g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
-{{-- <script type="text/javascript" src="{{asset('bower_components\select2\js\select2.full.min.js')}}"></script> --}}
-
 @endsection

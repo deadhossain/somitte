@@ -24,7 +24,7 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Remarks</label>
                 <div class="col-sm-10">
-                    <textarea rows="5" name="remakrs" class="form-control @error('remarks') form-control-danger @enderror" placeholder="Enter Remarks">{{old('remarks')}}</textarea>
+                    <textarea rows="5" name="remarks" class="form-control @error('remarks') form-control-danger @enderror" placeholder="Enter Remarks">{{old('remarks')}}</textarea>
                     <span class="messages popover-valid">
                         @error('remarks')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>

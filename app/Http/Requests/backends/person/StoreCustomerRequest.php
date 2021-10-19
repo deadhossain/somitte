@@ -37,13 +37,13 @@ class StoreCustomerRequest extends FormRequest
      */
     public function rules()
     {
-        dd("asdasd");
         $rules = $this::VALIDATION_RULES;
         if ($this->getMethod() == 'POST') {
 
         }else if ($this->getMethod() == 'PATCH'){
-            $rules['name'] = 'required|unique:customers,name,'.Crypt::decrypt($this->customer);
-            $rules['nid_no'] = 'required|unique:customers,nid_no,'.Crypt::decrypt($this->customer);
+            $id=Crypt::decrypt($this->customer);
+            $rules['name'] = 'required|unique:customers,name,'.$id;
+            $rules['nid_no'] = 'required|unique:customers,nid_no,'.$id;
         }
         return $rules;
     }
