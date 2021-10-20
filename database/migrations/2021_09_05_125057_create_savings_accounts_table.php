@@ -16,20 +16,16 @@ class CreateSavingsAccountsTable extends Migration
         Schema::create('savings_accounts', function (Blueprint $table) {
             $table->id();
             $table->string('account_no',50);
-            $table->double('first_deposit_ammount', 15, 4)->default(1);
+            $table->double('first_deposit_ammount', 15, 4)->default(0);
             $table->unsignedBigInteger('customer_id');
-            $table->unsignedBigInteger('svaings_scheme_id');
+            $table->unsignedBigInteger('savings_scheme_id');
             $table->date('start_date');
             $table->date('end_date')->nullable();
             $table->text('remarks')->nullable();
 
-            $table->decimal('amount', 12, 4)->default(1);
-            $table->decimal('late_fee', 12, 4)->default(1);
-            $table->decimal('profit', 7, 4)->default(1);
-
             $table->tinyInteger('active_fg')->default(1);
             $table->foreign('customer_id')->references('id')->on('customers');
-            $table->foreign('svaings_scheme_id')->references('id')->on('svaings_schemes');
+            $table->foreign('savings_scheme_id')->references('id')->on('savings_schemes');
             $table->unsignedBigInteger('created_by')->default(1);
             $table->foreign('created_by')->references('id')->on('users');
             $table->unsignedBigInteger('updated_by')->default(1);

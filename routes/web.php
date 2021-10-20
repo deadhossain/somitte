@@ -44,6 +44,9 @@ Route::group(['middleware'=>'auth'],function () {
     Route::get('savings/scheme/data', 'backends\savings\SavingsSchemeController@data')->name('scheme.data');
     Route::resource('savings/scheme', 'backends\savings\SavingsSchemeController');
 
+    Route::get('savings/account/data', 'backends\savings\SavingsAccountController@data')->name('account.data');
+    Route::resource('savings/account', 'backends\savings\SavingsAccountController');
+
     Route::resource('/home', 'backends\user\UserController');
 
 });

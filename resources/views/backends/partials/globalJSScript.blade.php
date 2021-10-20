@@ -7,6 +7,8 @@
             }
         });
 
+        $('.select2-select').select2();
+
         function readURL(input) {
             var url = input.value;
             var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();

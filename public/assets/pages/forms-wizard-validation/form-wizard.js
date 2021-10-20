@@ -16,7 +16,7 @@
           transitionEffect: "slideLeft",
           autoFocus: true
       });
-      $('.gender-select').select2();
+
       //Example 2
     $('.filer_input').filer({
         limit: 3,

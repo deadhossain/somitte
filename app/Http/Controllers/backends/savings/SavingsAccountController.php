@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\backends\savings;
 
 use App\Models\savings\SavingsAccount;
+use App\Models\savings\SavingsScheme;
+use App\Models\person\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
@@ -25,8 +27,7 @@ class SavingsAccountController extends Controller
      */
     public function index()
     {
-        $savingsAccounts = SavingsAccount::all();
-        return view('backends.pages.savings.scheme.index',compact('savingsSchemes'));
+        return view('backends.pages.savings.account.index');
     }
 
     /**
@@ -37,10 +38,10 @@ class SavingsAccountController extends Controller
     public function data()
     {
         try {
-            $savingsAccounts = SavingsAccount::get();
+            $savingsAccounts = SavingsAccount::with(['customer','scheme'])->get();
             return Datatables::of($savingsAccounts)->addIndexColumn()
             ->addColumn('actions', function ($savingsAccount) {
-                return (string) view('backends.pages.savings.scheme.actions', ['savingsScheme' => $savingsAccount]);
+                return (string) view('backends.pages.savings.account.actions', ['savingsAccounts' => $savingsAccount]);
             })->rawColumns(['actions','status'])->make();
         } catch (\Exception $th) {
             return back()->withErrors([
@@ -58,7 +59,9 @@ class SavingsAccountController extends Controller
      */
     public function create()
     {
-        return view('backends.pages.savings.scheme.create');
+        $customers = Customer::where('active_fg',1)->get();
+        $savingsSchemes = SavingsScheme::where('active_fg',1)->get();
+        return view('backends.pages.savings.account.create',compact('customers','savingsSchemes'));
     }
 
     /**
@@ -82,9 +85,9 @@ class SavingsAccountController extends Controller
             $savingsAccount->created_by = Auth::user()->id;
             $is_saved = $savingsAccount->save();
             if ($is_saved) {
-                return back()->with('message', 'Savings Scheme has been added');
+                return back()->with('message', 'Savings Account has been added');
             } else {
-                return back()->withErrors(['error'=>'Savings Scheme has not been added']);
+                return back()->withErrors(['error'=>'Savings Account has not been added']);
             }
         } catch (\Exception $th) {
             return back()->withErrors([
@@ -115,7 +118,7 @@ class SavingsAccountController extends Controller
     {
         $id = Crypt::decrypt($id);
         $savingsAccount = SavingsAccount::findorFail($id);
-        return view('backends.pages.savings.scheme.edit',compact('savingsScheme'));
+        return view('backends.pages.savings.accounts.edit',compact('savingsAccount'));
     }
 
     /**
@@ -125,10 +128,10 @@ class SavingsAccountController extends Controller
      * @param  \App\Models\savings\SavingsAccount  $savingsAccount
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreSavingsAccountRequest $request, SavingsAccount $savingsAccount)
+    public function update(StoreSavingsAccountRequest $request, $savingsAccount)
     {
         try {
-            $id = Crypt::decrypt($request->scheme);
+            $id = Crypt::decrypt($request->savingsAccount);
             $savingsAccount = SavingsAccount::findOrFail($id);
             $savingsAccount->name = $request->input('name');
             $savingsAccount->amount = $request->input('amount');
@@ -141,9 +144,9 @@ class SavingsAccountController extends Controller
             $savingsAccount->updated_by = Auth::user()->id;
             $is_saved = $savingsAccount->save();
             if ($is_saved) {
-                return back()->with('message', 'Savings Scheme has been updated');
+                return back()->with('message', 'Savings Account has been updated');
             } else {
-                return back()->withErrors(['error'=>'Savings Scheme has not been updated']);
+                return back()->withErrors(['error'=>'Savings Account has not been updated']);
             }
         } catch (\Exception $th) {
             return back()->withErrors([

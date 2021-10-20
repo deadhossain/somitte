@@ -25,12 +25,17 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label"> Gender * </label>
                         <div class="col-sm-10">
-                            <select name="gender_id" class="form-control gender-select @error('gender_id') form-control-danger @enderror" aria-placeholder="Select Gender" required>
+                            <select name="gender_id" class="form-control select2-select @error('gender_id') form-control-danger @enderror" aria-placeholder="Select Gender" required>
                                 <option value="">Select Gender</option>
                                 @foreach ($genders as $gender)
                                     <option value="{{$gender->id}}"> {{$gender->name}} </option>
                                 @endforeach
                             </select>
+                            <span class="messages popover-valid">
+                                @error('gender_id')
+                                    <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
+                                @enderror
+                            </span>
                         </div>
                     </div>
 
@@ -109,7 +114,7 @@
                     <div class="form-group">
                         <label class="col-form-label">Picture</label>
                         <img style="width: 280px;height: 300px;margin: auto;" src="{{asset('assets/images/customer-default.png')}}" alt="customer-default-pic" class="img-thumbnail image-preview">
-                        <input style="width: 280px;margin: auto;" type="file" class="form-control image @error('image') form-control-danger @enderror" name="image">
+                        <input style="width: 280px;" type="file" class="form-control image @error('image') form-control-danger @enderror" name="image">
                         <span class="messages popover-valid">
                             @error('image')
                                 <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
