@@ -1,0 +1,44 @@
+.form-group.has-error .input-group .input-group-addon {
+    border-color: #eb3422;
+}
+.form-group.has-error input,
+.form-group.has-error input[type="checkbox"],
+.form-group.has-error select,
+.form-group.has-error textarea {
+    border-color: #eb3422;
+    border: 1px solid #eb3422;
+    color: #eb3422;
+}
+.form-group.has-error input:focus,
+.form-group.has-error select:focus,
+.form-group.has-error textarea:focus {
+    color: #eb3422;
+    border-color: #eb3422;
+    background-color: #fef9f8;
+}
+/* .form-group.has-error .ace-icon,
+.form-group.has-error input:focus + .ace-icon,
+.form-group.has-error select:focus + .ace-icon,
+.form-group.has-error textarea:focus + .ace-icon {
+    color: #d68273;
+}
+.form-group.has-error .btn .ace-icon {
+    color: inherit;
+} */
+.form-group.has-error .control-label,
+.form-group.has-error .col-form-label,
+.form-group.has-error .help-block,
+.form-group.has-error .help-inline {
+    color: #eb3422;
+}
+.form-group.has-error .chosen-single {
+    border-color: #eb3422 !important;
+}
+.form-group.has-error .select2-container--default .select2-selection {
+    border-color: #eb3422 !important;
+}
+
+.form-group.has-error .select2-choice,
+.form-group.has-error .select2-choices {
+    border-color: #eb3422 !important;
+}
