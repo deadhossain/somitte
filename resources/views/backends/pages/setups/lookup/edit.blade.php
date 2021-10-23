@@ -10,10 +10,10 @@
         <form action="{{route('lookup.update',$lookup->id)}}" method="post" novalidate="">
             @csrf
             @method('patch')
-            <div class="form-group row">
+            <div class="form-group row @error('name') has-error @enderror">
                 <label class="col-sm-2 col-form-label">Name</label>
                 <div class="col-sm-10">
-                    <input autocomplete="off" type="text" class="form-control @error('name') form-control-danger @enderror" name="name" placeholder="Enter Lookup Name" value="{{ $lookup->name }}">
+                    <input autocomplete="off" type="text" class="form-control" name="name" placeholder="Enter Lookup Name" value="{{ $lookup->name }}">
                     <span class="messages popover-valid">
                         @error('name')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
@@ -22,10 +22,10 @@
                 </div>
             </div>
 
-            <div class="form-group row">
+            <div class="form-group row @error('remarks') has-error @enderror">
                 <label class="col-sm-2 col-form-label">Remarks</label>
                 <div class="col-sm-10">
-                    <textarea rows="5" name="remarks" class="form-control @error('remarks') form-control-danger @enderror" placeholder="Enter Remarks">{{ $lookup->remarks }}</textarea>
+                    <textarea rows="5" name="remarks" class="form-control" placeholder="Enter Remarks">{{ $lookup->remarks }}</textarea>
                     <span class="messages popover-valid">
                         @error('remarks')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>

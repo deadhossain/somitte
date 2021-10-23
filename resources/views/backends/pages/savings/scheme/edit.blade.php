@@ -10,10 +10,10 @@
         <form action="{{route('scheme.update',$savingsScheme->encryptId)}}" method="post" novalidate="">
             @csrf
             @method('patch')
-            <div class="form-group row">
+            <div class="form-group row @error('name') has-error @enderror">
                 <label class="col-sm-2 col-form-label">Name</label>
                 <div class="col-sm-10">
-                    <input autocomplete="off" type="text" class="form-control @error('name') form-control-danger @enderror" name="name" placeholder="Enter Scheme Name" value="{{ old('name')?:$savingsScheme->name }}">
+                    <input autocomplete="off" type="text" class="form-control" name="name" placeholder="Enter Scheme Name" value="{{ old('name')?:$savingsScheme->name }}">
                     <span class="messages popover-valid">
                         @error('name')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
@@ -22,10 +22,10 @@
                 </div>
             </div>
 
-            <div class="form-group row">
+            <div class="form-group row @error('amount') has-error @enderror">
                 <label class="col-sm-2 col-form-label">Amount</label>
                 <div class="col-sm-10">
-                    <input autocomplete="off" type="text" class="form-control autonumber @error('amount') form-control-danger @enderror" name="amount" placeholder="Enter Scheme Amount" value="{{ old('amount')?:$savingsScheme->amount }}">
+                    <input autocomplete="off" type="text" class="form-control autonumber" name="amount" placeholder="Enter Scheme Amount" value="{{ old('amount')?:$savingsScheme->amount }}">
                     <span class="messages popover-valid">
                         @error('amount')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
@@ -34,10 +34,10 @@
                 </div>
             </div>
 
-            <div class="form-group row">
+            <div class="form-group row @error('profit') has-error @enderror">
                 <label class="col-sm-2 col-form-label">Profit</label>
                 <div class="col-sm-10">
-                    <input autocomplete="off" type="text" class="form-control autonumber @error('profit') form-control-danger @enderror" name="profit" placeholder="Enter Profit" value="{{ old('profit')?:$savingsScheme->profit }}">
+                    <input autocomplete="off" type="text" class="form-control autonumber" name="profit" placeholder="Enter Profit" value="{{ old('profit')?:$savingsScheme->profit }}">
                     <span class="messages popover-valid">
                         @error('profit')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
@@ -46,10 +46,10 @@
                 </div>
             </div>
 
-            <div class="form-group row">
+            <div class="form-group row @error('late_fee') has-error @enderror">
                 <label class="col-sm-2 col-form-label">Late Fee</label>
                 <div class="col-sm-10">
-                    <input autocomplete="off" type="text" class="form-control autonumber @error('late_fee') form-control-danger @enderror" name="late_fee" placeholder="Enter Late Fee" value="{{ old('late_fee')?:$savingsScheme->late_fee }}">
+                    <input autocomplete="off" type="text" class="form-control autonumber" name="late_fee" placeholder="Enter Late Fee" value="{{ old('late_fee')?:$savingsScheme->late_fee }}">
                     <span class="messages popover-valid">
                         @error('late_fee')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
@@ -58,10 +58,10 @@
                 </div>
             </div>
 
-            <div class="form-group row">
+            <div class="form-group row @error('start_date') has-error @enderror">
                 <label class="col-sm-2 col-form-label">Start Date</label>
                 <div class="col-sm-10">
-                    <input autocomplete="off" type="text" class="form-control today-datepicker @error('start_date') form-control-danger @enderror" name="start_date" placeholder="Enter Scheme Start date" value="{{ old('start_date')?:showDateFormat($savingsScheme->start_date)}}">
+                    <input autocomplete="off" type="text" class="form-control today-datepicker" name="start_date" placeholder="Enter Scheme Start date" value="{{ old('start_date')?:showDateFormat($savingsScheme->start_date)}}">
                     <span class="messages popover-valid">
                         @error('start_date')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
@@ -70,10 +70,10 @@
                 </div>
             </div>
 
-            <div class="form-group row">
+            <div class="form-group row @error('end_date') has-error @enderror">
                 <label class="col-sm-2 col-form-label">End Date</label>
                 <div class="col-sm-10">
-                    <input autocomplete="off" type="text" class="form-control single-datepicker @error('end_date') form-control-danger @enderror" name="end_date" placeholder="Enter Scheme End date" value="{{old('end_date')?:showDateFormat($savingsScheme->end_date)}}">
+                    <input autocomplete="off" type="text" class="form-control single-datepicker" name="end_date" placeholder="Enter Scheme End date" value="{{old('end_date')?:showDateFormat($savingsScheme->end_date)}}">
                     <span class="messages popover-valid">
                         @error('end_date')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
@@ -82,10 +82,10 @@
                 </div>
             </div>
 
-            <div class="form-group row">
+            <div class="form-group row @error('remarks') has-error @enderror">
                 <label class="col-sm-2 col-form-label">Remarks</label>
                 <div class="col-sm-10">
-                    <textarea rows="5" name="remarks" class="form-control @error('remarks') form-control-danger @enderror" placeholder="Enter Remarks">{{ old('remarks')?:$savingsScheme->remarks }}</textarea>
+                    <textarea rows="5" name="remarks" class="form-control" placeholder="Enter Remarks">{{ old('remarks')?:$savingsScheme->remarks }}</textarea>
                     <span class="messages popover-valid">
                         @error('remarks')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>

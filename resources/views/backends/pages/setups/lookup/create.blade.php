@@ -9,10 +9,10 @@
     <div class="card-block">
         <form id="second" action="{{route('lookup.store')}}" method="post" novalidate="">
             @csrf
-            <div class="form-group row">
+            <div class="form-group row @error('name') has-error @enderror">
                 <label class="col-sm-2 col-form-label">Name</label>
                 <div class="col-sm-10">
-                    <input autocomplete="off" type="text" class="form-control @error('name') form-control-danger @enderror" name="name" placeholder="Enter Lookup Name" value="{{ old('name') }}">
+                    <input autocomplete="off" type="text" class="form-control" name="name" placeholder="Enter Lookup Name" value="{{ old('name') }}">
                     <span class="messages popover-valid">
                         @error('name')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
@@ -21,10 +21,10 @@
                 </div>
             </div>
 
-            <div class="form-group row">
+            <div class="form-group row @error('remarks') has-error @enderror">
                 <label class="col-sm-2 col-form-label">Remarks</label>
                 <div class="col-sm-10">
-                    <textarea rows="5" name="remarks" class="form-control @error('remarks') form-control-danger @enderror" placeholder="Enter Remarks">{{old('remarks')}}</textarea>
+                    <textarea rows="5" name="remarks" class="form-control" placeholder="Enter Remarks">{{old('remarks')}}</textarea>
                     <span class="messages popover-valid">
                         @error('remarks')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
