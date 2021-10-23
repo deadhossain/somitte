@@ -25,7 +25,7 @@ class Customer extends Model
         'status'
     ];
 
-    public function getIdAttribute()
+    public function getEncryptIdAttribute()
     {
         return Crypt::encrypt($this->attributes['id']);
     }

@@ -115,7 +115,6 @@ class SavingsSchemeController extends Controller
     {
         $id = Crypt::decrypt($id);
         $savingsScheme = SavingsScheme::findorFail($id);
-        // dd($savingsScheme);
         return view('backends.pages.savings.scheme.edit',compact('savingsScheme'));
     }
 

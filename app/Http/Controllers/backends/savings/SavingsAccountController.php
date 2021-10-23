@@ -38,10 +38,10 @@ class SavingsAccountController extends Controller
     public function data()
     {
         try {
-            $savingsAccounts = SavingsAccount::with(['customer','scheme'])->get();
+            $savingsAccounts = SavingsAccount::with(['customer','savingsScheme'])->get();
             return Datatables::of($savingsAccounts)->addIndexColumn()
             ->addColumn('actions', function ($savingsAccount) {
-                return (string) view('backends.pages.savings.account.actions', ['savingsAccounts' => $savingsAccount]);
+                return (string) view('backends.pages.savings.account.actions', ['savingsAccount' => $savingsAccount]);
             })->rawColumns(['actions','status'])->make();
         } catch (\Exception $th) {
             return back()->withErrors([
@@ -74,10 +74,10 @@ class SavingsAccountController extends Controller
     {
         try {
             $savingsAccount = new SavingsAccount;
-            $savingsAccount->name = $request->input('name');
-            $savingsAccount->amount = $request->input('amount');
-            $savingsAccount->late_fee = $request->input('late_fee');
-            $savingsAccount->profit = $request->input('profit');
+            $savingsAccount->account_no = $request->input('account_no');
+            $savingsAccount->first_deposit_ammount = trim($request->input('first_deposit_ammount'))?:0;
+            $savingsAccount->customer_id = Crypt::decrypt($request->input('customer_id'));
+            $savingsAccount->savings_scheme_id = Crypt::decrypt($request->input('savings_scheme_id'));
             $savingsAccount->start_date = insertDateFormat($request->input('start_date'));
             $savingsAccount->end_date = insertDateFormat($request->input('end_date'));
             $savingsAccount->remarks = $request->input('remarks');
@@ -118,7 +118,9 @@ class SavingsAccountController extends Controller
     {
         $id = Crypt::decrypt($id);
         $savingsAccount = SavingsAccount::findorFail($id);
-        return view('backends.pages.savings.accounts.edit',compact('savingsAccount'));
+        $customers = Customer::where('active_fg',1)->get();
+        $savingsSchemes = SavingsScheme::where('active_fg',1)->get();
+        return view('backends.pages.savings.account.edit',compact('savingsAccount','customers','savingsSchemes'));
     }
 
     /**
@@ -128,15 +130,15 @@ class SavingsAccountController extends Controller
      * @param  \App\Models\savings\SavingsAccount  $savingsAccount
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreSavingsAccountRequest $request, $savingsAccount)
+    public function update(StoreSavingsAccountRequest $request, SavingsAccount  $savingsAccount)
     {
         try {
-            $id = Crypt::decrypt($request->savingsAccount);
+            $id = Crypt::decrypt($request->account);
             $savingsAccount = SavingsAccount::findOrFail($id);
-            $savingsAccount->name = $request->input('name');
-            $savingsAccount->amount = $request->input('amount');
-            $savingsAccount->late_fee = $request->input('late_fee');
-            $savingsAccount->profit = $request->input('profit');
+            $savingsAccount->account_no = $request->input('account_no');
+            $savingsAccount->first_deposit_ammount = trim($request->input('first_deposit_ammount'))?:0;
+            $savingsAccount->customer_id = $request->input('customer_id');
+            $savingsAccount->savings_scheme_id = $request->input('savings_scheme_id');
             $savingsAccount->start_date = insertDateFormat($request->input('start_date'));
             $savingsAccount->end_date = insertDateFormat($request->input('end_date'));
             $savingsAccount->remarks = $request->input('remarks');
@@ -170,8 +172,8 @@ class SavingsAccountController extends Controller
             $savingsAccount->active_fg=0;
             $savingsAccount->updated_by = Auth::user()->id;
             $result = $savingsAccount->save();
-            if ($result) return response()->json(['type'=>'success', 'title'=>'Deleted!', 'msg'=>$savingsAccount->name.' has been deleted']);
-            return response()->json(['type'=>'error', 'title'=>'Sorry!', 'msg'=>'Failed to delete '.$savingsAccount->name]);
+            if ($result) return response()->json(['type'=>'success', 'title'=>'Deleted!', 'msg'=>'Savings Account has been deleted']);
+            return response()->json(['type'=>'error', 'title'=>'Sorry!', 'msg'=>'Failed to delete Savings Account']);
         }
         catch (\Exception $e) {
             return response()->json(['type'=>'error', 'title'=>'System Failure!!', 'msg'=>$e->getMessage()], 400);

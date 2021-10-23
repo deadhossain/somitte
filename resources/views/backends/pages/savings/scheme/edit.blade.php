@@ -7,7 +7,7 @@
         <h5>Create New Scheme</h5>
     </div>
     <div class="card-block">
-        <form action="{{route('scheme.update',$savingsScheme->id)}}" method="post" novalidate="">
+        <form action="{{route('scheme.update',$savingsScheme->encryptId)}}" method="post" novalidate="">
             @csrf
             @method('patch')
             <div class="form-group row">

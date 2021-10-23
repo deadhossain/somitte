@@ -3,7 +3,7 @@
 <!-- Tooltip Validation card start -->
 <div class="card">
     <div class="card-header">
-        <h5>Create New Account</h5>
+        <h5>Create New Savings Account</h5>
     </div>
     <div class="card-block">
         <form action="{{route('account.store')}}" method="post" novalidate="">
@@ -45,7 +45,7 @@
             <div class="form-group row @error('account_no') has-error @enderror">
                 <label class="col-sm-2 col-form-label">Account No</label>
                 <div class="col-sm-10">
-                    <input autocomplete="off" type="text" class="form-control" name="account_no" placeholder="Enter Scheme Name" value="{{ old('account_no') }}">
+                    <input autocomplete="off" type="text" class="form-control" name="account_no" placeholder="Enter Account No" value="{{ old('account_no') }}">
                     <span class="messages popover-valid">
                         @error('account_no')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
@@ -57,7 +57,7 @@
             <div class="form-group row  @error('first_deposit_ammount') has-error @enderror">
                 <label class="col-sm-2 col-form-label">First Deposit Amount</label>
                 <div class="col-sm-10">
-                    <input autocomplete="off" type="text" class="form-control autonumbe" name="amount" placeholder="Enter First Deposit Amount" value="{{ old('first_deposit_ammount') }}">
+                    <input autocomplete="off" type="text" class="form-control autonumbe" name="first_deposit_ammount" placeholder="Enter First Deposit Amount" value="{{ old('first_deposit_ammount') }}">
                     <span class="messages popover-valid">
                         @error('first_deposit_ammount')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>

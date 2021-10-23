@@ -7,7 +7,7 @@
         <h5>Update Customer</h5>
     </div>
     <div class="card-block">
-        <form action="{{route('customer.update',$customer->id)}}" method="post" novalidate="" enctype="multipart/form-data">
+        <form action="{{route('customer.update',$customer->encryptId)}}" method="post" novalidate="" enctype="multipart/form-data">
             @csrf
             @method('patch')
             <div class="row">

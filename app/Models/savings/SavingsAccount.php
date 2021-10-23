@@ -18,22 +18,27 @@ class SavingsAccount extends Model
      * @var array
      */
     protected $fillable = [
-        'account_no','first_deposit_ammount','customer_id','savings_scheme_id','start_date','end_date','remarks','active_fg','remarks'
+        'account_no','first_deposit_ammount','customer_id','savings_scheme_id','start_date','end_date','active_fg','remarks'
     ];
 
     protected $appends = [
         'status'
     ];
 
-    public function getIdAttribute()
+    public function getEncryptIdAttribute()
     {
         return Crypt::encrypt($this->attributes['id']);
     }
 
-    // public function getAmountAttribute()
-    // {
-    //     return $this->attributes['amount']+0; // remove trailing zeroes
-    // }
+    public function customer()
+    {
+        return $this->belongsTo('App\models\person\Customer', 'customer_id', 'id');
+    }
+
+    public function savingsScheme()
+    {
+        return $this->belongsTo(SavingsScheme::class, 'savings_scheme_id', 'id');
+    }
 
     public function getStatusAttribute()
     {

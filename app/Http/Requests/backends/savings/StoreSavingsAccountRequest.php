@@ -11,7 +11,7 @@ class StoreSavingsAccountRequest extends FormRequest
         'account_no' => 'required|max:50|unique:savings_accounts',
         'customer_id'=> 'required',
         'savings_scheme_id'=> 'required',
-        'first_deposit_ammount' => 'required|numeric|min:0|max:999999999999',
+        'first_deposit_ammount' => 'numeric|min:0|max:999999999999',
         'start_date' => ['required','date'],
         'end_date' => ['nullable','date','after:start_date']
     ];
@@ -36,7 +36,7 @@ class StoreSavingsAccountRequest extends FormRequest
         if ($this->getMethod() == 'POST') {
 
         }else if ($this->getMethod() == 'PATCH'){
-            $rules['name'] = 'required|unique:users,name,'.Crypt::decrypt($this->savingsAccount);
+            $rules['account_no'] = 'required|unique:savings_accounts,account_no,'.Crypt::decrypt($this->account);
         }
         return $rules;
     }
