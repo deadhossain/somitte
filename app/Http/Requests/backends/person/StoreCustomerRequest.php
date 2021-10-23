@@ -14,6 +14,8 @@ class StoreCustomerRequest extends FormRequest
         'phone' => 'required',
         'start_date' => ['required','date'],
         'end_date' => ['nullable','date','after:start_date'],
+        'image' => 'mimes:jpeg,jpg,bmp,png|max:5000',
+        'nid_attachment' => 'mimes:jpeg,jpg,bmp,png,pdf|max:5000',
     ];
 
     protected $fillable = [
@@ -61,7 +63,9 @@ class StoreCustomerRequest extends FormRequest
             'gender_id' => 'Gender',
             'phone' => 'Phone ',
             'start_date' => 'Start Date',
-            'end_date' => 'End Date'
+            'end_date' => 'End Date',
+            'image' => 'image',
+            'nid_attachment' => 'nid',
         ];
     }
 
