@@ -14,7 +14,7 @@
                     <select name="customer_id" class="form-control select2-select" aria-placeholder="Select Customer" required>
                         <option value="">Select Customer</option>
                         @foreach ($customers as $customer)
-                            <option value="{{$customer->id}}"> {{$customer->name}} </option>
+                            <option value="{{$customer->encryptId}}" @if(!@empty(old('customer_id')) && Crypt::decrypt(old('customer_id')) == $customer->id) selected @endif> {{$customer->name}} :: {{$customer->customer_uid}} </option>
                         @endforeach
                     </select>
                     <span class="messages popover-valid">
@@ -31,7 +31,7 @@
                     <select name="savings_scheme_id" class="form-control select2-select" aria-placeholder="Select Savings Scheme" required>
                         <option value="">Select Savings Scheme</option>
                         @foreach ($savingsSchemes as $savingsScheme)
-                            <option value="{{$savingsScheme->id}}"> {{$savingsScheme->name}} </option>
+                            <option value="{{$savingsScheme->encryptId}}" @if(!@empty(old('savings_scheme_id')) && Crypt::decrypt(old('savings_scheme_id')) == $savingsScheme->id) selected @endif> {{$savingsScheme->name}} </option>
                         @endforeach
                     </select>
                     <span class="messages popover-valid">

@@ -137,8 +137,8 @@ class SavingsAccountController extends Controller
             $savingsAccount = SavingsAccount::findOrFail($id);
             $savingsAccount->account_no = $request->input('account_no');
             $savingsAccount->first_deposit_ammount = trim($request->input('first_deposit_ammount'))?:0;
-            $savingsAccount->customer_id = $request->input('customer_id');
-            $savingsAccount->savings_scheme_id = $request->input('savings_scheme_id');
+            $savingsAccount->customer_id = Crypt::decrypt($request->input('customer_id'));
+            $savingsAccount->savings_scheme_id = Crypt::decrypt($request->input('savings_scheme_id'));
             $savingsAccount->start_date = insertDateFormat($request->input('start_date'));
             $savingsAccount->end_date = insertDateFormat($request->input('end_date'));
             $savingsAccount->remarks = $request->input('remarks');

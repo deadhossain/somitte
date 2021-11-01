@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\Crypt;
 class StoreCustomerRequest extends FormRequest
 {
     private const VALIDATION_RULES = [
-        'name' => 'required|max:50|unique:customers',
+        'name' => 'required|max:50',
+        'customer_uid' => 'required|max:50|unique:customers',
         'nid_no' => 'required|max:50|unique:customers',
         'gender_id' => 'required',
         'phone' => 'required',
@@ -19,7 +20,7 @@ class StoreCustomerRequest extends FormRequest
     ];
 
     protected $fillable = [
-        'name','nid_no','gender_id','phone','start_date','end_date','image','nid_attachment','address','remarks','active_fg'
+        'name','customer_uid','nid_no','gender_id','phone','start_date','end_date','image','nid_attachment','address','remarks','active_fg'
     ];
 
     /**
@@ -44,7 +45,7 @@ class StoreCustomerRequest extends FormRequest
 
         }else if ($this->getMethod() == 'PATCH'){
             $id=Crypt::decrypt($this->customer);
-            $rules['name'] = 'required|unique:customers,name,'.$id;
+            $rules['customer_uid'] = 'required|unique:customers,customer_uid,'.$id;
             $rules['nid_no'] = 'required|unique:customers,nid_no,'.$id;
         }
         return $rules;
@@ -59,6 +60,7 @@ class StoreCustomerRequest extends FormRequest
     {
         return [
             'name' => 'Name',
+            'customer_uid' => 'Customer Id',
             'nid_no' => 'NID No.',
             'gender_id' => 'Gender',
             'phone' => 'Phone ',

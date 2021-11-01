@@ -78,6 +78,7 @@ class CustomerController extends Controller
             DB::beginTransaction();
             $customer = new Customer;
             $customer->name = $request->input('name');
+            $customer->customer_uid = $request->input('customer_uid');
             $customer->nid_no = $request->input('nid_no');
             $customer->gender_id = $request->input('gender_id');
             $customer->phone = $request->input('phone');
@@ -156,6 +157,7 @@ class CustomerController extends Controller
             $id = Crypt::decrypt($id);
             $customer = Customer::findOrFail($id);
             $customer->name = $request->input('name');
+            $customer->customer_uid = $request->input('customer_uid');
             $customer->nid_no = $request->input('nid_no');
             $customer->gender_id = $request->input('gender_id');
             $customer->phone = $request->input('phone');

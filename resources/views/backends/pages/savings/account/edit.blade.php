@@ -16,7 +16,7 @@
                     <select name="customer_id" class="form-control select2-select" aria-placeholder="Select Customer" required>
                         <option value="">Select Customer</option>
                         @foreach ($customers as $customer)
-                            <option value="{{$customer->id}}" @if($customer->id==$savingsAccount->customer_id) selected @endif> {{$customer->name}} </option>
+                            <option value="{{$customer->encryptId}}" @if($customer->id==$savingsAccount->customer_id) selected @endif> {{$customer->name}} :: {{$customer->customer_uid}} </option>
                         @endforeach
                     </select>
                     <span class="messages popover-valid">
@@ -33,7 +33,7 @@
                     <select name="savings_scheme_id" class="form-control select2-select" aria-placeholder="Select Savings Scheme" required>
                         <option value="">Select Savings Scheme</option>
                         @foreach ($savingsSchemes as $savingsScheme)
-                            <option value="{{$savingsScheme->id}}" @if($savingsScheme->id==$savingsAccount->customer_id) selected @endif> {{$savingsScheme->name}} </option>
+                            <option value="{{$savingsScheme->encryptId}}" @if($savingsScheme->id==$savingsAccount->savings_scheme_id) selected @endif> {{$savingsScheme->name}} </option>
                         @endforeach
                     </select>
                     <span class="messages popover-valid">

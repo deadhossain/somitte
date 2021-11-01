@@ -34,7 +34,7 @@
             </div>
 
             <div class="form-group row @error('profit') has-error @enderror">
-                <label class="col-sm-2 col-form-label">Profit</label>
+                <label class="col-sm-2 col-form-label">Profit(%)</label>
                 <div class="col-sm-10">
                     <input autocomplete="off" type="text" class="form-control autonumber" name="profit" placeholder="Enter Profit" value="{{ old('profit') }}">
                     <span class="messages popover-valid">

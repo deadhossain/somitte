@@ -22,6 +22,18 @@
                         </div>
                     </div>
 
+                    <div class="form-group row @error('customer_uid') has-error @enderror">
+                        <label class="col-sm-2 col-form-label">Customer ID *</label>
+                        <div class="col-sm-10">
+                            <input autocomplete="off" type="text" class="form-control" name="customer_uid" placeholder="Enter Customer ID" value="{{ old('customer_uid') }}">
+                            <span class="messages popover-valid">
+                                @error('customer_uid')
+                                    <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
+                                @enderror
+                            </span>
+                        </div>
+                    </div>
+
                     <div class="form-group row @error('gender_id') has-error @enderror">
                         <label class="col-sm-2 col-form-label"> Gender * </label>
                         <div class="col-sm-10">
