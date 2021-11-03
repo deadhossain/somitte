@@ -32,6 +32,14 @@
                 </a>
             </li>
         </ul>
+        <ul class="pcoded-item pcoded-left-item">
+            <li>
+                <a href="{{route('account.index')}}">
+                    <span class="pcoded-micon"><i class="fa fa-briefcase"></i></span>
+                    <span class="pcoded-mtext"> Deposit </span>
+                </a>
+            </li>
+        </ul>
         <div class="pcoded-navigatio-lavel">Person</div>
         <ul class="pcoded-item pcoded-left-item">
             <li>
