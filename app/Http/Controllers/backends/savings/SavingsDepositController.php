@@ -3,10 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\savings\SavingsDeposit;
+use App\Models\savings\SavingsAccount;
+use App\Models\savings\SavingsScheme;
+use App\Models\person\Customer;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Crypt;
+use Yajra\DataTables\Facades\DataTables;
+use App\Http\Requests\backends\savings\StoreSavingsAccountRequest;
+use Auth;
 
 class SavingsDepositController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +28,7 @@ class SavingsDepositController extends Controller
      */
     public function index()
     {
-        //
+        return view('backends.pages.savings.account.index');
     }
 
     /**
