@@ -49,7 +49,6 @@ class SavingsAccountController extends Controller
                 'error-dev'=> $th->getMessage()
             ]);
         }
-
     }
 
     /**
@@ -75,7 +74,7 @@ class SavingsAccountController extends Controller
         try {
             $savingsAccount = new SavingsAccount;
             $savingsAccount->account_no = $request->input('account_no');
-            $savingsAccount->first_deposit_ammount = trim($request->input('first_deposit_ammount'))?:0;
+            $savingsAccount->first_deposit_amount = trim($request->input('first_deposit_amount'))?:0;
             $savingsAccount->customer_id = Crypt::decrypt($request->input('customer_id'));
             $savingsAccount->savings_scheme_id = Crypt::decrypt($request->input('savings_scheme_id'));
             $savingsAccount->start_date = insertDateFormat($request->input('start_date'));
@@ -136,7 +135,7 @@ class SavingsAccountController extends Controller
             $id = Crypt::decrypt($request->account);
             $savingsAccount = SavingsAccount::findOrFail($id);
             $savingsAccount->account_no = $request->input('account_no');
-            $savingsAccount->first_deposit_ammount = trim($request->input('first_deposit_ammount'))?:0;
+            $savingsAccount->first_deposit_amount = trim($request->input('first_deposit_amount'))?:0;
             $savingsAccount->customer_id = Crypt::decrypt($request->input('customer_id'));
             $savingsAccount->savings_scheme_id = Crypt::decrypt($request->input('savings_scheme_id'));
             $savingsAccount->start_date = insertDateFormat($request->input('start_date'));

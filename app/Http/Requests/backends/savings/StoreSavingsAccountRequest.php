@@ -11,7 +11,7 @@ class StoreSavingsAccountRequest extends FormRequest
         'account_no' => 'required|max:50|unique:savings_accounts',
         'customer_id'=> 'required',
         'savings_scheme_id'=> 'required',
-        'first_deposit_ammount' => 'numeric|nullable',
+        'first_deposit_amount' => 'numeric|nullable',
         'start_date' => ['required','date'],
         'end_date' => ['nullable','date','after:start_date']
     ];
@@ -52,7 +52,7 @@ class StoreSavingsAccountRequest extends FormRequest
             'customer_id'=> 'Customer',
             'savings_scheme_id'=> 'Savings Scheme',
             'account_no' => 'Account No',
-            'first_deposit_ammount' => 'Amount',
+            'first_deposit_amount' => 'Amount',
             'start_date' => 'Start Date',
             'end_date' => 'End Date'
         ];

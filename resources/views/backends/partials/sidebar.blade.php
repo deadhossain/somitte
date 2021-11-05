@@ -34,7 +34,7 @@
         </ul>
         <ul class="pcoded-item pcoded-left-item">
             <li>
-                <a href="{{route('account.index')}}">
+                <a href="{{route('deposit.index')}}">
                     <span class="pcoded-micon"><i class="fa fa-briefcase"></i></span>
                     <span class="pcoded-mtext"> Deposit </span>
                 </a>

@@ -16,7 +16,7 @@ class CreateSavingsDepositsTable extends Migration
         Schema::create('savings_deposits', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('savings_accounts_id');
-            $table->double('deposit_ammount', 15, 4)->default(0);
+            $table->double('deposit_amount', 15, 4)->default(0);
             $table->double('late_fee', 15, 4)->default(0);
             $table->date('schedule_date');
             $table->date('deposit_date');

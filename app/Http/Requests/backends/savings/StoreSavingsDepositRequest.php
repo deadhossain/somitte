@@ -9,12 +9,12 @@ class StoreSavingsDepositRequest extends FormRequest
 {
     private const VALIDATION_RULES = [
         'savings_accounts_id'=> 'required',
-        'deposit_ammount' => 'numeric|required',
+        'deposit_amount' => 'numeric|required',
         'late_fee' => 'numeric|nullable',
         'schedule_date' => ['required','date'],
         'deposit_date' => ['required','date','after:start_date']
     ];
-    
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -45,7 +45,7 @@ class StoreSavingsDepositRequest extends FormRequest
     {
         return [
             'savings_accounts_id' => 'Savings Account',
-            'deposit_ammount' => 'Deposit Ammount',
+            'deposit_amount' => 'Deposit amount',
             'late_fee' => 'Late Fee',
             'schedule_date' => 'Schedule Date',
             'deposit_date' => 'Deposit Date'

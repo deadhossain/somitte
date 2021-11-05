@@ -18,7 +18,7 @@ class SavingsAccount extends Model
      * @var array
      */
     protected $fillable = [
-        'account_no','first_deposit_ammount','customer_id','savings_scheme_id','start_date','end_date','active_fg','remarks'
+        'account_no','first_deposit_amount','customer_id','savings_scheme_id','start_date','end_date','active_fg','remarks'
     ];
 
     protected $appends = [
@@ -35,9 +35,31 @@ class SavingsAccount extends Model
         return $this->belongsTo('App\models\person\Customer', 'customer_id', 'id');
     }
 
+    public function activeCustomer()
+    {
+        return $this->customer()->where('active_fg',1);
+    }
+
     public function savingsScheme()
     {
         return $this->belongsTo(SavingsScheme::class, 'savings_scheme_id', 'id');
+    }
+
+    public function activeSavingsScheme()
+    {
+        return $this->savingsScheme()->where('active_fg',1);
+    }
+
+    public function savingsDeposits()
+    {
+        // return $this->hasMany('LookupDetail');
+        return $this->hasMany(SavingsDeposit::class, 'savings_accounts_id', 'id');
+    }
+
+    public function activeSavingsDeposits()
+    {
+        // return $this->hasMany('LookupDetail');
+        return $this->savingsDeposits()->where('active_fg',1);
     }
 
     public function getStatusAttribute()

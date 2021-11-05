@@ -18,7 +18,7 @@ class SavingsDeposit extends Model
      * @var array
      */
     protected $fillable = [
-        'savings_accounts_id','deposit_ammount','late_fee','schedule_date','deposit_date','active_fg','remarks'
+        'savings_accounts_id','deposit_amount','late_fee','schedule_date','deposit_date','active_fg','remarks'
     ];
 
     protected $appends = [

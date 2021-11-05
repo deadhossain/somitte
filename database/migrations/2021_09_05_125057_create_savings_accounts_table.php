@@ -16,7 +16,7 @@ class CreateSavingsAccountsTable extends Migration
         Schema::create('savings_accounts', function (Blueprint $table) {
             $table->id();
             $table->string('account_no',50);
-            $table->double('first_deposit_ammount', 15, 4)->default(0);
+            $table->double('first_deposit_amount', 15, 4)->default(0);
             $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('savings_scheme_id');
             $table->date('start_date');

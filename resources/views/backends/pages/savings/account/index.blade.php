@@ -50,7 +50,7 @@
         {data: 'customer.name', name: 'customer.name'},
         {data: 'account_no', name: 'account_no'},
         {data: 'savings_scheme.name', name: 'savings_scheme.name'},
-        {data: 'first_deposit_ammount', name: 'first_deposit_ammount'},
+        {data: 'first_deposit_amount', name: 'first_deposit_amount'},
         {data: 'start_date', name: 'start_date'},
         {data: 'status', name: 'status'},
         {data: 'actions', name: 'actions'},
