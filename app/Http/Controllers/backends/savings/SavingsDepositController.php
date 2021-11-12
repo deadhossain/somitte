@@ -8,8 +8,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
 use Yajra\DataTables\Facades\DataTables;
-use App\Http\Requests\backends\savings\StoreSavingsAccountRequest;
+use App\Http\Requests\backends\savings\StoreSavingsDepositRequest;
+use App\Models\setups\LookupDetail;
 use Auth;
+use DateTime;
 
 class SavingsDepositController extends Controller
 {
@@ -34,7 +36,7 @@ class SavingsDepositController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function data(Request $request,$date,$paymentMethodId=0)
+    public function data($date="")
     {
         $date = $date?:date('F-Y');
         $depositDate = array(
@@ -42,24 +44,22 @@ class SavingsDepositController extends Controller
             'end_date' => date('Y-m-t',strtotime($date))
         );
 
-        $accounts = SavingsAccount::with([
-                    'activeCustomer','activeSavingsScheme',
-                    'activeSavingsDeposits' => function ( $query ) use ($depositDate)
+        $accounts = SavingsAccount::with(['activeCustomer','activeSavingsScheme',
+                    'currentSavingsDeposit' => function ( $query ) use ($depositDate)
                     {
                         $query->whereBetween('deposit_date',$depositDate)->latest();
                     }])
                     ->where('savings_accounts.start_date','<',$depositDate['end_date'])
                     ->where(function ($query) use($depositDate) {
-                        $query->whereNull('end_date')
-                              ->orWhere('end_date','>=',$depositDate['end_date']);
+                        $query->whereNull('end_date')->orWhere('end_date','>=',$depositDate['end_date']);
                     })->get();
 
         return Datatables::of($accounts)->addIndexColumn()
-        // ->setRowClass(function ($employee) {
-        //     return $employee->ld_id == 13 ? 'alert-danger' : '';
-        // })
-        ->addColumn('actions', function ($account) use ($depositDate){
-            return (string) view('backends.pages.savings.deposit.actions',['account' => $account,'date' => $depositDate]);
+        ->setRowClass(function ($account) {
+            return empty($account->currentSavingsDeposit) ? 'alert-danger' : '';
+        })
+        ->addColumn('actions', function ($account) use ($date){
+            return (string) view('backends.pages.savings.deposit.actions',['account' => $account,'date' => $date]);
         })->rawColumns(['actions','status'])->make();
     }
 
@@ -68,9 +68,16 @@ class SavingsDepositController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($savingsAccountId,$date)
     {
-        //
+        $savingsAccountId = Crypt::decrypt($savingsAccountId);
+        $account = SavingsAccount::with(['activeCustomer','activeSavingsScheme'])->find($savingsAccountId);
+        $date1 = new DateTime($date);
+        $date2 = new DateTime();
+        $days = $date1->diff($date2)->d; // check if customer paying late
+        $lateDays = LookupDetail::where(['udid' => 'LS'])->firstOrFail();
+        // dd($days,$lateDays->value);
+        return view('backends.pages.savings.deposit.create',compact('account','date','lateDays','days'));
     }
 
     /**
@@ -79,9 +86,32 @@ class SavingsDepositController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreSavingsDepositRequest $request,$savingsAccountId)
     {
-        //
+        try {
+            $savingsAccountDeposit = SavingsDeposit::firstOrNew([
+                'savings_accounts_id' => Crypt::decrypt($savingsAccountId),
+                'schedule_date' => insertDateFormat($request->input('schedule_date'))
+            ]);
+
+            $savingsAccountDeposit->deposit_amount = trim($request->input('deposit_amount'))?:0;
+            $savingsAccountDeposit->late_fee = trim($request->input('late_fee'))?:0;
+            $savingsAccountDeposit->deposit_date = insertDateFormat($request->input('deposit_date'));
+            $savingsAccountDeposit->remarks = $request->input('remarks');
+            $savingsAccountDeposit->active_fg = 1;
+            $savingsAccountDeposit->created_by = Auth::user()->id;
+            $is_saved = $savingsAccountDeposit->save();
+            if ($is_saved) {
+                return back()->with('message', 'Deposit has been Succesful');
+            } else {
+                return back()->withErrors(['error'=>'Deposit has not been Succesful']);
+            }
+        } catch (\Exception $th) {
+            return back()->withErrors([
+                'error'=>'Seek system administrator help',
+                'error-dev'=> $th->getMessage()
+            ]);
+        }
     }
 
     /**

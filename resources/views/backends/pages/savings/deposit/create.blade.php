@@ -3,20 +3,16 @@
 <!-- Tooltip Validation card start -->
 <div class="card">
     <div class="card-header">
-        <h5>Create New Savings Account</h5>
+        <h5>Deposit</h5>
     </div>
     <div class="card-block">
-        <form action="{{route('account.store')}}" method="post" novalidate="">
+        <form action="{{route('deposit.store',$account->encryptId)}}" method="post" novalidate="">
             @csrf
             <div class="form-group row @error('customer_id') has-error @enderror">
                 <label class="col-sm-2 col-form-label"> Customer * </label>
                 <div class="col-sm-10">
-                    <select name="customer_id" class="form-control select2-select" aria-placeholder="Select Customer" required>
-                        <option value="">Select Customer</option>
-                        @foreach ($customers as $customer)
-                            <option value="{{$customer->encryptId}}" @if(!@empty(old('customer_id')) && Crypt::decrypt(old('customer_id')) == $customer->id) selected @endif> {{$customer->name}} :: {{$customer->customer_uid}} </option>
-                        @endforeach
-                    </select>
+                    {{-- <input autocomplete="off" type="hidden" class="form-control" name="customer_id" value="{{ $account->activeCustomer->encryptId }}"> --}}
+                    <input autocomplete="off" type="text" class="form-control" name="customer_name" value="{{ $account->activeCustomer->name }}" readonly>
                     <span class="messages popover-valid">
                         @error('customer_id')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
@@ -25,17 +21,13 @@
                 </div>
             </div>
 
-            <div class="form-group row @error('savings_scheme_id') has-error @enderror">
-                <label class="col-sm-2 col-form-label"> Savings Scheme * </label>
+            <div class="form-group row @error('customer_id') has-error @enderror">
+                <label class="col-sm-2 col-form-label"> Scheme * </label>
                 <div class="col-sm-10">
-                    <select name="savings_scheme_id" class="form-control select2-select" aria-placeholder="Select Savings Scheme" required>
-                        <option value="">Select Savings Scheme</option>
-                        @foreach ($savingsSchemes as $savingsScheme)
-                            <option value="{{$savingsScheme->encryptId}}" @if(!@empty(old('savings_scheme_id')) && Crypt::decrypt(old('savings_scheme_id')) == $savingsScheme->id) selected @endif> {{$savingsScheme->name}} </option>
-                        @endforeach
-                    </select>
+                    {{-- <input autocomplete="off" type="hidden" class="form-control" name="customer_id" value="{{ $account->activeSavingsScheme->encryptId }}"> --}}
+                    <input autocomplete="off" type="text" class="form-control" name="scheme_name" value="{{ $account->activeSavingsScheme->name }}" readonly>
                     <span class="messages popover-valid">
-                        @error('savings_scheme_id')
+                        @error('customer_id')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
                         @enderror
                     </span>
@@ -45,7 +37,7 @@
             <div class="form-group row @error('account_no') has-error @enderror">
                 <label class="col-sm-2 col-form-label">Account No</label>
                 <div class="col-sm-10">
-                    <input autocomplete="off" type="text" class="form-control" name="account_no" placeholder="Enter Account No" value="{{ old('account_no') }}">
+                    <input autocomplete="off" type="text" class="form-control" name="account_no" value="{{ $account->account_no }}" readonly>
                     <span class="messages popover-valid">
                         @error('account_no')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
@@ -54,36 +46,52 @@
                 </div>
             </div>
 
-            <div class="form-group row  @error('first_deposit_amount') has-error @enderror">
-                <label class="col-sm-2 col-form-label">First Deposit Amount</label>
+            <div class="form-group row  @error('deposit_amount') has-error @enderror">
+                <label class="col-sm-2 col-form-label">Deposit Amount</label>
                 <div class="col-sm-10">
-                    <input autocomplete="off" type="text" class="form-control autonumbe" name="first_deposit_amount" placeholder="Enter First Deposit Amount" value="{{ old('first_deposit_amount') }}">
+                    <input autocomplete="off" type="text" class="form-control autonumbe" name="deposit_amount" placeholder="Enter First Deposit Amount" value="{{ $account->activeSavingsScheme->amount }}">
                     <span class="messages popover-valid">
-                        @error('first_deposit_amount')
+                        @error('deposit_amount')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
                         @enderror
                     </span>
                 </div>
             </div>
 
-            <div class="form-group row @error('start_date') has-error @enderror">
-                <label class="col-sm-2 col-form-label">Start Date</label>
+            <div class="form-group row  @error('late_fee') has-error @enderror">
+                <label class="col-sm-2 col-form-label"> Late Fee({{$days}} day(s) late)</label>
                 <div class="col-sm-10">
-                    <input autocomplete="off" type="text" class="form-control today-datepicker" name="start_date" placeholder="Enter Scheme Start date" value="{{ old('start_date') }}">
+                    <input autocomplete="off" type="text" class="form-control autonumbe" name="late_fee" placeholder="Enter Late Fee"
+                    value="@php
+                        if(empty(old('late_fee'))) if($days>=$lateDays->value) echo $account->activeSavingsScheme->late_fee; else echo 0;
+                        else echo old('late_fee');
+                        @endphp">
                     <span class="messages popover-valid">
-                        @error('start_date')
+                        @error('late_fee')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
                         @enderror
                     </span>
                 </div>
             </div>
 
-            <div class="form-group row @error('end_date') has-error @enderror">
-                <label class="col-sm-2 col-form-label">End Date</label>
+            <div class="form-group row @error('schedule_date') has-error @enderror">
+                <label class="col-sm-2 col-form-label">Deposit Schedule Month</label>
                 <div class="col-sm-10">
-                    <input autocomplete="off" type="text" class="form-control single-datepicker" name="end_date" placeholder="Enter Scheme End date" value="{{ old('end_date') }}">
+                    <input readonly autocomplete="off" type="text" class="form-control month-datepicker" name="schedule_date" placeholder="Enter Schedule date" value="{{ showDateFormat($date,'F-Y') }}">
                     <span class="messages popover-valid">
-                        @error('end_date')
+                        @error('schedule_date')
+                            <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
+                        @enderror
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group row @error('deposit_date') has-error @enderror">
+                <label class="col-sm-2 col-form-label">Deposit Date</label>
+                <div class="col-sm-10">
+                    <input autocomplete="off" type="text" class="form-control single-datepicker" name="deposit_date" placeholder="Enter Scheme End date" value="{{ date('d-m-Y') }}">
+                    <span class="messages popover-valid">
+                        @error('deposit_date')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
                         @enderror
                     </span>

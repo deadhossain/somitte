@@ -52,14 +52,18 @@ class SavingsAccount extends Model
 
     public function savingsDeposits()
     {
-        // return $this->hasMany('LookupDetail');
         return $this->hasMany(SavingsDeposit::class, 'savings_accounts_id', 'id');
     }
 
     public function activeSavingsDeposits()
     {
-        // return $this->hasMany('LookupDetail');
         return $this->savingsDeposits()->where('active_fg',1);
+    }
+
+    // current month deposit
+    public function currentSavingsDeposit()
+    {
+        return $this->hasOne(SavingsDeposit::class, 'savings_accounts_id', 'id')->where('active_fg',1);
     }
 
     public function getStatusAttribute()

@@ -8,11 +8,11 @@ use Illuminate\Support\Facades\Crypt;
 class StoreSavingsDepositRequest extends FormRequest
 {
     private const VALIDATION_RULES = [
-        'savings_accounts_id'=> 'required',
+        // 'savings_accounts_id'=> 'required',
         'deposit_amount' => 'numeric|required',
         'late_fee' => 'numeric|nullable',
         'schedule_date' => ['required','date'],
-        'deposit_date' => ['required','date','after:start_date']
+        'deposit_date' => ['required','date','after_or_equal:start_date']
     ];
 
     /**
@@ -44,7 +44,7 @@ class StoreSavingsDepositRequest extends FormRequest
     public function attributes()
     {
         return [
-            'savings_accounts_id' => 'Savings Account',
+            // 'savings_accounts_id' => 'Savings Account',
             'deposit_amount' => 'Deposit amount',
             'late_fee' => 'Late Fee',
             'schedule_date' => 'Schedule Date',

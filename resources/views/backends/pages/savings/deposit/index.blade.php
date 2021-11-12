@@ -5,7 +5,7 @@
 <div class="card">
     <div class="card-header table-card-header">
         <h5 class="text-inverse">LIST OF SAVINGS DEPOSIT</h5>
-        <a href="{{route('deposit.create')}}" class="btn btn-sm btn-primary m-b-20 float-right">+ Add Savings Deposit</a>
+
     </div>
     <div class="card-block">
         <div class="dt-responsive table-responsive">
