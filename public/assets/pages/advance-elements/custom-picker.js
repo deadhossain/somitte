@@ -144,21 +144,21 @@ $(document).ready(function(){
     $('input[name="daterange"]').daterangepicker();
     $(function() {
 
-        // $('input.single-datepicker').daterangepicker({
-        //     singleDatePicker: true,
-        //     showDropdowns: true,
-        //     autoUpdateInput:false,
-        //     "autoApply": true,
-        //     locale: {
-        //         format: 'DD-MM-YYYY'
-        //     }
-        // });
-
-        $('input.single-datepicker:not([readonly])').datepicker({
-            format: 'DD-MM-YYYY',
-            autoclose: true,
-            todayHighlight: true
+        $('input.single-datepicker').daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true,
+            autoUpdateInput:false,
+            "autoApply": true,
+            locale: {
+                format: 'DD-MM-YYYY'
+            }
         });
+
+        // $('input.single-datepicker:not([readonly])').datepicker({
+        //     format: 'DD-MM-YYYY',
+        //     autoclose: true,
+        //     todayHighlight: true
+        // });
 
         $(".month-picker:not([readonly])").datepicker( {
             format: "MM-yyyy",

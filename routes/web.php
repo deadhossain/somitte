@@ -53,6 +53,7 @@ Route::group(['middleware'=>'auth'],function () {
     //     dd($savings_accounts_id,$date);
     // });
     Route::get('savings/deposit/data/{date?}', 'backends\savings\SavingsDepositController@data')->name('deposit.data');
+    Route::post('savings/deposit', 'backends\savings\SavingsDepositController@index')->name('deposit.index');
     Route::resource('savings/deposit', 'backends\savings\SavingsDepositController')->except([
         'create', 'store'
     ]);
