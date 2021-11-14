@@ -37,18 +37,18 @@ class SavingsDepositController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function data($date="")
+    public function data($month="")
     {
-        $date = $date?:date('F-Y');
+        $month = $month?:date('F-Y');
         $depositDate = array(
-            'start_date' => date('Y-m-1',strtotime($date)),
-            'end_date' => date('Y-m-t',strtotime($date))
+            'start_date' => date('Y-m-1',strtotime($month)),
+            'end_date' => date('Y-m-t',strtotime($month))
         );
 
         $accounts = SavingsAccount::with(['activeCustomer','activeSavingsScheme',
                     'currentSavingsDeposit' => function ( $query ) use ($depositDate)
                     {
-                        $query->whereBetween('deposit_date',$depositDate)->latest();
+                        $query->whereBetween('schedule_date',$depositDate)->latest();
                     }])
                     ->where('savings_accounts.start_date','<',$depositDate['end_date'])
                     ->where(function ($query) use($depositDate) {
@@ -59,8 +59,8 @@ class SavingsDepositController extends Controller
         ->setRowClass(function ($account) {
             return empty($account->currentSavingsDeposit) ? 'alert-danger' : '';
         })
-        ->addColumn('actions', function ($account) use ($date){
-            return (string) view('backends.pages.savings.deposit.actions',['account' => $account,'date' => $date]);
+        ->addColumn('actions', function ($account) use ($month){
+            return (string) view('backends.pages.savings.deposit.actions',['account' => $account,'date' => $month]);
         })->rawColumns(['actions','status'])->make();
     }
 
@@ -75,9 +75,8 @@ class SavingsDepositController extends Controller
         $account = SavingsAccount::with(['activeCustomer','activeSavingsScheme'])->find($savingsAccountId);
         $date1 = new DateTime($date);
         $date2 = new DateTime();
-        $days = $date1->diff($date2)->d; // check if customer paying late
+        $days = $date1->diff($date2)->days; // check if customer paying late
         $lateDays = LookupDetail::where(['udid' => 'LS'])->firstOrFail();
-        // dd($days,$lateDays->value);
         return view('backends.pages.savings.deposit.create',compact('account','date','lateDays','days'));
     }
 

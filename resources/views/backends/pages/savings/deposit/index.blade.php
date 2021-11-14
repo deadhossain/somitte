@@ -26,7 +26,7 @@
     </form>
     <div class="card-block">
         <div class="dt-responsive table-responsive">
-            <table data-source="{{route('deposit.data')}}" class="table savings-deposit-datatable compact table-hover table-bordered nowrap" style="width:100%">
+            <table data-source="{{route('deposit.data',$month)}}" class="table savings-deposit-datatable compact table-hover table-bordered nowrap" style="width:100%">
                 <thead>
                     <tr>
                         <th>SL</th>
