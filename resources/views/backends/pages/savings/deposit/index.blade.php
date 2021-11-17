@@ -69,7 +69,7 @@
         {data: 'account_no', name: 'account_no'},
         {data: 'active_savings_scheme.amount', name: 'active_savings_scheme.amount'},
         {data: 'active_savings_scheme.late_fee', name: 'active_savings_scheme.late_fee'},
-        {data: 'status', name: 'status'},
+        {data: 'paymentStatus', name: 'paymentStatus'},
         {data: 'actions', name: 'actions'},
     ]
     $(document).ready(function(){

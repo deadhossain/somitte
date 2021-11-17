@@ -51,6 +51,7 @@ class SavingsDepositController extends Controller
                         $query->whereBetween('schedule_date',$depositDate)->latest();
                     }])
                     ->where('savings_accounts.start_date','<',$depositDate['end_date'])
+                    ->where('savings_accounts.active_fg',1)
                     ->where(function ($query) use($depositDate) {
                         $query->whereNull('end_date')->orWhere('end_date','>=',$depositDate['end_date']);
                     })->get();
@@ -59,9 +60,13 @@ class SavingsDepositController extends Controller
         ->setRowClass(function ($account) {
             return empty($account->currentSavingsDeposit) ? 'alert-danger' : '';
         })
+        ->addColumn('paymentStatus', function ($account) {
+            if (empty($account->currentSavingsDeposit)) return '<label class="label label-danger">Unpaid</label>';
+                return '<label class="label label-success">Paid</label>';
+        })
         ->addColumn('actions', function ($account) use ($month){
             return (string) view('backends.pages.savings.deposit.actions',['account' => $account,'date' => $month]);
-        })->rawColumns(['actions','status'])->make();
+        })->rawColumns(['actions','paymentStatus'])->make();
     }
 
     /**
@@ -131,9 +136,11 @@ class SavingsDepositController extends Controller
      * @param  \App\Models\savings\SavingsDeposit  $savingsDeposit
      * @return \Illuminate\Http\Response
      */
-    public function edit(SavingsDeposit $savingsDeposit)
+    public function edit($id)
     {
-        //
+        $id = Crypt::decrypt($id);
+        $deposit = SavingsDeposit::with(['savingsAccount','savingsAccount.activeCustomer','savingsAccount.activeSavingsScheme'])->findorFail($id);
+        return view('backends.pages.savings.deposit.edit',compact('deposit'));
     }
 
     /**
@@ -145,7 +152,28 @@ class SavingsDepositController extends Controller
      */
     public function update(Request $request, SavingsDeposit $savingsDeposit)
     {
-        //
+        try {
+            $id = Crypt::decrypt($request->deposit);
+            $savingsAccountDeposit = SavingsDeposit::findOrFail($id);
+            // $savingsAccountDeposit->schedule_date = insertDateFormat($request->input('schedule_date'));
+            $savingsAccountDeposit->deposit_amount = trim($request->input('deposit_amount'))?:0;
+            $savingsAccountDeposit->late_fee = trim($request->input('late_fee'))?:0;
+            $savingsAccountDeposit->deposit_date = insertDateFormat($request->input('deposit_date'));
+            $savingsAccountDeposit->remarks = $request->input('remarks');
+            $savingsAccountDeposit->active_fg = 1;
+            $savingsAccountDeposit->created_by = Auth::user()->id;
+            $is_saved = $savingsAccountDeposit->save();
+            if ($is_saved) {
+                return back()->with('message', 'Deposit has been Succesful');
+            } else {
+                return back()->withErrors(['error'=>'Deposit has not been Succesful']);
+            }
+        } catch (\Exception $th) {
+            return back()->withErrors([
+                'error'=>'Seek system administrator help',
+                'error-dev'=> $th->getMessage()
+            ]);
+        }
     }
 
     /**
@@ -154,8 +182,19 @@ class SavingsDepositController extends Controller
      * @param  \App\Models\savings\SavingsDeposit  $savingsDeposit
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SavingsDeposit $savingsDeposit)
+    public function destroy($id)
     {
-        //
+        try{
+            $id = Crypt::decrypt($id);
+            $savingsAccountDeposit = SavingsDeposit::findOrFail($id);
+            $savingsAccountDeposit->active_fg=0;
+            $savingsAccountDeposit->updated_by = Auth::user()->id;
+            $result = $savingsAccountDeposit->save();
+            if ($result) return response()->json(['type'=>'success', 'title'=>'Deleted!', 'msg'=>'Deposit has been removed']);
+            return response()->json(['type'=>'error', 'title'=>'Sorry!', 'msg'=>'Failed to remove Deposit']);
+        }
+        catch (\Exception $e) {
+            return response()->json(['type'=>'error', 'title'=>'System Failure!!', 'msg'=>$e->getMessage()], 400);
+        }
     }
 }
