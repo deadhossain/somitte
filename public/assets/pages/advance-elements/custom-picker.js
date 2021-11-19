@@ -151,8 +151,16 @@ $(document).ready(function(){
             "autoApply": true,
             locale: {
                 format: 'DD-MM-YYYY'
-            }
+            },
+            onSelect: function(d,i){
+                alert();
+                if(d !== i.lastVal){
+                    $(this).change();
+                }
+           }
         });
+
+
 
         // $('input.single-datepicker:not([readonly])').datepicker({
         //     format: 'DD-MM-YYYY',
@@ -168,6 +176,7 @@ $(document).ready(function(){
 
         $('input.single-datepicker').on('apply.daterangepicker', function(ev, picker) {
             $(this).val(picker.startDate.format('DD-MM-YYYY'));
+            $(this).change();
         });
 
         $('input.today-datepicker').daterangepicker({

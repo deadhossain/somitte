@@ -8,6 +8,7 @@
     <div class="card-block">
         <form action="{{route('deposit.store',$account->encryptId)}}" method="post" novalidate="">
             @csrf
+            <input type="hidden" readonly name="lateDays" id="late-days" value="{{$lateDays->value}}">
             <div class="form-group row @error('customer_id') has-error @enderror">
                 <label class="col-sm-2 col-form-label"> Customer * </label>
                 <div class="col-sm-10">
@@ -59,9 +60,9 @@
             </div>
 
             <div class="form-group row  @error('late_fee') has-error @enderror">
-                <label class="col-sm-2 col-form-label"> Late Fee({{$days}} day(s) late)</label>
+                <label class="col-sm-2 col-form-label"> Late Fee(<strong class="late-days">{{$days}}</strong> day(s) late)</label>
                 <div class="col-sm-10">
-                    <input autocomplete="off" type="text" class="form-control autonumber" name="late_fee" placeholder="Enter Late Fee"
+                    <input autocomplete="off" type="text" class="form-control autonumber" name="late_fee" placeholder="Enter Late Fee" latefee={{$account->activeSavingsScheme->late_fee}}
                     value="@php
                         if(empty(old('late_fee'))) if($days>=$lateDays->value) echo $account->activeSavingsScheme->late_fee; else echo 0;
                         else echo old('late_fee');
@@ -120,5 +121,29 @@
     </div>
 </div>
 <!-- Tooltip Validation card end -->
+
+<script>
+    $(document).ready(function() {
+        $(document).on('change','input[name="deposit_date"]',function (params) {
+            let lateDays= $(this).closest('form').find('input[name="lateDays"]').val();
+
+            let scheduleDate= $(this).closest('form').find('input[name="schedule_date"]').val();
+            let lateFees=$(this).closest('form').find('input[name="late_fee"]').attr('latefee');
+            // let lbllateFees=$(this).closest('form').find('input[name="late_fee"]').attr('latefee');
+
+            var DepositDate= $(this).val();
+            let differenceDays = dateDiff (scheduleDate, DepositDate);
+            $(this).closest('form').find('strong.late-days').text(differenceDays);
+            if(differenceDays>=lateDays) $(this).closest('form').find('input[name="late_fee"]').val(lateFees);
+            else $(this).closest('form').find('input[name="late_fee"]').val(0);
+        })
+    })
+
+    function dateDiff (date1, date2) {
+        var start = moment(date1, "MMMM-YYYY");
+        var end = moment(date2, "DD-MM-YYYY");
+        return moment.duration(end.diff(start)).asDays();
+    }
+</script>
 
 @endsection
