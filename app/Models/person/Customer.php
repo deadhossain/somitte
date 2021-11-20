@@ -18,7 +18,7 @@ class Customer extends Model
      * @var array
      */
     protected $fillable = [
-        'name','nid_no','gender_id','phone','start_date','end_date','image','nid_attachment','address','remarks','active_fg'
+        'name','nid_no','customer_uid','gender_id','phone','start_date','end_date','image','nid_attachment','address','remarks','active_fg'
     ];
 
     protected $appends = [
