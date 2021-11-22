@@ -197,4 +197,10 @@ class SavingsDepositController extends Controller
             return response()->json(['type'=>'error', 'title'=>'System Failure!!', 'msg'=>$e->getMessage()], 400);
         }
     }
+
+    public function monthWiseDepositReport(Request $request)
+    {
+        // $month = $request->input('from_month')?date('F-Y',strtotime($request->input('from_month'))):date('F-Y');
+        return view('backends.pages.savings.deposit.reports.month_wise_report');
+    }
 }
