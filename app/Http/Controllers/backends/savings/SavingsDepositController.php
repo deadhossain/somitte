@@ -150,7 +150,7 @@ class SavingsDepositController extends Controller
      * @param  \App\Models\savings\SavingsDeposit  $savingsDeposit
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SavingsDeposit $savingsDeposit)
+    public function update(StoreSavingsDepositRequest $request, SavingsDeposit $savingsDeposit)
     {
         try {
             $id = Crypt::decrypt($request->deposit);
@@ -200,7 +200,13 @@ class SavingsDepositController extends Controller
 
     public function monthWiseDepositReport(Request $request)
     {
+        if (!empty($_POST)) {
+            dd($request->all());
+        }
+
+        $currentYear = date('01/01/Y').' - ' .date('01/12/Y');
         // $month = $request->input('from_month')?date('F-Y',strtotime($request->input('from_month'))):date('F-Y');
-        return view('backends.pages.savings.deposit.reports.month_wise_report');
+        $daterange = $request->input('datefilter')?:$currentYear;
+        return view('backends.pages.savings.deposit.reports.month_wise_report',compact('daterange'));
     }
 }

@@ -55,6 +55,7 @@ Route::group(['middleware'=>'auth'],function () {
         'create', 'store'
     ]);
     Route::get('savings/deposit/report/month-wise', 'backends\savings\SavingsDepositController@monthWiseDepositReport')->name('deposit.report.month-wise');
+    Route::match(['get', 'post'], 'savings/deposit/report/month-wise', 'backends\savings\SavingsDepositController@monthWiseDepositReport')->name('deposit.report.month-wise');
 
 
 

@@ -3,7 +3,7 @@
 
 <!-- HTML5 Export Buttons table start -->
 <div class="card">
-    <form action="{{route('deposit.index')}}" method="post">
+    <form action="{{route('deposit.report.month-wise')}}" method="post">
         @csrf
         <div class="card-header table-card-header">
             <div class="row">
@@ -12,16 +12,20 @@
                 </div>
 
                 <div class="col-md-12">
-                    <div class=" col-md-3 form-group row @error('datefilter') has-error @enderror">
+                    <div class=" col-md-3 form-group row @error('monthfilter') has-error @enderror">
                         <label class="col-form-label"> Select Date Range </label>
-                        <input autocomplete="off" type="text" class="form-control" name="datefilter" placeholder="Select Month" value="">
+                        <input readonly autocomplete="off" type="text" class="form-control" name="monthfilter" placeholder="Select Month" value="{{$daterange}}" required>
                         <span class="messages popover-valid">
-                            @error('datefilter')
+                            @error('monthfilter')
                                 <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
                             @enderror
                         </span>
                     </div>
 
+                    <div class=" col-md-3 form-group row">
+                        <label class="col-form-label"> </label>
+                        <input type="submit" class="btn btn-primary m-b-0" name="month-wise-report" value="Submit">
+                    </div>
                 </div>
 
 
