@@ -44,13 +44,26 @@
                         <th>Customer ID</th>
                         <th>Savings Scheme</th>
                         <th>Account No</th>
-                        <th>Jan-21</th>
+                        @php
+                        $start = strtotime(trim($daterangeArray[0]));
+                        $end = strtotime(trim($daterangeArray[1]));
+                        // echo date('F Y', $month), PHP_EOL;
+                        //     $month = strtotime("+1 month", $month);
+                        @endphp
+                        @while($start <= $end)
+                            @php
+                            echo $start = strtotime("+1 month", $start);
+                            @endphp
+                            <th>Jan-21</th>
+
+                        @endwhile
+                        {{-- <th>Jan-21</th>
                         <th>Feb-21</th>
                         <th>Mar-21</th>
                         <th>Apr-21</th>
                         <th>May-21</th>
                         <th>Jun-21</th>
-                        <th>Jul-21</th>
+                        <th>Jul-21</th> --}}
                         <th>Total</th>
                     </tr>
                 </thead>
