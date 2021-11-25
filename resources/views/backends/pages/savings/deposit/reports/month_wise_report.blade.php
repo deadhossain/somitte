@@ -12,11 +12,11 @@
                 </div>
 
                 <div class="col-md-12">
-                    <div class=" col-md-3 form-group row @error('monthfilter') has-error @enderror">
+                    <div class=" col-md-3 form-group row @error('datefilter') has-error @enderror">
                         <label class="col-form-label"> Select Date Range </label>
-                        <input readonly autocomplete="off" type="text" class="form-control" name="monthfilter" placeholder="Select Month" value="{{$daterange}}" required>
+                        <input readonly autocomplete="off" type="text" class="form-control" name="datefilter" placeholder="Select Month" value="{{$daterange}}" required>
                         <span class="messages popover-valid">
-                            @error('monthfilter')
+                            @error('datefilter')
                                 <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
                             @enderror
                         </span>
@@ -45,16 +45,16 @@
                         <th>Savings Scheme</th>
                         <th>Account No</th>
                         @php
-                        $start = strtotime(trim($daterangeArray[0]));
-                        $end = strtotime(trim($daterangeArray[1]));
-                        // echo date('F Y', $month), PHP_EOL;
-                        //     $month = strtotime("+1 month", $month);
+                            $start = strtotime(date('Y-m-d',strtotime(str_replace('/', '-', trim($daterangeArray[0])))));
+                            $end = strtotime(date('Y-m-d',strtotime(str_replace('/', '-', trim($daterangeArray[1])))));
+                            // while($start <= $end){
+                                // echo $start = strtotime("+1 month", $start);
+                                // echo '<br>';
+                            // }
                         @endphp
                         @while($start <= $end)
-                            @php
-                            echo $start = strtotime("+1 month", $start);
-                            @endphp
-                            <th>Jan-21</th>
+                            <th> @php echo date('F-Y',$start) @endphp</th>
+                            @php $start = strtotime("+1 month", $start); @endphp
 
                         @endwhile
                         {{-- <th>Jan-21</th>

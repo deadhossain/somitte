@@ -200,29 +200,9 @@ class SavingsDepositController extends Controller
 
     public function monthWiseDepositReport(Request $request)
     {
-        if (!empty($_POST)) {
-            dd($request->all());
-        }
-
-        $currentYear = date('01/01/Y').' - ' .date('01/12/Y');
-        // $month = $request->input('from_month')?date('F-Y',strtotime($request->input('from_month'))):date('F-Y');
+        $currentYear = date('01/01/Y').' - ' .date('31/12/Y');
         $daterange = $request->input('datefilter')?:$currentYear;
         $daterangeArray = explode("-",$daterange);
-        // dd($daterangeArray);
-        echo date('Y-m-d',strtotime(trim($daterangeArray[0])));
-        echo '<br>';
-        echo date('Y-m-d',strtotime(trim($daterangeArray[1])));
-        echo '<br>';
-        echo $start = strtotime(date('Y-m-d',strtotime(trim($daterangeArray[0]))));
-        echo '<br>';
-        echo $end = strtotime(date('Y-m-d',strtotime(trim($daterangeArray[1]))));
-        echo '<br>';
-
-        while($start <= $end){
-            echo $start = strtotime("+1 month", $start);
-            echo '<br>';
-        }
-        dd("dd");
         return view('backends.pages.savings.deposit.reports.month_wise_report',compact('daterange','daterangeArray'));
     }
 }
