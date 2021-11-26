@@ -45,7 +45,7 @@ class SavingsDepositController extends Controller
             'end_date' => date('Y-m-t',strtotime($month))
         );
 
-        $accounts = SavingsAccount::with(['activeCustomer','activeSavingsScheme',
+        $accounts = SavingsAccount::with(['customer','savingsScheme',
                     'currentSavingsDeposit' => function ( $query ) use ($depositDate)
                     {
                         $query->whereBetween('schedule_date',$depositDate)->latest();
@@ -77,7 +77,7 @@ class SavingsDepositController extends Controller
     public function create($savingsAccountId,$date)
     {
         $savingsAccountId = Crypt::decrypt($savingsAccountId);
-        $account = SavingsAccount::with(['activeCustomer','activeSavingsScheme'])->find($savingsAccountId);
+        $account = SavingsAccount::with(['customer','savingsScheme'])->find($savingsAccountId);
         $date1 = new DateTime($date);
         $date2 = new DateTime();
         $days = $date1->diff($date2)->days; // check if customer paying late
@@ -139,7 +139,7 @@ class SavingsDepositController extends Controller
     public function edit($id)
     {
         $id = Crypt::decrypt($id);
-        $deposit = SavingsDeposit::with(['savingsAccount','savingsAccount.activeCustomer','savingsAccount.activeSavingsScheme'])->findorFail($id);
+        $deposit = SavingsDeposit::with(['savingsAccount','savingsAccount.customer','savingsAccount.savingsScheme'])->findorFail($id);
         return view('backends.pages.savings.deposit.edit',compact('deposit'));
     }
 
@@ -203,6 +203,17 @@ class SavingsDepositController extends Controller
         $currentYear = date('01/01/Y').' - ' .date('31/12/Y');
         $daterange = $request->input('datefilter')?:$currentYear;
         $daterangeArray = explode("-",$daterange);
-        return view('backends.pages.savings.deposit.reports.month_wise_report',compact('daterange','daterangeArray'));
+        $daterangeArray[0] = date('Y-m-d',strtotime(str_replace('/', '-', trim($daterangeArray[0]))));
+        $daterangeArray[1] = date('Y-m-d',strtotime(str_replace('/', '-', trim($daterangeArray[1]))));
+        $startTime = strtotime($daterangeArray[0]);
+        $endTime = strtotime($daterangeArray[1]);
+
+        $accounts = SavingsAccount::with(['customer','savingsScheme','activeSavingsDeposits'])
+                    ->where('savings_accounts.start_date','<',$daterangeArray[1])
+                    ->where('savings_accounts.active_fg',1)
+                    ->where(function ($query) use($daterangeArray) {
+                        $query->whereNull('end_date')->orWhere('end_date','>=',$daterangeArray[1]);
+                    })->get();
+        return view('backends.pages.savings.deposit.reports.month_wise_report',compact('daterange','daterangeArray','startTime','endTime','accounts'));
     }
 }

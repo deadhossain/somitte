@@ -44,30 +44,38 @@
                         <th>Customer ID</th>
                         <th>Savings Scheme</th>
                         <th>Account No</th>
-                        @php
-                            $start = strtotime(date('Y-m-d',strtotime(str_replace('/', '-', trim($daterangeArray[0])))));
-                            $end = strtotime(date('Y-m-d',strtotime(str_replace('/', '-', trim($daterangeArray[1])))));
-                            // while($start <= $end){
-                                // echo $start = strtotime("+1 month", $start);
-                                // echo '<br>';
-                            // }
-                        @endphp
-                        @while($start <= $end)
-                            <th> @php echo date('F-Y',$start) @endphp</th>
-                            @php $start = strtotime("+1 month", $start); @endphp
+                        @php $tempStartTime = $startTime @endphp
+                        @while($tempStartTime <= $endTime)
+                            <th> @php echo date('F-Y',$tempStartTime) @endphp</th>
+                            @php $tempStartTime = strtotime("+1 month", $tempStartTime); @endphp
 
                         @endwhile
-                        {{-- <th>Jan-21</th>
-                        <th>Feb-21</th>
-                        <th>Mar-21</th>
-                        <th>Apr-21</th>
-                        <th>May-21</th>
-                        <th>Jun-21</th>
-                        <th>Jul-21</th> --}}
                         <th>Total</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($accounts as $account)
+                        <tr>
+                            <td>SL</td>
+                            <td>{{$account->customer->name}}</td>
+                            <td>{{$account->customer->customer_uid}}</td>
+                            <td>{{$account->savingsScheme->name}}</td>
+                            <td>{{$account->account_no}}</td>
+                            @php $tempStartTime = $startTime @endphp
+                            @while($tempStartTime <= $endTime)
+                                @php $paid = false @endphp
+                                @foreach ($account->activeSavingsDeposits as $deposit)
+                                    @if($deposit->scheduleDateTime == $tempStartTime)
+                                        @php $paid = true @endphp
+                                        <td>{{$deposit->deposit_amount}}</td>
+                                    @endif
+                                @endforeach
+                                @if($paid == false) <td> 0 </td> @endif
+                                @php $tempStartTime = strtotime("+1 month", $tempStartTime); @endphp
+                            @endwhile
+                            <td>Total</td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -82,11 +90,11 @@
             orderable: false,
             searchable: false
         },
-        {data: 'active_customer.name', name: 'active_customer.name'},
-        {data: 'active_savings_scheme.name', name: 'active_savings_scheme.name'},
+        {data: 'customer.name', name: 'customer.name'},
+        {data: 'savings_scheme.name', name: 'savings_scheme.name'},
         {data: 'account_no', name: 'account_no'},
-        {data: 'active_savings_scheme.amount', name: 'active_savings_scheme.amount'},
-        {data: 'active_savings_scheme.late_fee', name: 'active_savings_scheme.late_fee'},
+        {data: 'savings_scheme.amount', name: 'savings_scheme.amount'},
+        {data: 'savings_scheme.late_fee', name: 'savings_scheme.late_fee'},
         {data: 'paymentStatus', name: 'paymentStatus'},
         {data: 'actions', name: 'actions'},
     ]

@@ -13,8 +13,8 @@
             <div class="form-group row @error('customer_id') has-error @enderror">
                 <label class="col-sm-2 col-form-label"> Customer * </label>
                 <div class="col-sm-10">
-                    {{-- <input autocomplete="off" type="hidden" class="form-control" name="customer_id" value="{{ $account->activeCustomer->encryptId }}"> --}}
-                    <input autocomplete="off" type="text" class="form-control" name="customer_name" value="{{ $deposit->savingsAccount->activeCustomer->name }}" readonly>
+                    {{-- <input autocomplete="off" type="hidden" class="form-control" name="customer_id" value="{{ $account->customer->encryptId }}"> --}}
+                    <input autocomplete="off" type="text" class="form-control" name="customer_name" value="{{ $deposit->savingsAccount->customer->name }}" readonly>
                     <span class="messages popover-valid">
                         @error('customer_id')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
@@ -26,8 +26,8 @@
             <div class="form-group row @error('customer_id') has-error @enderror">
                 <label class="col-sm-2 col-form-label"> Scheme * </label>
                 <div class="col-sm-10">
-                    {{-- <input autocomplete="off" type="hidden" class="form-control" name="customer_id" value="{{ $account->activeSavingsScheme->encryptId }}"> --}}
-                    <input autocomplete="off" type="text" class="form-control" name="scheme_name" value="{{ $deposit->savingsAccount->activeSavingsScheme->name }}" readonly>
+                    {{-- <input autocomplete="off" type="hidden" class="form-control" name="customer_id" value="{{ $account->savingsScheme->encryptId }}"> --}}
+                    <input autocomplete="off" type="text" class="form-control" name="scheme_name" value="{{ $deposit->savingsAccount->savingsScheme->name }}" readonly>
                     <span class="messages popover-valid">
                         @error('customer_id')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>

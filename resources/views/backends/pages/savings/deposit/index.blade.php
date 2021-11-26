@@ -64,11 +64,11 @@
             orderable: false,
             searchable: false
         },
-        {data: 'active_customer.name', name: 'active_customer.name'},
-        {data: 'active_savings_scheme.name', name: 'active_savings_scheme.name'},
+        {data: 'customer.name', name: 'customer.name'},
+        {data: 'savings_scheme.name', name: 'savings_scheme.name'},
         {data: 'account_no', name: 'account_no'},
-        {data: 'active_savings_scheme.amount', name: 'active_savings_scheme.amount'},
-        {data: 'active_savings_scheme.late_fee', name: 'active_savings_scheme.late_fee'},
+        {data: 'savings_scheme.amount', name: 'savings_scheme.amount'},
+        {data: 'savings_scheme.late_fee', name: 'savings_scheme.late_fee'},
         {data: 'paymentStatus', name: 'paymentStatus'},
         {data: 'actions', name: 'actions'},
     ]

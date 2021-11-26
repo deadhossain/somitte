@@ -30,6 +30,11 @@ class SavingsDeposit extends Model
         return Crypt::encrypt($this->attributes['id']);
     }
 
+    public function getScheduleDateTimeAttribute()
+    {
+        return strtotime($this->attributes['schedule_date']);
+    }
+
     public function savingsAccount()
     {
         return $this->belongsTo(SavingsAccount::class, 'savings_accounts_id', 'id');
