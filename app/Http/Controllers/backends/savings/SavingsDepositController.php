@@ -205,6 +205,7 @@ class SavingsDepositController extends Controller
         // dd($request->all());
         $currentYear = date('01/01/Y').' - ' .date('31/12/Y');
         $customerId = $request->input('customer_id')?:0;
+        $accountId = $request->input('account_id')?:0;
         $savingsSchemeId = $request->input('savings_scheme_id')?:0;
 
         $daterange = $request->input('datefilter')?:$currentYear;
@@ -228,6 +229,10 @@ class SavingsDepositController extends Controller
             $customerId = Crypt::decrypt($customerId);
             $accounts = $accounts->whereHas('customer', function($q) use ($customerId){ $q->where('id','=', $customerId);});
         }
+        if ($accountId!==0){
+            $accountId = Crypt::decrypt($accountId);
+            $accounts = $accounts->where('id', $accountId);
+        }
         // dd($savingsSchemeId);
         if ($savingsSchemeId!==0){
             $savingsSchemeId = Crypt::decrypt($savingsSchemeId);
@@ -238,6 +243,6 @@ class SavingsDepositController extends Controller
         $customers = Customer::where('active_fg',1)->get();
         $savingsSchemes = SavingsScheme::where('active_fg',1)->get();
         return view('backends.pages.savings.deposit.reports.month_wise_report',
-                compact('daterange','daterangeArray','startTime','endTime','accounts','endTime','accounts','customers','customerId','savingsSchemes','savingsSchemeId'));
+                compact('daterange','daterangeArray','startTime','endTime','accounts','accountId','endTime','accounts','customers','customerId','savingsSchemes','savingsSchemeId'));
     }
 }

@@ -43,6 +43,16 @@
                             </select>
                         </div>
 
+                        <div class="col-md-3 form-group">
+                            <label class="col-form-label"> Account No </label>
+                            <select style="width: 100%" name="account_id" class="form-control select2-select col-sm-12" aria-placeholder="Select Account">
+                                <option value="">Select Account</option>
+                                @foreach ($accounts as $account)
+                                    <option value="{{$account->encryptId}}" @if($accountId == $account->id) selected @endif> {{$account->account_no}} </option>
+                                @endforeach
+                            </select>
+                        </div>
+
 
                     </div>
                     <div class=" col-md-3 form-group row">
