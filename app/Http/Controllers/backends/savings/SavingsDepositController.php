@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Crypt;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\backends\savings\StoreSavingsDepositRequest;
 use App\Models\setups\LookupDetail;
+use App\Models\person\Customer;
+use App\Models\savings\SavingsScheme;
 use Auth;
 use DateTime;
 
@@ -214,6 +216,9 @@ class SavingsDepositController extends Controller
                     ->where(function ($query) use($daterangeArray) {
                         $query->whereNull('end_date')->orWhere('end_date','>=',$daterangeArray[1]);
                     })->get();
-        return view('backends.pages.savings.deposit.reports.month_wise_report',compact('daterange','daterangeArray','startTime','endTime','accounts'));
+        $customers = Customer::where('active_fg',1)->get();
+        $savingsSchemes = SavingsScheme::where('active_fg',1)->get();
+        return view('backends.pages.savings.deposit.reports.month_wise_report',
+                compact('daterange','daterangeArray','startTime','endTime','accounts','endTime','accounts','customers','savingsSchemes'));
     }
 }

@@ -6,30 +6,50 @@
     <form action="{{route('deposit.report.month-wise')}}" method="post">
         @csrf
         <div class="card-header table-card-header">
-            <div class="row">
+
                 <div class="col-md-12" style="margin-bottom: 25px">
                     <h5 class="text-inverse">MONTH WISE SAVINGS DEPOSIT REPORT</h5>
                 </div>
 
                 <div class="col-md-12">
-                    <div class=" col-md-3 form-group row @error('datefilter') has-error @enderror">
-                        <label class="col-form-label"> Select Date Range </label>
-                        <input readonly autocomplete="off" type="text" class="form-control" name="datefilter" placeholder="Select Month" value="{{$daterange}}" required>
-                        <span class="messages popover-valid">
-                            @error('datefilter')
-                                <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
-                            @enderror
-                        </span>
-                    </div>
+                    <div class="row">
+                        <div class="col-md-3 form-group @error('datefilter') has-error @enderror">
+                            <label class="col-form-label"> Select Date Range </label>
+                            <input readonly autocomplete="off" type="text" class="form-control" name="datefilter" placeholder="Select Month" value="{{$daterange}}" required>
+                            <span class="messages popover-valid">
+                                @error('datefilter')
+                                    <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
+                                @enderror
+                            </span>
+                        </div>
 
+                        <div class="col-md-3 form-group">
+                            <label class="col-form-label"> Customer </label>
+                            <select style="width: 100%" name="customer_id" class="form-control select2-select col-sm-12" aria-placeholder="Select Customer" required>
+                                <option value="">Select Customer</option>
+                                @foreach ($customers as $customer)
+                                    <option value="{{$customer->encryptId}}" @if(!@empty(old('customer_id')) && Crypt::decrypt(old('customer_id')) == $customer->id) selected @endif> {{$customer->name}} :: {{$customer->customer_uid}} </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-md-3 form-group">
+                            <label class="col-form-label"> Scheme </label>
+                            <select name="savings_scheme_id" class="form-control select2-select" aria-placeholder="Select Savings Scheme" required>
+                                <option value="">Select Savings Scheme</option>
+                                @foreach ($savingsSchemes as $savingsScheme)
+                                    <option value="{{$savingsScheme->encryptId}}" @if(!@empty(old('savings_scheme_id')) && Crypt::decrypt(old('savings_scheme_id')) == $savingsScheme->id) selected @endif> {{$savingsScheme->name}} </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+
+                    </div>
                     <div class=" col-md-3 form-group row">
                         <label class="col-form-label"> </label>
                         <input type="submit" class="btn btn-primary m-b-0" name="month-wise-report" value="Submit">
                     </div>
                 </div>
-
-
-            </div>
             <hr>
         </div>
     </form>
@@ -50,13 +70,19 @@
                             @php $tempStartTime = strtotime("+1 month", $tempStartTime); @endphp
 
                         @endwhile
-                        <th>Total</th>
+                        <th>Total Deposit</th>
+                        <th>Total Late Fee</th>
+                        <th>Total Amount</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @php $sl = 1 @endphp
                     @foreach ($accounts as $account)
+                        @php
+                            $totalDeposit = 0; $totalLateFee = 0; $totalAmount = 0
+                        @endphp
                         <tr>
-                            <td>SL</td>
+                            <td>{{$sl++}}</td>
                             <td>{{$account->customer->name}}</td>
                             <td>{{$account->customer->customer_uid}}</td>
                             <td>{{$account->savingsScheme->name}}</td>
@@ -66,14 +92,27 @@
                                 @php $paid = false @endphp
                                 @foreach ($account->activeSavingsDeposits as $deposit)
                                     @if($deposit->scheduleDateTime == $tempStartTime)
-                                        @php $paid = true @endphp
-                                        <td>{{$deposit->deposit_amount}}</td>
+                                        @php
+                                            $paid = true;
+                                            $depositAmount = $deposit->deposit_amount;
+                                            $lateFee = $deposit->late_fee;
+                                            $totalDeposit += $depositAmount;
+                                            $totalLateFee += $lateFee;
+                                        @endphp
+                                        <td>
+                                            <ul class="list list-unstyled">
+                                                <li>Deposit #: &nbsp;{{$depositAmount}}</li>
+                                                <li style="color: red">Late Fee #: &nbsp;{{$lateFee}}</li>
+                                            </ul>
+                                        </td>
                                     @endif
                                 @endforeach
                                 @if($paid == false) <td> 0 </td> @endif
                                 @php $tempStartTime = strtotime("+1 month", $tempStartTime); @endphp
                             @endwhile
-                            <td>Total</td>
+                            <td>{{$totalDeposit}}</td>
+                            <td>{{$totalLateFee}}</td>
+                            <td>{{$totalDeposit+$totalLateFee}}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -99,8 +138,13 @@
         {data: 'actions', name: 'actions'},
     ]
     $(document).ready(function(){
-        loadDatatableWithColumns($('.savings-deposit-datatable'),columns);
+        // loadDatatableWithColumns($('.savings-deposit-datatable'),columns);
+
+        $('.select2-select').select2({
+            width: '100%' // need to override the changed default
+        });
     });
+
 </script>
 
 @endsection

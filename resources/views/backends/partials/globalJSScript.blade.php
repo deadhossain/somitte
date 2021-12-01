@@ -7,8 +7,9 @@
             }
         });
 
-        $('.select2-select').select2();
-
+        $('.select2-select').select2({
+            width: '100%' // need to override the changed default
+        });
         function readURL(input) {
             var url = input.value;
             var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
