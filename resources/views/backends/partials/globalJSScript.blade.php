@@ -8,7 +8,8 @@
         });
 
         $('.select2-select').select2({
-            width: '100%' // need to override the changed default
+            width: '100%', // need to override the changed default
+            allowClear: true,
         });
         function readURL(input) {
             var url = input.value;

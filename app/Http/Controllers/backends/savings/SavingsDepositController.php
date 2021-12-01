@@ -233,7 +233,7 @@ class SavingsDepositController extends Controller
             $accountId = Crypt::decrypt($accountId);
             $accounts = $accounts->where('id', $accountId);
         }
-        // dd($savingsSchemeId);
+        
         if ($savingsSchemeId!==0){
             $savingsSchemeId = Crypt::decrypt($savingsSchemeId);
             $accounts = $accounts->whereHas('savingsScheme', function($q) use ($savingsSchemeId){ $q->where('id','=', $savingsSchemeId);});

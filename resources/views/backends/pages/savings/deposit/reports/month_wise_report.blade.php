@@ -25,8 +25,8 @@
 
                         <div class="col-md-3 form-group">
                             <label class="col-form-label"> Customer </label>
-                            <select style="width: 100%" name="customer_id" class="form-control select2-select col-sm-12" aria-placeholder="Select Customer">
-                                <option value="">Select Customer</option>
+                            <select style="width: 100%" name="customer_id" class="form-control select2-select col-sm-12"  data-placeholder="Select Customer">
+                                <option value=""></option>
                                 @foreach ($customers as $customer)
                                     <option value="{{$customer->encryptId}}" @if($customerId == $customer->id) selected @endif> {{$customer->name}} :: {{$customer->customer_uid}} </option>
                                 @endforeach
@@ -35,8 +35,8 @@
 
                         <div class="col-md-3 form-group">
                             <label class="col-form-label"> Scheme </label>
-                            <select name="savings_scheme_id" class="form-control select2-select" aria-placeholder="Select Savings Scheme">
-                                <option value="">Select Savings Scheme</option>
+                            <select name="savings_scheme_id" class="form-control select2-select" data-placeholder="Select Savings Scheme">
+                                <option value=""></option>
                                 @foreach ($savingsSchemes as $savingsScheme)
                                     <option value="{{$savingsScheme->encryptId}}" @if($savingsSchemeId == $savingsScheme->id) selected @endif> {{$savingsScheme->name}} </option>
                                 @endforeach
@@ -45,8 +45,8 @@
 
                         <div class="col-md-3 form-group">
                             <label class="col-form-label"> Account No </label>
-                            <select style="width: 100%" name="account_id" class="form-control select2-select col-sm-12" aria-placeholder="Select Account">
-                                <option value="">Select Account</option>
+                            <select style="width: 100%" name="account_id" class="form-control select2-select col-sm-12" data-placeholder="Select Account">
+                                <option value=""></option>
                                 @foreach ($accounts as $account)
                                     <option value="{{$account->encryptId}}" @if($accountId == $account->id) selected @endif> {{$account->account_no}} </option>
                                 @endforeach
@@ -149,10 +149,6 @@
     ]
     $(document).ready(function(){
         // loadDatatableWithColumns($('.savings-deposit-datatable'),columns);
-
-        $('.select2-select').select2({
-            width: '100%' // need to override the changed default
-        });
     });
 
 </script>

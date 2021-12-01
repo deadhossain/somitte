@@ -37,7 +37,7 @@
                     <div class="form-group row @error('gender_id') has-error @enderror">
                         <label class="col-sm-2 col-form-label"> Gender * </label>
                         <div class="col-sm-10">
-                            <select name="gender_id" class="form-control select2-select" aria-placeholder="Select Gender" required>
+                            <select name="gender_id" class="form-control select2-select" data-placeholder="Select Gender" required>
                                 <option value="">Select Gender</option>
                                 @foreach ($genders as $gender)
                                     <option value="{{$gender->id}}"> {{$gender->name}} </option>

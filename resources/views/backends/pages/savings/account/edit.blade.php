@@ -13,7 +13,7 @@
             <div class="form-group row @error('customer_id') has-error @enderror">
                 <label class="col-sm-2 col-form-label"> Customer * </label>
                 <div class="col-sm-10">
-                    <select name="customer_id" class="form-control select2-select" aria-placeholder="Select Customer" required>
+                    <select name="customer_id" class="form-control select2-select" data-placeholder="Select Customer" required>
                         <option value="">Select Customer</option>
                         @foreach ($customers as $customer)
                             <option value="{{$customer->encryptId}}" @if($customer->id==$savingsAccount->customer_id) selected @endif> {{$customer->name}} :: {{$customer->customer_uid}} </option>
@@ -30,7 +30,7 @@
             <div class="form-group row @error('savings_scheme_id') has-error @enderror">
                 <label class="col-sm-2 col-form-label"> Savings Scheme * </label>
                 <div class="col-sm-10">
-                    <select name="savings_scheme_id" class="form-control select2-select" aria-placeholder="Select Savings Scheme" required>
+                    <select name="savings_scheme_id" class="form-control select2-select" data-placeholder="Select Savings Scheme" required>
                         <option value="">Select Savings Scheme</option>
                         @foreach ($savingsSchemes as $savingsScheme)
                             <option value="{{$savingsScheme->encryptId}}" @if($savingsScheme->id==$savingsAccount->savings_scheme_id) selected @endif> {{$savingsScheme->name}} </option>
