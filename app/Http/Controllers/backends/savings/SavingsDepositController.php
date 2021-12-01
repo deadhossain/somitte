@@ -202,8 +202,14 @@ class SavingsDepositController extends Controller
 
     public function monthWiseDepositReport(Request $request)
     {
+        // dd($request->all());
         $currentYear = date('01/01/Y').' - ' .date('31/12/Y');
+        $customerId = $request->input('customer_id')?:0;
+        $savingsSchemeId = $request->input('savings_scheme_id')?:0;
+
         $daterange = $request->input('datefilter')?:$currentYear;
+        // dd($request->all(),$request->input('customer_id'),$customerId,$request->input('savings_scheme_id'),$savingsSchemeId,$savingsSchemeId!=0);
+
         $daterangeArray = explode("-",$daterange);
         $daterangeArray[0] = date('Y-m-d',strtotime(str_replace('/', '-', trim($daterangeArray[0]))));
         $daterangeArray[1] = date('Y-m-d',strtotime(str_replace('/', '-', trim($daterangeArray[1]))));
@@ -213,12 +219,25 @@ class SavingsDepositController extends Controller
         $accounts = SavingsAccount::with(['customer','savingsScheme','activeSavingsDeposits'])
                     ->where('savings_accounts.start_date','<',$daterangeArray[1])
                     ->where('savings_accounts.active_fg',1)
+
                     ->where(function ($query) use($daterangeArray) {
                         $query->whereNull('end_date')->orWhere('end_date','>=',$daterangeArray[1]);
-                    })->get();
+                    });
+
+        if ($customerId!==0){
+            $customerId = Crypt::decrypt($customerId);
+            $accounts = $accounts->whereHas('customer', function($q) use ($customerId){ $q->where('id','=', $customerId);});
+        }
+        // dd($savingsSchemeId);
+        if ($savingsSchemeId!==0){
+            $savingsSchemeId = Crypt::decrypt($savingsSchemeId);
+            $accounts = $accounts->whereHas('savingsScheme', function($q) use ($savingsSchemeId){ $q->where('id','=', $savingsSchemeId);});
+        }
+
+        $accounts = $accounts->get();
         $customers = Customer::where('active_fg',1)->get();
         $savingsSchemes = SavingsScheme::where('active_fg',1)->get();
         return view('backends.pages.savings.deposit.reports.month_wise_report',
-                compact('daterange','daterangeArray','startTime','endTime','accounts','endTime','accounts','customers','savingsSchemes'));
+                compact('daterange','daterangeArray','startTime','endTime','accounts','endTime','accounts','customers','customerId','savingsSchemes','savingsSchemeId'));
     }
 }
