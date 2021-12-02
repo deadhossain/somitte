@@ -1,5 +1,21 @@
 @extends('backends.pages.main')
 @section('main-body')
+<style>
+    th:nth-child(-n+4), td:nth-child(-n+4)
+    {
+        position:sticky;
+        background-color: white;
+        z-index: 2;
+    }
+
+    table{
+        border: none;
+        border-collapse: separate;
+        border-spacing: 0;
+        border: 1px solid black !important;
+    }
+
+</style>
 
 <!-- HTML5 Export Buttons table start -->
 <div class="card">
@@ -66,22 +82,20 @@
     <div class="card-block">
 
         <div class="dt-responsive table-responsive">
-            <table data-source="{{route('deposit.data')}}" class="table savings-deposit-datatable compact table-hover table-bordered nowrap" style="width:100%">
+            <table data-source="{{route('deposit.data')}}" class="table savings-deposit-datatable compact table-hover table-bordered nowrap" style="width:100%;">
                 <thead>
                     <tr>
                         <th>SL</th>
-                        <th>Customer Name</th>
-                        <th>Customer ID</th>
+                        <th>Customer Information</th>
                         <th>Savings Scheme</th>
-                        <th>Account No</th>
+                        <th>Account Information</th>
                         @php $tempStartTime = $startTime @endphp
                         @while($tempStartTime <= $endTime)
                             <th> @php echo date('F-Y',$tempStartTime) @endphp</th>
                             @php $tempStartTime = strtotime("+1 month", $tempStartTime); @endphp
 
                         @endwhile
-                        <th>Total Deposit</th>
-                        <th>Total Late Fee</th>
+                        <th>Deposit Details</th>
                         <th>Total Amount</th>
                     </tr>
                 </thead>
@@ -93,10 +107,20 @@
                         @endphp
                         <tr>
                             <td>{{$sl++}}</td>
-                            <td>{{$account->customer->name}}</td>
-                            <td>{{$account->customer->customer_uid}}</td>
+                            <td>
+                                <ul class="list list-unstyled">
+                                    <li>ID #: &nbsp;{{$account->customer->customer_uid}}</li>
+                                    <li>{{$account->customer->name}}</li>
+                                </ul>
+                            </td>
                             <td>{{$account->savingsScheme->name}}</td>
-                            <td>{{$account->account_no}}</td>
+                            <td>
+                                <ul class="list list-unstyled">
+                                    <li>Account #: &nbsp;{{$account->account_no}}</li>
+                                    <li>Start Date #: &nbsp;{{showdateformat($account->start_date,'M-Y')}}</li>
+                                    <li>End Date #: &nbsp;{{showdateformat($account->end_date,'M-Y')}}</li>
+                                </ul>
+                            </td>
                             @php $tempStartTime = $startTime @endphp
                             @while($tempStartTime <= $endTime)
                                 @php $paid = false @endphp
@@ -117,11 +141,21 @@
                                         </td>
                                     @endif
                                 @endforeach
-                                @if($paid == false) <td> 0 </td> @endif
+                                @if($paid == false)
+                                    @if((strtotime($account->start_date) <= $tempStartTime) && (empty($account->end_date) || strtotime($account->end_date) >= $tempStartTime))
+                                        <td> 0 </td>
+                                    @else
+                                        <td> N/A </td>
+                                    @endif
+                                @endif
                                 @php $tempStartTime = strtotime("+1 month", $tempStartTime); @endphp
                             @endwhile
-                            <td>{{$totalDeposit}}</td>
-                            <td>{{$totalLateFee}}</td>
+                            <td>
+                                <ul class="list list-unstyled">
+                                    <li>Total Deposit #: &nbsp;{{$totalDeposit}}</li>
+                                    <li style="color: red">Total Late Fee #: &nbsp;{{$totalLateFee}}</li>
+                                </ul>
+                            </td>
                             <td>{{$totalDeposit+$totalLateFee}}</td>
                         </tr>
                     @endforeach
@@ -148,6 +182,12 @@
         {data: 'actions', name: 'actions'},
     ]
     $(document).ready(function(){
+        let colWidth = 0;
+        for (let index = 1; index <= 4; index++) {
+            $('th:nth-child('+index+')').css('left',colWidth);
+            $('td:nth-child('+index+')').css('left',colWidth);
+            colWidth += $('th:nth-child('+(index)+')').outerWidth();
+        }
         // loadDatatableWithColumns($('.savings-deposit-datatable'),columns);
     });
 
