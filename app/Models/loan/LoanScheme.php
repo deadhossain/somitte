@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Models\savings;
+namespace App\Models\loan;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Crypt;
 
-class SavingsScheme extends Model
+class LoanScheme extends Model
 {
     use HasFactory;
 
-    protected $table = 'savings_schemes';
+    protected $table = 'loan_schemes';
 
     /**
      * The attributes that are mass assignable.
@@ -18,7 +18,7 @@ class SavingsScheme extends Model
      * @var array
      */
     protected $fillable = [
-        'name','amount','late_fee','profit','start_date','end_date','remarks','active_fg'
+        'name','min_amount','max_amount','late_fee','rate','max_installment','remarks','active_fg','nominee_id','min_loan_tenure','max_loan_tenure'
     ];
 
     protected $appends = [
@@ -35,9 +35,9 @@ class SavingsScheme extends Model
         return $this->attributes['amount']+0; // remove trailing zeroes
     }
 
-    public function getProfitAttribute()
+    public function getRateAttribute()
     {
-        return $this->attributes['profit']+0; // remove trailing zeroes
+        return $this->attributes['rate']+0; // remove trailing zeroes
     }
 
     public function getLateFeeAttribute()

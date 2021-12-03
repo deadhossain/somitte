@@ -59,6 +59,9 @@ Route::group(['middleware'=>'auth'],function () {
 
 
 
+    Route::get('loan/scheme/data', 'backends\loan\LoanSchemeController@data')->name('loan_scheme.data');
+    Route::resource('loan/scheme', 'backends\loan\LoanSchemeController', ['names' => 'loan_scheme']);
+
     Route::resource('/home', 'backends\user\UserController');
 
 });

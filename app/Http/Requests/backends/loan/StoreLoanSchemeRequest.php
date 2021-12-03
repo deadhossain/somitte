@@ -1,19 +1,22 @@
 <?php
 
-namespace App\Http\Requests\backends\savings;
+namespace App\Http\Requests\backends\loan;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Crypt;
 
-class SavingsSchemeRequest extends FormRequest
+class StoreLoanSchemeRequest extends FormRequest
 {
     private const VALIDATION_RULES = [
-        'name' => 'required|max:50|unique:savings_schemes',
-        'amount' => 'required|numeric|min:0|max:999999999999',
+        'name' => 'required|max:50|unique:loan_schemes',
+        'nominee_id'=> 'required',
+        'min_amount' => 'required|numeric|min:0|max:999999999999|lte:max_amount',
+        'max_amount' => 'required|numeric|min:0|max:999999999999|gte:min_amount',
         'late_fee' => 'required|numeric|min:0|max:999999999999',
-        'profit' => 'required|numeric|min:0|max:999999999999',
-        'start_date' => ['required','date'],
-        'end_date' => ['nullable','date','after:start_date']
+        'max_installment' => 'required|numeric|min:1|max:999999999999',
+        'min_loan_tenure' => 'required|numeric|min:1|max:999999999999',
+        'max_loan_tenure' => 'required|numeric|min:1|max:999999999999',
+        'rate' => 'required|numeric|min:0|max:999999999999'
     ];
     /**
      * Determine if the user is authorized to make this request.
@@ -36,7 +39,7 @@ class SavingsSchemeRequest extends FormRequest
         if ($this->getMethod() == 'POST') {
 
         }else if ($this->getMethod() == 'PATCH'){
-            $rules['name'] = 'required|unique:savings_schemes,name,'.Crypt::decrypt($this->scheme);
+            $rules['name'] = 'required|unique:loan_schemes,name,'.Crypt::decrypt($this->scheme);
         }
         return $rules;
     }
@@ -50,13 +53,18 @@ class SavingsSchemeRequest extends FormRequest
     {
         return [
             'name' => 'Name',
-            'amount' => 'Amount',
+            'min_amount' => 'Min Amount',
+            'max_amount' => 'Max Amount',
+            'nominee_id' => 'Nominee',
             'late_fee' => 'Late Fee',
-            'profit' => 'Profit',
-            'start_date' => 'Start Date',
-            'end_date' => 'End Date',
-            'remarks' => 'Remarks'
+            'rate' => 'Rate',
+            'remarks' => 'Remarks',
+            'max_installment' => 'Max Installment',
+            'min_loan_tenure' => 'Min Loan Tenure',
+            'max_loan_tenure' => 'Max Loan Tenure',
         ];
+
+
     }
 
     /**
