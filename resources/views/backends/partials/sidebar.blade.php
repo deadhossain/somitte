@@ -15,6 +15,17 @@
                 </a>
             </li>
         </ul>
+
+        <div class="pcoded-navigatio-lavel">Person</div>
+        <ul class="pcoded-item pcoded-left-item">
+            <li>
+                <a href="{{route('customer.index')}}">
+                    <span class="pcoded-micon"><i class="fa fa-users"></i></span>
+                    <span class="pcoded-mtext">Customer</span>
+                </a>
+            </li>
+        </ul>
+
         <div class="pcoded-navigatio-lavel">Savings</div>
         <ul class="pcoded-item pcoded-left-item">
             <li>
@@ -56,15 +67,17 @@
             </li>
         </ul>
 
-        <div class="pcoded-navigatio-lavel">Person</div>
+        <div class="pcoded-navigatio-lavel">Loans</div>
         <ul class="pcoded-item pcoded-left-item">
             <li>
-                <a href="{{route('customer.index')}}">
-                    <span class="pcoded-micon"><i class="fa fa-users"></i></span>
-                    <span class="pcoded-mtext">Customer</span>
+                <a href="{{route('loan_scheme.index')}}">
+                    <span class="pcoded-micon"><i class="fa fa-briefcase"></i></span>
+                    <span class="pcoded-mtext">Scheme</span>
                 </a>
             </li>
         </ul>
+
+
     </div>
 </nav>
 

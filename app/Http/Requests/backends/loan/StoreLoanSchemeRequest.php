@@ -9,13 +9,10 @@ class StoreLoanSchemeRequest extends FormRequest
 {
     private const VALIDATION_RULES = [
         'name' => 'required|max:50|unique:loan_schemes',
-        'nominee_id'=> 'required',
         'min_amount' => 'required|numeric|min:0|max:999999999999|lte:max_amount',
         'max_amount' => 'required|numeric|min:0|max:999999999999|gte:min_amount',
         'late_fee' => 'required|numeric|min:0|max:999999999999',
         'max_installment' => 'required|numeric|min:1|max:999999999999',
-        'min_loan_tenure' => 'required|numeric|min:1|max:999999999999',
-        'max_loan_tenure' => 'required|numeric|min:1|max:999999999999',
         'rate' => 'required|numeric|min:0|max:999999999999'
     ];
     /**
@@ -55,13 +52,10 @@ class StoreLoanSchemeRequest extends FormRequest
             'name' => 'Name',
             'min_amount' => 'Min Amount',
             'max_amount' => 'Max Amount',
-            'nominee_id' => 'Nominee',
             'late_fee' => 'Late Fee',
             'rate' => 'Rate',
             'remarks' => 'Remarks',
-            'max_installment' => 'Max Installment',
-            'min_loan_tenure' => 'Min Loan Tenure',
-            'max_loan_tenure' => 'Max Loan Tenure',
+            'max_installment' => 'Max Installment'
         ];
 
 

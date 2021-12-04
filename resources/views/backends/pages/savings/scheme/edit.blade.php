@@ -4,7 +4,7 @@
 <!-- Tooltip Validation card start -->
 <div class="card">
     <div class="card-header">
-        <h5>Create New Scheme</h5>
+        <h5>Edit Scheme</h5>
     </div>
     <div class="card-block">
         <form action="{{route('scheme.update',$savingsScheme->encryptId)}}" method="post" novalidate="">

@@ -18,11 +18,11 @@ class LoanScheme extends Model
      * @var array
      */
     protected $fillable = [
-        'name','min_amount','max_amount','late_fee','rate','max_installment','remarks','active_fg','nominee_id','min_loan_tenure','max_loan_tenure'
+        'name','min_amount','max_amount','late_fee','rate','max_installment','remarks','active_fg'
     ];
 
     protected $appends = [
-        'status'
+        'status','amount_range'
     ];
 
     public function getEncryptIdAttribute()
@@ -30,9 +30,19 @@ class LoanScheme extends Model
         return Crypt::encrypt($this->attributes['id']);
     }
 
-    public function getAmountAttribute()
+    public function getMinAmountAttribute()
     {
-        return $this->attributes['amount']+0; // remove trailing zeroes
+        return $this->attributes['min_amount']+0; // remove trailing zeroes
+    }
+
+    public function getMaxAmountAttribute()
+    {
+        return $this->attributes['max_amount']+0; // remove trailing zeroes
+    }
+
+    public function getAmountRangeAttribute()
+    {
+        return $this->getMinAmountAttribute().' - '.$this->getMaxAmountAttribute(); // remove trailing zeroes
     }
 
     public function getRateAttribute()

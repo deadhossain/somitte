@@ -21,13 +21,9 @@ class CreateLoanSchemesTable extends Migration
             $table->decimal('late_fee', 12, 4)->default(1);
             $table->decimal('rate', 7, 4)->default(1);
             $table->smallInteger('max_installment')->default(1);
-            $table->smallInteger('min_loan_tenure')->default(1);
-            $table->smallInteger('max_loan_tenure')->default(1);
-            $table->unsignedBigInteger('nominee_id');
             $table->text('remarks')->nullable();
 
             $table->tinyInteger('active_fg')->default(1);
-            $table->foreign('nominee_id')->references('id')->on('customers');
             $table->unsignedBigInteger('created_by')->default(1);
             $table->foreign('created_by')->references('id')->on('users');
             $table->unsignedBigInteger('updated_by')->default(1);

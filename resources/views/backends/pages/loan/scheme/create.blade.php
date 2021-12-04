@@ -4,15 +4,15 @@
 <!-- Tooltip Validation card start -->
 <div class="card">
     <div class="card-header">
-        <h5>Create New Scheme</h5>
+        <h5>Create New Loan Scheme</h5>
     </div>
     <div class="card-block">
-        <form action="{{route('scheme.store')}}" method="post" novalidate="">
+        <form action="{{route('loan_scheme.store')}}" method="post" novalidate="">
             @csrf
             <div class="form-group row @error('name') has-error @enderror">
                 <label class="col-sm-2 col-form-label">Name</label>
                 <div class="col-sm-10">
-                    <input autocomplete="off" type="text" class="form-control" name="name" placeholder="Enter Scheme Name" value="{{ old('name') }}">
+                    <input autocomplete="off" type="text" class="form-control" name="name" placeholder="Enter Loan Scheme Name" value="{{ old('name') }}">
                     <span class="messages popover-valid">
                         @error('name')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
@@ -21,24 +21,48 @@
                 </div>
             </div>
 
-            <div class="form-group row @error('amount') has-error @enderror">
-                <label class="col-sm-2 col-form-label">Amount</label>
+            <div class="form-group row @error('min_amount') has-error @enderror">
+                <label class="col-sm-2 col-form-label">Min Amount</label>
                 <div class="col-sm-10">
-                    <input autocomplete="off" type="text" class="form-control autonumber" name="amount" placeholder="Enter Scheme Amount" value="{{ old('amount') }}">
+                    <input autocomplete="off" type="text" class="form-control autonumber" name="min_amount" placeholder="Enter Min Amount" value="{{ old('min_amount') }}">
                     <span class="messages popover-valid">
-                        @error('amount')
+                        @error('min_amount')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
                         @enderror
                     </span>
                 </div>
             </div>
 
-            <div class="form-group row @error('profit') has-error @enderror">
-                <label class="col-sm-2 col-form-label">Profit(%)</label>
+            <div class="form-group row @error('max_amount') has-error @enderror">
+                <label class="col-sm-2 col-form-label">Max Amount</label>
                 <div class="col-sm-10">
-                    <input autocomplete="off" type="text" class="form-control autonumber" name="profit" placeholder="Enter Profit" value="{{ old('profit') }}">
+                    <input autocomplete="off" type="text" class="form-control autonumber" name="max_amount" placeholder="Enter Max Amount" value="{{ old('max_amount') }}">
                     <span class="messages popover-valid">
-                        @error('profit')
+                        @error('max_amount')
+                            <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
+                        @enderror
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group row @error('rate') has-error @enderror">
+                <label class="col-sm-2 col-form-label">Rate (%)</label>
+                <div class="col-sm-10">
+                    <input autocomplete="off" type="text" class="form-control autonumber" name="rate" placeholder="Enter Rate" value="{{ old('rate') }}">
+                    <span class="messages popover-valid">
+                        @error('rate')
+                            <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
+                        @enderror
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group row @error('max_installment') has-error @enderror">
+                <label class="col-sm-2 col-form-label">Max Installment</label>
+                <div class="col-sm-10">
+                    <input autocomplete="off" type="text" class="form-control autonumber" name="max_installment" placeholder="Enter Max Installment" value="{{ old('max_installment') }}">
+                    <span class="messages popover-valid">
+                        @error('max_installment')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
                         @enderror
                     </span>
@@ -51,30 +75,6 @@
                     <input autocomplete="off" type="text" class="form-control autonumber" name="late_fee" placeholder="Enter Late Fee" value="{{ old('late_fee') }}">
                     <span class="messages popover-valid">
                         @error('late_fee')
-                            <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
-                        @enderror
-                    </span>
-                </div>
-            </div>
-
-            <div class="form-group row @error('start_date') has-error @enderror">
-                <label class="col-sm-2 col-form-label">Start Date</label>
-                <div class="col-sm-10">
-                    <input autocomplete="off" type="text" class="form-control today-datepicker" name="start_date" placeholder="Enter Scheme Start date" value="{{ old('start_date') }}">
-                    <span class="messages popover-valid">
-                        @error('start_date')
-                            <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
-                        @enderror
-                    </span>
-                </div>
-            </div>
-
-            <div class="form-group row @error('end_date') has-error @enderror">
-                <label class="col-sm-2 col-form-label">End Date</label>
-                <div class="col-sm-10">
-                    <input autocomplete="off" type="text" class="form-control single-datepicker" name="end_date" placeholder="Enter Scheme End date" value="{{ old('end_date') }}">
-                    <span class="messages popover-valid">
-                        @error('end_date')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
                         @enderror
                     </span>

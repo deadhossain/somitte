@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\backends\loan\StoreLoanSchemeRequest;
+use Auth;
 
 class LoanSchemeController extends Controller
 {
@@ -70,11 +71,11 @@ class LoanSchemeController extends Controller
         try {
             $loanScheme = new LoanScheme;
             $loanScheme->name = $request->input('name');
-            $loanScheme->amount = $request->input('amount');
+            $loanScheme->min_amount = $request->input('min_amount');
+            $loanScheme->max_amount = $request->input('max_amount');
             $loanScheme->late_fee = $request->input('late_fee');
-            $loanScheme->profit = $request->input('profit');
-            $loanScheme->start_date = insertDateFormat($request->input('start_date'));
-            $loanScheme->end_date = insertDateFormat($request->input('end_date'));
+            $loanScheme->rate = $request->input('rate');
+            $loanScheme->max_installment = $request->input('max_installment');
             $loanScheme->remarks = $request->input('remarks');
             $loanScheme->active_fg = 1;
             $loanScheme->created_by = Auth::user()->id;
@@ -129,11 +130,11 @@ class LoanSchemeController extends Controller
             $id = Crypt::decrypt($request->scheme);
             $loanScheme = LoanScheme::findOrFail($id);
             $loanScheme->name = $request->input('name');
-            $loanScheme->amount = $request->input('amount');
+            $loanScheme->min_amount = $request->input('min_amount');
+            $loanScheme->max_amount = $request->input('max_amount');
             $loanScheme->late_fee = $request->input('late_fee');
-            $loanScheme->profit = $request->input('profit');
-            $loanScheme->start_date = insertDateFormat($request->input('start_date'));
-            $loanScheme->end_date = insertDateFormat($request->input('end_date'));
+            $loanScheme->rate = $request->input('rate');
+            $loanScheme->max_installment = $request->input('max_installment');
             $loanScheme->remarks = $request->input('remarks');
             $loanScheme->active_fg = $request->input('active_fg');
             $loanScheme->updated_by = Auth::user()->id;
