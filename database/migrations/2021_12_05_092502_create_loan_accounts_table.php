@@ -22,9 +22,11 @@ class CreateLoanAccountsTable extends Migration
             $table->double('loan_amount', 15, 4)->default(1);
             $table->decimal('late_fee', 12, 4)->default(1);
             $table->decimal('rate', 7, 4)->default(1);
+            $table->double('total_payable_amount', 15, 4)->default(1);
             $table->smallInteger('total_installment_no')->default(1);
-            $table->date('start_date');
-            $table->date('end_date')->nullable();
+            $table->date('loan_date');
+            $table->date('start_installment_date');
+            $table->date('end_installment_date')->nullable();
             $table->text('remarks')->nullable();
             $table->tinyInteger('account_status')->default(1)->comment('1 for running, 2 for complete');
             $table->tinyInteger('active_fg')->default(1);
