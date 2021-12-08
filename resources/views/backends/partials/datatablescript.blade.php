@@ -127,6 +127,14 @@ $(document).ready(function() {
     });
 })
 
+function adjustWidth() {
+    $('input.filter-datatable').each(function (index, obj) {
+        tdIndex = $(this).closest('th').index()+1;
+        var $th = $('table tr:nth-child(1)').find('th:nth-child(' + tdIndex + ')');
+        $(this).width($th.width());
+    })
+}
+
 function loadDatatableWithColumns(table,columns){
     var source_data  = table.data('source');
     // alert(source_data);

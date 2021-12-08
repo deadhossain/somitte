@@ -23,12 +23,12 @@
                     </tr>
                     <tr>
                         <th></th>
-                        <th><input autocomplete="off" style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
-                        <th><input autocomplete="off" style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
-                        <th><input autocomplete="off" style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
-                        <th><input autocomplete="off" style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
-                        <th><input autocomplete="off" style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
-                        <th><input autocomplete="off" style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
+                        <th><input autocomplete="off" type="text" class="form-control filter-datatable" placeholder="search"></th>
+                        <th><input autocomplete="off" type="text" class="form-control filter-datatable" placeholder="search"></th>
+                        <th><input autocomplete="off" type="text" class="form-control filter-datatable" placeholder="search"></th>
+                        <th><input autocomplete="off" type="text" class="form-control filter-datatable" placeholder="search"></th>
+                        <th><input autocomplete="off" type="text" class="form-control filter-datatable" placeholder="search"></th>
+                        <th><input autocomplete="off" type="text" class="form-control filter-datatable" placeholder="search"></th>
                         <th></th>
                     </tr>
                 </thead>
@@ -56,6 +56,7 @@
         {data: 'actions', name: 'actions'},
     ]
     $(document).ready(function(){
+        adjustWidth();
         loadDatatableWithColumns($('.loan-scheme-datatable'),columns);
     });
 </script>

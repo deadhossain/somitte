@@ -76,6 +76,14 @@
                 </a>
             </li>
         </ul>
+        <ul class="pcoded-item pcoded-left-item">
+            <li>
+                <a href="{{route('loan_account.index')}}">
+                    <span class="pcoded-micon"><i class="fa fa-briefcase"></i></span>
+                    <span class="pcoded-mtext">Accounts</span>
+                </a>
+            </li>
+        </ul>
 
 
     </div>

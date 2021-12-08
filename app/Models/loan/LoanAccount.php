@@ -38,7 +38,7 @@ class LoanAccount extends Model
 
     public function nominee()
     {
-        return $this->belongsTo('App\models\person\Customer', 'customer_id', 'id');
+        return $this->belongsTo('App\models\person\Customer', 'nominee_id', 'id');
     }
 
     public function loanScheme()
