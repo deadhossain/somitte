@@ -52,12 +52,14 @@
 
 
             <div class="row">
-                <div class="col-md-3 form-group @error('loan_scheme_id') has-error @enderror">
-                    <label class="col-form-label"> Loan Scheme * </label>
+                <div class="col-md-4 form-group @error('loan_scheme_id') has-error @enderror">
+                    <label class="col-form-label"> Loan Scheme (Rate - Installment)* </label>
                     <select name="loan_scheme_id" class="form-control select2-select" data-placeholder="Select Loan Scheme" required>
                         <option value="">Select Loan Scheme</option>
                         @foreach ($loanSchemes as  $loanScheme)
-                            <option min="{{ $loanScheme->min_amount}}" max="{{ $loanScheme->max_amount}}" rate="{{ $loanScheme->rate}}" max-installment="{{ $loanScheme->max_installment}}" value="{{ $loanScheme->encryptId}}" @if(!@empty(old('loan_scheme_id')) && Crypt::decrypt(old('loan_scheme_id')) ==  $loanScheme->id) selected @endif> {{ $loanScheme->name}} </option>
+                            <option min="{{ $loanScheme->min_amount}}" max="{{ $loanScheme->max_amount}}" rate="{{ $loanScheme->rate}}" max-installment="{{ $loanScheme->max_installment}}" value="{{ $loanScheme->encryptId}}" @if(!@empty(old('loan_scheme_id')) && Crypt::decrypt(old('loan_scheme_id')) ==  $loanScheme->id) selected @endif>
+                                {{ $loanScheme->name }} ({{$loanScheme->rate}}%-{{$loanScheme->max_installment}})
+                            </option>
                         @endforeach
                     </select>
                     <span class="messages popover-valid">
@@ -68,7 +70,18 @@
                 </div>
 
 
-                <div class="col-md-3 form-group @error('min_amount') has-error @enderror">
+                <div class="col-md-2 form-group @error('rate') has-error @enderror">
+                    <label class="col-form-label">Rate (%)</label>
+                    <input readonly autocomplete="off" type="text" class="form-control autonumber" name="rate" placeholder="Enter Rate" value="{{ old('rate') }}">
+                    <span class="messages popover-valid">
+                        @error('rate')
+                            <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
+                        @enderror
+                    </span>
+                </div>
+
+
+                <div class="col-md-2 form-group @error('min_amount') has-error @enderror">
                     <label class="col-form-label">Min Amount</label>
                     <input readonly autocomplete="off" type="text" class="form-control autonumber" name="min_amount" placeholder="Enter Min Amount" value="{{ old('min_amount') }}">
                     <span class="messages popover-valid">
@@ -78,7 +91,7 @@
                     </span>
                 </div>
 
-                <div class="col-md-3 form-group @error('max_amount') has-error @enderror">
+                <div class="col-md-2 form-group @error('max_amount') has-error @enderror">
                     <label class="col-form-label">Max Amount</label>
                     <input readonly autocomplete="off" type="text" class="form-control autonumber" name="max_amount" placeholder="Enter Max Amount" value="{{ old('max_amount') }}">
                     <span class="messages popover-valid">
@@ -88,7 +101,7 @@
                     </span>
                 </div>
 
-                <div class="col-md-3 form-group @error('max_installment') has-error @enderror">
+                <div class="col-md-2 form-group @error('max_installment') has-error @enderror">
                     <label class="col-form-label">Max Installment</label>
                     <input readonly autocomplete="off" type="text" class="form-control autonumber" name="max_installment" placeholder="Enter Max Installment" value="{{ old('max_installment') }}">
                     <span class="messages popover-valid">
@@ -110,11 +123,11 @@
                     </span>
                 </div>
 
-                <div class="col-md-3 form-group @error('rate') has-error @enderror">
-                    <label class="col-form-label">Rate (%)</label>
-                    <input readonly autocomplete="off" type="text" class="form-control autonumber" name="rate" placeholder="Enter Rate" value="{{ old('rate') }}">
+                <div class="col-md-2 form-group @error('profit') has-error @enderror">
+                    <label class="col-form-label">Profit</label>
+                    <input readonly autocomplete="off" type="text" class="form-control autonumber" name="profit" placeholder="Enter Rate" value="{{ old('profit') }}">
                     <span class="messages popover-valid">
-                        @error('rate')
+                        @error('profit')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
                         @enderror
                     </span>
@@ -130,11 +143,21 @@
                     </span>
                 </div>
 
-                <div class="col-md-3 form-group @error('total_installment_no') has-error @enderror">
+                <div class="col-md-2 form-group @error('total_installment_no') has-error @enderror">
                     <label class="col-form-label">Installment</label>
                     <input readonly autocomplete="off" type="text" class="form-control autonumber" name="total_installment_no" placeholder="Enter Total Installment" value="{{ old('total_installment_no') }}">
                     <span class="messages popover-valid">
                         @error('total_installment_no')
+                            <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
+                        @enderror
+                    </span>
+                </div>
+
+                <div class="col-md-2 form-group  @error('per_installment') has-error @enderror">
+                    <label class="col-form-label">Per Installment</label>
+                    <input readonly autocomplete="off" type="text" class="form-control autonumber" name="per_installment" placeholder="Per Installment" value="{{ old('per_installment') }}">
+                    <span class="messages popover-valid">
+                        @error('per_installment')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
                         @enderror
                     </span>
@@ -164,7 +187,7 @@
 
                 <div class="col-md-3 form-group @error('start_installment_date') has-error @enderror">
                     <label class="col-form-label">Start Installment Date</label>
-                    <input autocomplete="off" type="text" class="form-control today-datepicker" name="start_installment_date" placeholder="Enter Scheme Start date" value="{{ old('start_installment_date') }}">
+                    <input autocomplete="off" type="text" class="form-control single-datepicker" name="start_installment_date" placeholder="Enter Scheme Start date" value="{{ old('start_installment_date') }}">
                     <span class="messages popover-valid">
                         @error('start_installment_date')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
@@ -216,13 +239,16 @@
         elementLoanAmount = form.find('input[name="loan_amount"]');
         elementPayableAmount = form.find('input[name="total_payable_amount"]');
         elementTotalInstallment = form.find('input[name="total_installment_no"]');
+        elementPerInstallment = form.find('input[name="per_installment"]');
         elementMinLoanAmount = form.find('input[name="min_amount"]');
         elementMaxLoanAmount = form.find('input[name="max_amount"]');
         elementMaxInstallment = form.find('input[name="max_installment"]');
         elementRate = form.find('input[name="rate"]');
+        elementProfit = form.find('input[name="profit"]');
         elementLoanAmount.val("");
         elementPayableAmount.val("");
         elementTotalInstallment.val("");
+        elementPerInstallment.val("");
         if(schemeId){
             var element = $(this).find('option:selected');
             var minAmount = element.attr('min');
@@ -246,28 +272,55 @@
             elementMaxLoanAmount.val("");
             elementMaxInstallment.val("");
             elementRate.val("");
+            elementProfit.val("");
         }
     })
 
-    $(document).on('keypress','input[name="loan_amount"]',function (params) {
-        var form = $(this).closest('form');
+    $(document).ready(function() {
+        var timer = null;
+        $(document).on('keydown','input[name="loan_amount"]',function (e) {
+            var keyCode = (e.keyCode ? e.keyCode : e.which);
+            if (keyCode === 13 || keyCode == undefined ){
+                e.preventDefault();
+                var time = 0;
+            }else{
+                var time = 1400;
+            }
+            clearTimeout(timer);
+            var self = $(this);
+            timer = setTimeout(function() { calculateLoan(self) }, time);
+
+        })
+    });
+
+
+
+    function calculateLoan(element) {
+        var form = element.closest('form');
         elementLoanAmount = form.find('input[name="loan_amount"]');
-        elementPayableAmount = form.find('input[name="total_payable_amount"]');
+        elementTotalPayableAmount = form.find('input[name="total_payable_amount"]');
         elementTotalInstallment = form.find('input[name="total_installment_no"]');
-        var minAmount = form.find('input[name="min_amount"]').val();
-        var maxAmount = form.find('input[name="max_amount"]').val();
-        var rate = form.find('input[name="rate"]').val();
-        var loanAmount = $(this).val();
+        elementPerInstallment = form.find('input[name="per_installment"]');
+        elementProfit = form.find('input[name="profit"]');
+        var minAmount = parseInt(form.find('input[name="min_amount"]').val());
+        var maxAmount = parseInt(form.find('input[name="max_amount"]').val());
+        var rate = parseInt(form.find('input[name="rate"]').val());
+        var loanAmount = parseInt(elementLoanAmount.val());
+        var totalInstallment = parseInt(elementTotalInstallment.val());
         if(loanAmount>maxAmount || loanAmount<minAmount){
             alert("loan amount out of range");
             elementLoanAmount.val("");
-            elementPayableAmount.val("");
-            elementTotalInstallment.val("");
+            elementTotalPayableAmount.val("");
+            elementPerInstallment.val("");
+            elementProfit.val("");
         }else{
-            var totalAmount = (rate/100)*loanAmount;
-            elementPayableAmount.val("");
+            var profit = (rate/100)*loanAmount;
+            var totalAmount = loanAmount+profit;
+            elementProfit.val(profit);
+            elementTotalPayableAmount.val(totalAmount);
+            elementPerInstallment.val(Math.ceil(totalAmount/totalInstallment));
         }
-    })
+    }
 </script>
 
 @endsection
