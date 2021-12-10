@@ -1,9 +1,16 @@
+
 @extends('backends.pages.main')
 @section('main-body')
 <!-- Tooltip Validation card start -->
 <div class="card">
     <div class="card-header">
         <h5>Create New Loan Account</h5>
+
+        @php
+            if($errors->any()){
+                echo implode('', $errors->all('<div>:message</div>'));
+            }
+        @endphp
     </div>
     <div class="card-block">
         <form action="{{route('account.store')}}" method="post" novalidate="">
@@ -145,7 +152,7 @@
 
                 <div class="col-md-2 form-group @error('total_installment_no') has-error @enderror">
                     <label class="col-form-label">Installment</label>
-                    <input readonly autocomplete="off" type="text" class="form-control autonumber" name="total_installment_no" placeholder="Enter Total Installment" value="{{ old('total_installment_no') }}">
+                    <input readonly autocomplete="off" type="text" class="form-control autonumber" name="total_installment_no" placeholder="Enter Total Installment" default-value="{{ old('total_installment_no') }}" value="{{ old('total_installment_no') }}">
                     <span class="messages popover-valid">
                         @error('total_installment_no')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
@@ -248,6 +255,7 @@
         elementLoanAmount.val("");
         elementPayableAmount.val("");
         elementTotalInstallment.val("");
+        elementTotalInstallment.attr('default-value',"");
         elementPerInstallment.val("");
         if(schemeId){
             var element = $(this).find('option:selected');
@@ -258,6 +266,7 @@
             elementMaxLoanAmount.val(maxAmount);
             elementMaxInstallment.val(maxInstallment);
             elementTotalInstallment.val(maxInstallment);
+            elementTotalInstallment.attr('default-value',maxInstallment);
             elementRate.val(element.attr('rate'));
             elementLoanAmount.attr('min',minAmount);
             elementLoanAmount.attr('max',maxAmount);
@@ -319,6 +328,43 @@
             elementProfit.val(profit);
             elementTotalPayableAmount.val(totalAmount);
             elementPerInstallment.val(Math.ceil(totalAmount/totalInstallment));
+        }
+    }
+
+
+    $(document).ready(function() {
+        var timer = null;
+        $(document).on('keydown','input[name="total_installment_no"]',function (e) {
+            var keyCode = (e.keyCode ? e.keyCode : e.which);
+            if (keyCode === 13 || keyCode == undefined ){
+                e.preventDefault();
+                var time = 0;
+            }else{
+                var time = 1400;
+            }
+            clearTimeout(timer);
+            var self = $(this);
+            timer = setTimeout(function() { calculateInstallment(self) }, time);
+
+        })
+    });
+
+    function calculateInstallment(element) {
+        var form = element.closest('form');
+        elementTotalPayableAmount = form.find('input[name="total_payable_amount"]');
+        elementTotalInstallment = form.find('input[name="total_installment_no"]');
+        elementMaxInstallment = form.find('input[name="max_installment"]');
+        elementPerInstallment = form.find('input[name="per_installment"]');
+        var totalInstallment = parseInt(elementTotalInstallment.val());
+        var defaulTotalInstallment = parseInt(elementTotalInstallment.attr('default-value'));
+        var maxInstallment = parseInt(elementMaxInstallment.val());
+        var totalPayableAmount = parseInt(elementTotalPayableAmount.val());
+        if(totalInstallment<=0 || totalInstallment>maxInstallment){
+            alert("Installment must be greater than 0 and less equal to "+maxInstallment);
+            elementTotalInstallment.val(defaulTotalInstallment);
+        }else{
+            elementTotalInstallment.attr('default-value',totalInstallment);
+            elementPerInstallment.val(Math.ceil(totalPayableAmount/totalInstallment));
         }
     }
 </script>
