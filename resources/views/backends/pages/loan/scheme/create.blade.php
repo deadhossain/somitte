@@ -24,7 +24,7 @@
             <div class="form-group row @error('min_amount') has-error @enderror">
                 <label class="col-sm-2 col-form-label">Min Amount</label>
                 <div class="col-sm-10">
-                    <input autocomplete="off" type="text" class="form-control autonumber" name="min_amount" placeholder="Enter Min Amount" value="{{ old('min_amount') }}">
+                    <input autocomplete="off" type="text" class="form-control decimalNumber" name="min_amount" placeholder="Enter Min Amount" value="{{ old('min_amount') }}">
                     <span class="messages popover-valid">
                         @error('min_amount')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
@@ -36,7 +36,7 @@
             <div class="form-group row @error('max_amount') has-error @enderror">
                 <label class="col-sm-2 col-form-label">Max Amount</label>
                 <div class="col-sm-10">
-                    <input autocomplete="off" type="text" class="form-control autonumber" name="max_amount" placeholder="Enter Max Amount" value="{{ old('max_amount') }}">
+                    <input autocomplete="off" type="text" class="form-control decimalNumber" name="max_amount" placeholder="Enter Max Amount" value="{{ old('max_amount') }}">
                     <span class="messages popover-valid">
                         @error('max_amount')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
@@ -48,7 +48,7 @@
             <div class="form-group row @error('rate') has-error @enderror">
                 <label class="col-sm-2 col-form-label">Rate (%)</label>
                 <div class="col-sm-10">
-                    <input autocomplete="off" type="text" class="form-control autonumber" name="rate" placeholder="Enter Rate" value="{{ old('rate') }}">
+                    <input autocomplete="off" type="text" class="form-control decimalNumber" name="rate" placeholder="Enter Rate" value="{{ old('rate') }}">
                     <span class="messages popover-valid">
                         @error('rate')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
@@ -60,7 +60,7 @@
             <div class="form-group row @error('max_installment') has-error @enderror">
                 <label class="col-sm-2 col-form-label">Max Installment</label>
                 <div class="col-sm-10">
-                    <input autocomplete="off" type="text" class="form-control autonumber" name="max_installment" placeholder="Enter Max Installment" value="{{ old('max_installment') }}">
+                    <input autocomplete="off" type="text" class="form-control decimalNumber" name="max_installment" placeholder="Enter Max Installment" value="{{ old('max_installment') }}">
                     <span class="messages popover-valid">
                         @error('max_installment')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
@@ -72,7 +72,7 @@
             <div class="form-group row @error('late_fee') has-error @enderror">
                 <label class="col-sm-2 col-form-label">Late Fee</label>
                 <div class="col-sm-10">
-                    <input autocomplete="off" type="text" class="form-control autonumber" name="late_fee" placeholder="Enter Late Fee" value="{{ old('late_fee') }}">
+                    <input autocomplete="off" type="text" class="form-control decimalNumber" name="late_fee" placeholder="Enter Late Fee" value="{{ old('late_fee') }}">
                     <span class="messages popover-valid">
                         @error('late_fee')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>

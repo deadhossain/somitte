@@ -25,7 +25,7 @@
             <div class="form-group row @error('amount') has-error @enderror">
                 <label class="col-sm-2 col-form-label">Amount</label>
                 <div class="col-sm-10">
-                    <input autocomplete="off" type="text" class="form-control autonumber" name="amount" placeholder="Enter Scheme Amount" value="{{ old('amount')?:$savingsScheme->amount }}">
+                    <input autocomplete="off" type="text" class="form-control decimalNumber" name="amount" placeholder="Enter Scheme Amount" value="{{ old('amount')?:$savingsScheme->amount }}">
                     <span class="messages popover-valid">
                         @error('amount')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
@@ -37,7 +37,7 @@
             <div class="form-group row @error('profit') has-error @enderror">
                 <label class="col-sm-2 col-form-label">Profit (%)</label>
                 <div class="col-sm-10">
-                    <input autocomplete="off" type="text" class="form-control autonumber" name="profit" placeholder="Enter Profit" value="{{ old('profit')?:$savingsScheme->profit }}">
+                    <input autocomplete="off" type="text" class="form-control decimalNumber" name="profit" placeholder="Enter Profit" value="{{ old('profit')?:$savingsScheme->profit }}">
                     <span class="messages popover-valid">
                         @error('profit')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
@@ -49,7 +49,7 @@
             <div class="form-group row @error('late_fee') has-error @enderror">
                 <label class="col-sm-2 col-form-label">Late Fee</label>
                 <div class="col-sm-10">
-                    <input autocomplete="off" type="text" class="form-control autonumber" name="late_fee" placeholder="Enter Late Fee" value="{{ old('late_fee')?:$savingsScheme->late_fee }}">
+                    <input autocomplete="off" type="text" class="form-control decimalNumber" name="late_fee" placeholder="Enter Late Fee" value="{{ old('late_fee')?:$savingsScheme->late_fee }}">
                     <span class="messages popover-valid">
                         @error('late_fee')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>

@@ -41,7 +41,7 @@ class StoreLoanAccountRequest extends FormRequest
     {
         $rules = $this::VALIDATION_RULES;
         if ($this->getMethod() == 'POST') {
-
+            // dd($rules);
         }else if ($this->getMethod() == 'PATCH'){
             $rules['account_no'] = 'required|unique:loan_accounts,account_no,'.Crypt::decrypt($this->account);
         }

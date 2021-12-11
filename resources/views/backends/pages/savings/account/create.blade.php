@@ -57,7 +57,7 @@
             <div class="form-group row  @error('first_deposit_amount') has-error @enderror">
                 <label class="col-sm-2 col-form-label">First Deposit Amount</label>
                 <div class="col-sm-10">
-                    <input autocomplete="off" type="text" class="form-control autonumber" name="first_deposit_amount" placeholder="Enter First Deposit Amount" value="{{ old('first_deposit_amount') }}">
+                    <input autocomplete="off" type="text" class="form-control decimalNumber" name="first_deposit_amount" placeholder="Enter First Deposit Amount" value="{{ old('first_deposit_amount') }}">
                     <span class="messages popover-valid">
                         @error('first_deposit_amount')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>

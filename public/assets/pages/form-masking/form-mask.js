@@ -21,5 +21,8 @@ $(function() {
     $(".ipv6").inputmask({ mask: "9999:9999:9999:9:999:9999:9999:9999"});
 
     /*numbers*/
-    $('.autonumber').autoNumeric('init',{aSep: ''});
-  });
+    $('.wholeNumber').autoNumeric('init',{aSep: '', mDec: '0', minimumValue: '0'});
+
+    $('.decimalNumber').autoNumeric('init',{aSep: '', minimumValue: '0'});
+
+});

@@ -5,21 +5,15 @@
 <div class="card">
     <div class="card-header">
         <h5>Create New Loan Account</h5>
-
-        @php
-            if($errors->any()){
-                echo implode('', $errors->all('<div>:message</div>'));
-            }
-        @endphp
     </div>
     <div class="card-block">
-        <form action="{{route('account.store')}}" method="post" novalidate="">
+        <form action="{{route('loan_account.store')}}" method="post" novalidate="">
             @csrf
             <div class="row">
                 <div class="col-md-4 form-group @error('account_no') has-error @enderror">
-                    <label class="col-form-label">Account No</label>
+                    <label class="col-form-label">Account No *</label>
                     <input autocomplete="off" type="text" class="form-control" name="account_no" placeholder="Enter Account No" value="{{ old('account_no') }}">
-                    <span class="messages popover-valid">
+                    <span class="messages popover-valid-inline">
                         @error('account_no')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
                         @enderror
@@ -34,7 +28,7 @@
                             <option value="{{$customer->encryptId}}" @if(!@empty(old('customer_id')) && Crypt::decrypt(old('customer_id')) == $customer->id) selected @endif> {{$customer->name}} :: {{$customer->customer_uid}} </option>
                         @endforeach
                     </select>
-                    <span class="messages popover-valid">
+                    <span class="messages popover-valid-inline">
                         @error('customer_id')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
                         @enderror
@@ -49,7 +43,7 @@
                             <option value="{{$nominee->encryptId}}" @if(!@empty(old('nominee_id')) && Crypt::decrypt(old('nominee_id')) == $nominee->id) selected @endif> {{$nominee->name}} :: {{$nominee->customer_uid}} </option>
                         @endforeach
                     </select>
-                    <span class="messages popover-valid">
+                    <span class="messages popover-valid-inline">
                         @error('nominee_id')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
                         @enderror
@@ -64,12 +58,12 @@
                     <select name="loan_scheme_id" class="form-control select2-select" data-placeholder="Select Loan Scheme" required>
                         <option value="">Select Loan Scheme</option>
                         @foreach ($loanSchemes as  $loanScheme)
-                            <option min="{{ $loanScheme->min_amount}}" max="{{ $loanScheme->max_amount}}" rate="{{ $loanScheme->rate}}" max-installment="{{ $loanScheme->max_installment}}" value="{{ $loanScheme->encryptId}}" @if(!@empty(old('loan_scheme_id')) && Crypt::decrypt(old('loan_scheme_id')) ==  $loanScheme->id) selected @endif>
+                            <option late_fee="{{ $loanScheme->late_fee}}" min="{{ $loanScheme->min_amount}}" max="{{ $loanScheme->max_amount}}" rate="{{ $loanScheme->rate}}" max-installment="{{ $loanScheme->max_installment}}" value="{{ $loanScheme->encryptId}}" @if(!@empty(old('loan_scheme_id')) && Crypt::decrypt(old('loan_scheme_id')) ==  $loanScheme->id) selected @endif>
                                 {{ $loanScheme->name }} ({{$loanScheme->rate}}%-{{$loanScheme->max_installment}})
                             </option>
                         @endforeach
                     </select>
-                    <span class="messages popover-valid">
+                    <span class="messages popover-valid-inline">
                         @error('loan_scheme_id')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
                         @enderror
@@ -79,8 +73,8 @@
 
                 <div class="col-md-2 form-group @error('rate') has-error @enderror">
                     <label class="col-form-label">Rate (%)</label>
-                    <input readonly autocomplete="off" type="text" class="form-control autonumber" name="rate" placeholder="Enter Rate" value="{{ old('rate') }}">
-                    <span class="messages popover-valid">
+                    <input readonly autocomplete="off" type="text" class="form-control decimalNumber" name="rate" placeholder="Enter Rate" value="{{ old('rate') }}">
+                    <span class="messages popover-valid-inline">
                         @error('rate')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
                         @enderror
@@ -90,8 +84,8 @@
 
                 <div class="col-md-2 form-group @error('min_amount') has-error @enderror">
                     <label class="col-form-label">Min Amount</label>
-                    <input readonly autocomplete="off" type="text" class="form-control autonumber" name="min_amount" placeholder="Enter Min Amount" value="{{ old('min_amount') }}">
-                    <span class="messages popover-valid">
+                    <input readonly autocomplete="off" type="text" class="form-control decimalNumber" name="min_amount" placeholder="Enter Min Amount" value="{{ old('min_amount') }}">
+                    <span class="messages popover-valid-inline">
                         @error('min_amount')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
                         @enderror
@@ -100,8 +94,8 @@
 
                 <div class="col-md-2 form-group @error('max_amount') has-error @enderror">
                     <label class="col-form-label">Max Amount</label>
-                    <input readonly autocomplete="off" type="text" class="form-control autonumber" name="max_amount" placeholder="Enter Max Amount" value="{{ old('max_amount') }}">
-                    <span class="messages popover-valid">
+                    <input readonly autocomplete="off" type="text" class="form-control decimalNumber" name="max_amount" placeholder="Enter Max Amount" value="{{ old('max_amount') }}">
+                    <span class="messages popover-valid-inline">
                         @error('max_amount')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
                         @enderror
@@ -110,8 +104,8 @@
 
                 <div class="col-md-2 form-group @error('max_installment') has-error @enderror">
                     <label class="col-form-label">Max Installment</label>
-                    <input readonly autocomplete="off" type="text" class="form-control autonumber" name="max_installment" placeholder="Enter Max Installment" value="{{ old('max_installment') }}">
-                    <span class="messages popover-valid">
+                    <input readonly autocomplete="off" type="text" class="form-control decimalNumber" name="max_installment" placeholder="Enter Max Installment" value="{{ old('max_installment') }}">
+                    <span class="messages popover-valid-inline">
                         @error('max_installment')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
                         @enderror
@@ -122,8 +116,8 @@
             <div class="row">
                 <div class="col-md-3 form-group  @error('loan_amount') has-error @enderror">
                     <label class="col-form-label">Loan Amount</label>
-                    <input readonly autocomplete="off" type="text" class="form-control autonumber" name="loan_amount" placeholder="Enter Loan Amount" value="{{ old('loan_amount') }}">
-                    <span class="messages popover-valid">
+                    <input readonly autocomplete="off" type="text" class="form-control decimalNumber" name="loan_amount" placeholder="Enter Loan Amount" value="{{ old('loan_amount') }}">
+                    <span class="messages popover-valid-inline">
                         @error('loan_amount')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
                         @enderror
@@ -132,8 +126,8 @@
 
                 <div class="col-md-2 form-group @error('profit') has-error @enderror">
                     <label class="col-form-label">Profit</label>
-                    <input readonly autocomplete="off" type="text" class="form-control autonumber" name="profit" placeholder="Enter Rate" value="{{ old('profit') }}">
-                    <span class="messages popover-valid">
+                    <input readonly autocomplete="off" type="text" class="form-control decimalNumber" name="profit" placeholder="Enter Rate" value="{{ old('profit') }}">
+                    <span class="messages popover-valid-inline">
                         @error('profit')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
                         @enderror
@@ -142,8 +136,8 @@
 
                 <div class="col-md-3 form-group  @error('total_payable_amount') has-error @enderror">
                     <label class="col-form-label">Total Payable Amount</label>
-                    <input readonly autocomplete="off" type="text" class="form-control autonumber" name="total_payable_amount" placeholder="Enter Payable Amount" value="{{ old('total_payable_amount') }}">
-                    <span class="messages popover-valid">
+                    <input readonly autocomplete="off" type="text" class="form-control decimalNumber" name="total_payable_amount" placeholder="Enter Payable Amount" value="{{ old('total_payable_amount') }}">
+                    <span class="messages popover-valid-inline">
                         @error('total_payable_amount')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
                         @enderror
@@ -152,8 +146,8 @@
 
                 <div class="col-md-2 form-group @error('total_installment_no') has-error @enderror">
                     <label class="col-form-label">Installment</label>
-                    <input readonly autocomplete="off" type="text" class="form-control autonumber" name="total_installment_no" placeholder="Enter Total Installment" default-value="{{ old('total_installment_no') }}" value="{{ old('total_installment_no') }}">
-                    <span class="messages popover-valid">
+                    <input readonly autocomplete="off" type="text" class="form-control wholeNumber" name="total_installment_no" placeholder="Enter Total Installment" default-value="{{ old('total_installment_no') }}" value="{{ old('total_installment_no') }}">
+                    <span class="messages popover-valid-inline">
                         @error('total_installment_no')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
                         @enderror
@@ -162,8 +156,8 @@
 
                 <div class="col-md-2 form-group  @error('per_installment') has-error @enderror">
                     <label class="col-form-label">Per Installment</label>
-                    <input readonly autocomplete="off" type="text" class="form-control autonumber" name="per_installment" placeholder="Per Installment" value="{{ old('per_installment') }}">
-                    <span class="messages popover-valid">
+                    <input readonly autocomplete="off" type="text" class="form-control wholeNumber" name="per_installment" placeholder="Per Installment" value="{{ old('per_installment') }}">
+                    <span class="messages popover-valid-inline">
                         @error('per_installment')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
                         @enderror
@@ -175,7 +169,7 @@
                 <div class="col-md-3 form-group @error('loan_date') has-error @enderror">
                     <label class="col-form-label">Loan Date</label>
                     <input autocomplete="off" type="text" class="form-control today-datepicker" name="loan_date" placeholder="Enter Loan date" value="{{ old('loan_date') }}">
-                    <span class="messages popover-valid">
+                    <span class="messages popover-valid-inline">
                         @error('loan_date')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
                         @enderror
@@ -184,8 +178,8 @@
 
                 <div class="col-md-3 form-group @error('late_fee') has-error @enderror">
                     <label class="col-form-label">Late Fee</label>
-                    <input autocomplete="off" type="text" class="form-control autonumber" name="late_fee" placeholder="Enter Late Fee" value="{{ old('late_fee') }}">
-                    <span class="messages popover-valid">
+                    <input autocomplete="off" type="text" class="form-control wholeNumber" name="late_fee" placeholder="Enter Late Fee" value="{{ old('late_fee') }}">
+                    <span class="messages popover-valid-inline">
                         @error('late_fee')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
                         @enderror
@@ -195,7 +189,7 @@
                 <div class="col-md-3 form-group @error('start_installment_date') has-error @enderror">
                     <label class="col-form-label">Start Installment Date</label>
                     <input autocomplete="off" type="text" class="form-control single-datepicker" name="start_installment_date" placeholder="Enter Scheme Start date" value="{{ old('start_installment_date') }}">
-                    <span class="messages popover-valid">
+                    <span class="messages popover-valid-inline">
                         @error('start_installment_date')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
                         @enderror
@@ -205,7 +199,7 @@
                 <div class="col-md-3 form-group @error('end_installment_date') has-error @enderror">
                     <label class="col-form-label">End Installment Date</label>
                     <input autocomplete="off" type="text" class="form-control single-datepicker" name="end_installment_date" placeholder="Enter Scheme End date" value="{{ old('end_installment_date') }}">
-                    <span class="messages popover-valid">
+                    <span class="messages popover-valid-inline">
                         @error('end_installment_date')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
                         @enderror
@@ -221,7 +215,7 @@
             <div class="col-md-12 form-group row @error('remarks') has-error @enderror" style="padding-right: 0px">
                 <label class="ol-form-label">Remarks</label>
                 <textarea rows="5" name="remarks" class="form-control" placeholder="Enter Remarks">{{old('remarks')}}</textarea>
-                <span class="messages popover-valid">
+                <span class="messages popover-valid-inline">
                     @error('remarks')
                         <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
                     @enderror
@@ -240,50 +234,59 @@
 <!-- Tooltip Validation card end -->
 
 <script>
-    $(document).on('change','select[name="loan_scheme_id"]',function (params) {
-        var schemeId = $(this).val();
-        var form = $(this).closest('form');
-        elementLoanAmount = form.find('input[name="loan_amount"]');
-        elementPayableAmount = form.find('input[name="total_payable_amount"]');
-        elementTotalInstallment = form.find('input[name="total_installment_no"]');
-        elementPerInstallment = form.find('input[name="per_installment"]');
-        elementMinLoanAmount = form.find('input[name="min_amount"]');
-        elementMaxLoanAmount = form.find('input[name="max_amount"]');
-        elementMaxInstallment = form.find('input[name="max_installment"]');
-        elementRate = form.find('input[name="rate"]');
-        elementProfit = form.find('input[name="profit"]');
-        elementLoanAmount.val("");
-        elementPayableAmount.val("");
-        elementTotalInstallment.val("");
-        elementTotalInstallment.attr('default-value',"");
-        elementPerInstallment.val("");
-        if(schemeId){
-            var element = $(this).find('option:selected');
-            var minAmount = element.attr('min');
-            var maxAmount = element.attr('max');
-            var maxInstallment = element.attr('max-installment');
-            elementMinLoanAmount.val(minAmount);
-            elementMaxLoanAmount.val(maxAmount);
-            elementMaxInstallment.val(maxInstallment);
-            elementTotalInstallment.val(maxInstallment);
-            elementTotalInstallment.attr('default-value',maxInstallment);
-            elementRate.val(element.attr('rate'));
-            elementLoanAmount.attr('min',minAmount);
-            elementLoanAmount.attr('max',maxAmount);
-            elementLoanAmount.attr("readonly", false);
-            elementPayableAmount.attr("readonly", false);
-            elementTotalInstallment.attr("readonly", false);
-        }else{
-            elementLoanAmount.attr("readonly", true);
-            elementPayableAmount.attr("readonly", true);
-            elementTotalInstallment.attr("readonly", true);
-            elementMinLoanAmount.val("");
-            elementMaxLoanAmount.val("");
-            elementMaxInstallment.val("");
-            elementRate.val("");
-            elementProfit.val("");
-        }
+    $(document).ready(function () {
+
+        $(document).on('change','select[name="loan_scheme_id"]',function (params) {
+            var schemeId = $(this).val();
+            var form = $(this).closest('form');
+            elementLoanAmount = form.find('input[name="loan_amount"]');
+            elementPayableAmount = form.find('input[name="total_payable_amount"]');
+            elementTotalInstallment = form.find('input[name="total_installment_no"]');
+            elementPerInstallment = form.find('input[name="per_installment"]');
+            elementMinLoanAmount = form.find('input[name="min_amount"]');
+            elementMaxLoanAmount = form.find('input[name="max_amount"]');
+            elementMaxInstallment = form.find('input[name="max_installment"]');
+            elementRate = form.find('input[name="rate"]');
+            elementLateFee = form.find('input[name="late_fee"]');
+            elementProfit = form.find('input[name="profit"]');
+            elementLoanAmount.val("");
+            elementPayableAmount.val("");
+            elementTotalInstallment.val("");
+            elementTotalInstallment.attr('default-value',"");
+            elementPerInstallment.val("");
+            if(schemeId){
+                var element = $(this).find('option:selected');
+                var minAmount = element.attr('min');
+                var maxAmount = element.attr('max');
+                var maxInstallment = element.attr('max-installment');
+                elementMinLoanAmount.val(minAmount);
+                elementMaxLoanAmount.val(maxAmount);
+                elementMaxInstallment.val(maxInstallment);
+                elementTotalInstallment.val(maxInstallment);
+                elementTotalInstallment.attr('default-value',maxInstallment);
+                elementRate.val(element.attr('rate'));
+                elementLateFee.val(element.attr('late_fee'));
+                elementLoanAmount.attr('min',minAmount);
+                elementLoanAmount.attr('max',maxAmount);
+                elementLoanAmount.attr("readonly", false);
+                elementPayableAmount.attr("readonly", false);
+                elementTotalInstallment.attr("readonly", false);
+            }else{
+                elementLoanAmount.attr("readonly", true);
+                elementPayableAmount.attr("readonly", true);
+                elementTotalInstallment.attr("readonly", true);
+                elementMinLoanAmount.val("");
+                elementMaxLoanAmount.val("");
+                elementMaxInstallment.val("");
+                elementRate.val("");
+                elementLateFee.val("");
+                elementProfit.val("");
+            }
+        });
+
+        $('select[name="loan_scheme_id"]').trigger("change");
     })
+
 
     $(document).ready(function() {
         var timer = null;
@@ -334,7 +337,7 @@
 
     $(document).ready(function() {
         var timer = null;
-        $(document).on('keydown','input[name="total_installment_no"]',function (e) {
+        $(document).on('keydown','input[name="total_installment_no"],input[name="total_payable_amount"]',function (e) {
             var keyCode = (e.keyCode ? e.keyCode : e.which);
             if (keyCode === 13 || keyCode == undefined ){
                 e.preventDefault();
@@ -344,12 +347,12 @@
             }
             clearTimeout(timer);
             var self = $(this);
-            timer = setTimeout(function() { calculateInstallment(self) }, time);
+            timer = setTimeout(function() { calculatePerInstallment(self) }, time);
 
         })
     });
 
-    function calculateInstallment(element) {
+    function calculatePerInstallment(element) {
         var form = element.closest('form');
         elementTotalPayableAmount = form.find('input[name="total_payable_amount"]');
         elementTotalInstallment = form.find('input[name="total_installment_no"]');
