@@ -43,7 +43,7 @@ class LoanAccount extends Model
 
     public function loanScheme()
     {
-        return $this->belongsTo(LoanScheme::class, 'savings_scheme_id', 'id');
+        return $this->belongsTo(LoanScheme::class, 'loan_scheme_id', 'id');
     }
 
     public function activeLoanScheme()

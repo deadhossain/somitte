@@ -44,7 +44,7 @@ class LoanAccountController extends Controller
             return Datatables::of($loanAccounts)->addIndexColumn()
             ->addColumn('actions', function ($loanAccount) {
                 return (string) view('backends.pages.loan.account.actions', ['loanAccount' => $loanAccount]);
-            })->rawColumns(['actions','status'])->make();
+            })->rawColumns(['actions','account_status'])->make();
         } catch (\Exception $th) {
             return back()->withErrors([
                 'error'=>'Seek system administrator help',
@@ -76,12 +76,19 @@ class LoanAccountController extends Controller
         try {
             $loanAccount = new LoanAccount;
             $loanAccount->account_no = $request->input('account_no');
-            $loanAccount->first_deposit_amount = trim($request->input('first_deposit_amount'))?:0;
+            $loanAccount->loan_amount = $request->input('loan_amount');
+            $loanAccount->total_payable_amount = $request->input('total_payable_amount');
+            $loanAccount->total_installment_no = $request->input('total_installment_no');
             $loanAccount->customer_id = Crypt::decrypt($request->input('customer_id'));
+            $loanAccount->nominee_id = Crypt::decrypt($request->input('nominee_id'));
             $loanAccount->loan_scheme_id = Crypt::decrypt($request->input('loan_scheme_id'));
-            $loanAccount->start_date = insertDateFormat($request->input('start_date'));
-            $loanAccount->end_date = insertDateFormat($request->input('end_date'));
+            $loanAccount->late_fee = trim($request->input('late_fee'))?:0;
+            $loanAccount->rate = $request->input('rate');
+            $loanAccount->loan_date = insertDateFormat($request->input('loan_date'));
+            $loanAccount->start_installment_date = insertDateFormat($request->input('start_installment_date'));
+            $loanAccount->end_installment_date = insertDateFormat($request->input('end_installment_date'));
             $loanAccount->remarks = $request->input('remarks');
+            $loanAccount->account_status = 1; // 1 for running
             $loanAccount->active_fg = 1;
             $loanAccount->created_by = Auth::user()->id;
             $is_saved = $loanAccount->save();

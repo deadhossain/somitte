@@ -17,7 +17,7 @@ class StoreLoanAccountRequest extends FormRequest
         'customer_id'=> 'required',
         'nominee_id'=> 'required',
         'loan_scheme_id'=> 'required',
-        'account_status'=> 'required',
+
         'loan_date' => ['required','date'],
         'start_installment_date' => ['required','date','after:loan_date'],
         'end_installment_date' => ['nullable','date','after:start_installment_date']
@@ -44,6 +44,7 @@ class StoreLoanAccountRequest extends FormRequest
             // dd($rules);
         }else if ($this->getMethod() == 'PATCH'){
             $rules['account_no'] = 'required|unique:loan_accounts,account_no,'.Crypt::decrypt($this->account);
+            $rules['account_status']= 'required';
         }
         return $rules;
     }
