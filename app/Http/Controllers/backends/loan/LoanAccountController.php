@@ -125,7 +125,8 @@ class LoanAccountController extends Controller
     public function edit($id)
     {
         $id = Crypt::decrypt($id);
-        $loanAccount = LoanAccount::findorFail($id);
+        $loanAccount = LoanAccount::with(['customer','loanScheme','nominee'])->findorFail($id);
+        // $loanAccount = LoanAccount::findorFail($id);
         $customers = Customer::where('active_fg',1)->get();
         $loanSchemes = LoanScheme::where('active_fg',1)->get();
         return view('backends.pages.loan.account.edit',compact('loanAccount','customers','loanSchemes'));

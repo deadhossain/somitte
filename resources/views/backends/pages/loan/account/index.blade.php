@@ -16,7 +16,7 @@
                         <th>Customer</th>
                         <th>Account No</th>
                         <th>Scheme</th>
-                        <th>Loan Amount</th>
+                        <th title="Loan Amount">LA</th>
                         <th>Rate</th>
                         <th title="Total Payable Amount">TP. Amount</th>
                         <th title="Total Installment">Tot. Inst.</th>
@@ -53,7 +53,7 @@
 
 @include('backends.partials.datatablescript')
 <script type="text/javascript">
-    
+
     // protected $fillable = [
     //     'account_no','loan_amount','customer_id','nominee_id','loan_scheme_id','late_fee','rate','total_payable_amount',
     //     'total_installment_no','loan_date','start_installment_date','end_installment_date','active_fg','remarks','account_status'

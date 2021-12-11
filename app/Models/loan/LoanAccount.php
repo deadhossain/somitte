@@ -67,6 +67,11 @@ class LoanAccount extends Model
     //     return $this->hasOne(SavingsDeposit::class, 'savings_accounts_id', 'id')->where('active_fg',1);
     // }
 
+    public function getRateAttribute()
+    {
+        return $this->attributes['rate']+0; // remove trailing zeroes
+    }
+
     public function getStatusAttribute()
     {
         if ($this->attributes['active_fg'] == 1) return '<label class="label label-success">ACTIVE</label>';
