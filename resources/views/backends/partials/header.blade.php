@@ -1,4 +1,4 @@
-<nav class="navbar header-navbar pcoded-header">
+<nav class="navbar header-navbar pcoded-header ddd">
     <div class="navbar-wrapper">
 
         <div class="navbar-logo">
@@ -25,7 +25,7 @@
                 <li class="user-profile header-notification">
                     <div class="dropdown-primary dropdown">
                         <div class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="{{asset('assets/images/avatar-4.jpg')}}" class="img-radius" alt="User-Profile-Image">
+                            {{-- <img src="{{asset('assets/images/avatar-4.jpg')}}" class="img-radius" alt="User-Profile-Image"> --}}
                             <span>{{ucfirst(Auth::user()->name)}}</span>
                             <i class="feather icon-chevron-down"></i>
                         </div>

@@ -213,7 +213,7 @@
                     <label class="col-form-label"> Account Status </label>
                     <select name="account_status" class="form-control">
                         <option value="1" @if($loanAccount->account_status==1 && old('account_status')==1) selected @endif>Running</option>
-                        <option value="0" @if($loanAccount->account_status==0 && old('account_status')==0) selected @endif>Completed</option>
+                        <option value="0" @if($loanAccount->account_status==2 && old('account_status')==2) selected @endif>Completed</option>
                     </select>
                 </div>
 
@@ -298,7 +298,7 @@
             }
         });
 
-        $('select[name="loan_scheme_id"]').trigger("change");
+        // $('select[name="loan_scheme_id"]').trigger("change");
     })
 
 
