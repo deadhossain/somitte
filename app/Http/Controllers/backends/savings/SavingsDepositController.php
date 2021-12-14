@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\backends\savings;
 
+use Illuminate\Http\Request;
 use App\Models\savings\SavingsDeposit;
 use App\Models\savings\SavingsAccount;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
 use Yajra\DataTables\Facades\DataTables;
@@ -83,7 +83,7 @@ class SavingsDepositController extends Controller
         $date1 = new DateTime($date);
         $date2 = new DateTime();
         $days = $date1->diff($date2)->days; // check if customer paying late
-        $lateDays = LookupDetail::where(['udid' => 'LS'])->firstOrFail();
+        $lateDays = LookupDetail::where(['udid' => 'SLF'])->firstOrFail();
         return view('backends.pages.savings.deposit.create',compact('account','date','lateDays','days'));
     }
 
@@ -233,7 +233,7 @@ class SavingsDepositController extends Controller
             $accountId = Crypt::decrypt($accountId);
             $accounts = $accounts->where('id', $accountId);
         }
-        
+
         if ($savingsSchemeId!==0){
             $savingsSchemeId = Crypt::decrypt($savingsSchemeId);
             $accounts = $accounts->whereHas('savingsScheme', function($q) use ($savingsSchemeId){ $q->where('id','=', $savingsSchemeId);});

@@ -53,6 +53,7 @@
         {data: 'actions', name: 'actions'},
     ]
     $(document).ready(function(){
+        adjustWidth();
         loadDatatableWithColumns($('.savings-scheme-datatable'),columns);
     });
 </script>

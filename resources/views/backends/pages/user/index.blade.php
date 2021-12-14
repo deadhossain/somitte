@@ -65,6 +65,7 @@
         {data: 'actions', name: 'actions'},
     ]
     $(document).ready(function(){
+        adjustWidth();
         loadDatatableWithColumns($('.users-datatable'),columns);
     });
 </script>

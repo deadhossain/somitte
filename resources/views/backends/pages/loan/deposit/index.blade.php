@@ -3,21 +3,38 @@
 
 <!-- HTML5 Export Buttons table start -->
 <div class="card">
-    <div class="card-header table-card-header">
-        <h5 class="text-inverse">LIST OF SAVINGS ACCOUNTS</h5>
-        <a href="{{route('account.create')}}" class="btn btn-sm btn-primary m-b-20 float-right">+ Add Savings Account</a>
-    </div>
+    <form action="{{route('deposit.index')}}" method="post">
+        @csrf
+        <div class="card-header table-card-header">
+            <div class="row">
+                <div class="col-md-9">
+                    <h5 class="text-inverse">LIST OF LOAN DEPOSITS: {{$month}}</h5>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="input-group input-group-button">
+                        <input name="month-picker" type="text" class="form-control month-picker" autocomplete="off" value="{{$month}}">
+                        <span  class="input-group-addon btn btn-primary" id="basic-addon10" type="submit" onclick="event.preventDefault();
+                        $(this).closest('form').submit();">
+                            <span style="color: white">Submit</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </form>
     <div class="card-block">
         <div class="dt-responsive table-responsive">
-            <table data-source="{{route('account.data')}}" class="table savings-account-datatable compact table-hover table-bordered nowrap" style="width:100%">
+            <table data-source="{{route('loan_deposit.data',$month)}}" class="table loan-deposit-datatable compact table-hover table-bordered nowrap" style="width:100%">
                 <thead>
                     <tr>
                         <th>SL</th>
                         <th>Customer</th>
-                        <th>Account No</th>
                         <th>Scheme</th>
-                        <th>First Deposit</th>
-                        <th>Start Date</th>
+                        <th>Account No</th>
+                        <th>Deposit Amount</th>
+                        <th>Late Fee</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -48,16 +65,16 @@
             searchable: false
         },
         {data: 'customer.name', name: 'customer.name'},
+        {data: 'loan_scheme.name', name: 'loan_scheme.name'},
         {data: 'account_no', name: 'account_no'},
-        {data: 'savings_scheme.name', name: 'savings_scheme.name'},
-        {data: 'first_deposit_amount', name: 'first_deposit_amount'},
-        {data: 'start_date', name: 'start_date'},
-        {data: 'status', name: 'status'},
+        {data: 'loan_scheme.amount', name: 'loan_scheme.amount'},
+        {data: 'loan_scheme.late_fee', name: 'loan_scheme.late_fee'},
+        {data: 'paymentStatus', name: 'paymentStatus'},
         {data: 'actions', name: 'actions'},
     ]
     $(document).ready(function(){
         adjustWidth();
-        loadDatatableWithColumns($('.savings-account-datatable'),columns);
+        loadDatatableWithColumns($('.loan-deposit-datatable'),columns);
     });
 </script>
 

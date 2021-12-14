@@ -154,7 +154,7 @@
     </div>
 </div>
 
-{{-- <script type="text/javascript" src="{{asset('bower_components/popper.js/js/popper.min.js')}}"></script> --}}
+<script type="text/javascript" src="{{asset('bower_components/popper.js/js/popper.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('bower_components/bootstrap/js/bootstrap.min.js')}}"></script>
 
 <!-- jquery slimscroll js -->

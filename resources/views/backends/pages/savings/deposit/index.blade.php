@@ -73,6 +73,7 @@
         {data: 'actions', name: 'actions'},
     ]
     $(document).ready(function(){
+        adjustWidth();
         loadDatatableWithColumns($('.savings-deposit-datatable'),columns);
     });
 </script>

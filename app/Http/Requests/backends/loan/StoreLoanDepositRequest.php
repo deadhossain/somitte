@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\backends\savings;
+namespace App\Http\Requests\backends\loan;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Crypt;
 
-class StoreSavingsDepositRequest extends FormRequest
+class StoreLoanDepositRequest extends FormRequest
 {
     private const VALIDATION_RULES = [
         // 'savings_accounts_id'=> 'required',

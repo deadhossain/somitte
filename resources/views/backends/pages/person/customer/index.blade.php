@@ -56,6 +56,7 @@
         {data: 'actions', name: 'actions'},
     ]
     $(document).ready(function(){
+        adjustWidth();
         loadDatatableWithColumns($('.customer-datatable'),columns);
     });
 </script>

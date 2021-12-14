@@ -65,6 +65,14 @@ Route::group(['middleware'=>'auth'],function () {
     Route::get('loan/account/data', 'backends\loan\LoanAccountController@data')->name('loan_account.data');
     Route::resource('loan/account', 'backends\loan\LoanAccountController', ['names' => 'loan_account']);
 
+    Route::get('loan/deposit/create/{loan_accounts_id}/{date}', 'backends\loan\LoanDepositController@create')->name('loan_deposit.create');
+    Route::post('loan/deposit/store/{loan_accounts_id}', 'backends\loan\LoanDepositController@store')->name('loan_deposit.store');
+    Route::get('loan/deposit/data/{date?}', 'backends\loan\LoanDepositController@data')->name('loan_deposit.data');
+    Route::post('loan/deposit', 'backends\loan\LoanDepositController@index')->name('loan_deposit.index');
+    Route::resource('loan/deposit', 'backends\loan\LoanDepositController', ['names' => 'loan_deposit'])->except([
+        'create', 'store'
+    ]);
+
     Route::resource('/home', 'backends\user\UserController');
 
 });

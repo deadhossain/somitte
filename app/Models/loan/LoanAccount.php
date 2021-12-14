@@ -51,21 +51,21 @@ class LoanAccount extends Model
         return $this->loanScheme()->where('active_fg',1);
     }
 
-    // public function savingsDeposits()
-    // {
-    //     return $this->hasMany(SavingsDeposit::class, 'savings_accounts_id', 'id');
-    // }
+    public function loanDeposits()
+    {
+        return $this->hasMany(LoanDeposit::class, 'loan_accounts_id', 'id');
+    }
 
-    // public function activeSavingsDeposits()
-    // {
-    //     return $this->savingsDeposits()->where('active_fg',1);
-    // }
+    public function activeLoanDeposits()
+    {
+        return $this->loanDeposits()->where('active_fg',1);
+    }
 
-    // // current month deposit
-    // public function currentSavingsDeposit()
-    // {
-    //     return $this->hasOne(SavingsDeposit::class, 'savings_accounts_id', 'id')->where('active_fg',1);
-    // }
+    // current month deposit
+    public function currentLoanDeposit()
+    {
+        return $this->hasOne(LoanDeposit::class, 'loan_accounts_id', 'id')->where('active_fg',1);
+    }
 
     public function getRateAttribute()
     {
