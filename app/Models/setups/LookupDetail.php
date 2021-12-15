@@ -10,7 +10,7 @@ class LookupDetail extends Model
     use HasFactory;
     protected $table = 'lookup_details';
     protected $fillable = [
-        'name','remarks','value','active_fg','lookup_id'
+        'name','udid','remarks','value','active_fg','lookup_id'
     ];
 
     public function lookup()

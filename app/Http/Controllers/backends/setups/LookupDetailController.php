@@ -63,6 +63,7 @@ class LookupDetailController extends Controller
         try {
             $lookupDetail = new LookupDetail;
             $lookupDetail->lookup_id = Crypt::decrypt($lookup_id);
+            $lookupDetail->udid = $request->input('udid');
             $lookupDetail->name = $request->input('name');
             $lookupDetail->value = $request->input('value');
             $lookupDetail->remarks = $request->input('remarks');
@@ -118,6 +119,7 @@ class LookupDetailController extends Controller
         try {
             $lookupDetail = LookupDetail::findOrFail($lookupDetail->id);
             $lookupDetail->name = $request->input('name');
+            $lookupDetail->udid = $request->input('udid');
             $lookupDetail->value = $request->input('value');
             $lookupDetail->remarks = $request->input('remarks');
             $lookupDetail->active_fg = $request->input('active_fg');

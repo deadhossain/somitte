@@ -48,6 +48,7 @@
                                         <tr>
                                             <th>SL</th>
                                             <th>Name</th>
+                                            <th>ID</th>
                                             <th>Value</th>
                                             <th>remarks</th>
                                             <th>Status</th>
@@ -55,6 +56,7 @@
                                         </tr>
                                         <tr>
                                             <th></th>
+                                            <th><input autocomplete="off" style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
                                             <th><input autocomplete="off" style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
                                             <th><input autocomplete="off" style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
                                             <th><input autocomplete="off" style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
@@ -82,6 +84,7 @@
             searchable: false
         },
         {data: 'name', name: 'name'},
+        {data: 'udid', name: 'udid', "defaultContent": "<i>Not set</i>"},
         {data: 'value', name: 'value'},
         {data: 'remarks', name: 'remarks'},
         {data: 'status', name: 'status'},

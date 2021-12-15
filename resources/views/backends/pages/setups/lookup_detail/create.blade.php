@@ -21,6 +21,18 @@
                 </div>
             </div>
 
+            <div class="form-group row @error('udid') has-error @enderror">
+                <label class="col-sm-2 col-form-label">User Define Id</label>
+                <div class="col-sm-10">
+                    <input autocomplete="off" type="text" class="form-control" name="udid" placeholder="Enter User Define Id" value="{{ old('udid') }}">
+                    <span class="messages popover-valid">
+                        @error('udid')
+                            <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
+                        @enderror
+                    </span>
+                </div>
+            </div>
+
             <div class="form-group row @error('value') has-error @enderror">
                 <label class="col-sm-2 col-form-label">Value</label>
                 <div class="col-sm-10">
