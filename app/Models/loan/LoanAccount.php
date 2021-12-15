@@ -23,7 +23,7 @@ class LoanAccount extends Model
     ];
 
     protected $appends = [
-        'status','account_status'
+        'status','account_status','per_installment'
     ];
 
     public function getEncryptIdAttribute()
@@ -65,6 +65,11 @@ class LoanAccount extends Model
     public function currentLoanDeposit()
     {
         return $this->hasOne(LoanDeposit::class, 'loan_accounts_id', 'id')->where('active_fg',1);
+    }
+
+    public function getPerInstallmentAttribute()
+    {
+        return $this->attributes['total_payable_amount']/$this->attributes['total_installment_no']; // remove trailing zeroes
     }
 
     public function getRateAttribute()

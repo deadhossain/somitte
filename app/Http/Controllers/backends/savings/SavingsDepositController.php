@@ -30,7 +30,7 @@ class SavingsDepositController extends Controller
      */
     public function index(Request $request)
     {
-        $month = $request->input('month-picker')?date('F-Y',strtotime($request->input('month-picker'))):date('F-Y');
+        $month = $request->input('month-picker')?date('d-M-Y',strtotime($request->input('month-picker'))):date('d-M-Y');
         return view('backends.pages.savings.deposit.index',compact('month'));
     }
 

@@ -3,7 +3,7 @@
 
 <!-- HTML5 Export Buttons table start -->
 <div class="card">
-    <form action="{{route('deposit.index')}}" method="post">
+    <form action="{{route('loan_deposit.index')}}" method="post">
         @csrf
         <div class="card-header table-card-header">
             <div class="row">
@@ -30,12 +30,12 @@
                 <thead>
                     <tr>
                         <th>SL</th>
-                        <th>Customer</th>
-                        <th>Scheme</th>
-                        <th>Account No</th>
-                        <th>Deposit Amount</th>
-                        <th>Late Fee</th>
-                        <th>Status</th>
+                        <th style="width: 15%">Customer</th>
+                        <th style="width: 12%">Scheme</th>
+                        <th style="width: 8%">Account No</th>
+                        <th style="width: 8%">Deposit Amount</th>
+                        <th style="width: 5%">Late Fee</th>
+                        <th style="width: 5%">Status</th>
                         <th>Action</th>
                     </tr>
                     <tr>
@@ -67,7 +67,7 @@
         {data: 'customer.name', name: 'customer.name'},
         {data: 'loan_scheme.name', name: 'loan_scheme.name'},
         {data: 'account_no', name: 'account_no'},
-        {data: 'loan_scheme.amount', name: 'loan_scheme.amount'},
+        {data: 'per_installment', name: 'per_installment'},
         {data: 'loan_scheme.late_fee', name: 'loan_scheme.late_fee'},
         {data: 'paymentStatus', name: 'paymentStatus'},
         {data: 'actions', name: 'actions'},

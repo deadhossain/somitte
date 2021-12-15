@@ -161,6 +161,28 @@ $(document).ready(function(){
         });
 
 
+        $('input.month-picker:not([readonly])').daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true,
+            autoUpdateInput:false,
+            "autoApply": true,
+            locale: {
+                format: 'MMM-YYYY'
+            },
+            onSelect: function(d,i){
+                alert();
+                if(d !== i.lastVal){
+                    $(this).change();
+                }
+           }
+        });
+
+        $('input.month-picker:not([readonly])').on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format('MMMM-YYYY'));
+            $(this).change();
+        });
+
+
 
         // $('input.single-datepicker:not([readonly])').datepicker({
         //     format: 'DD-MM-YYYY',
@@ -168,11 +190,11 @@ $(document).ready(function(){
         //     todayHighlight: true
         // });
 
-        $(".month-picker:not([readonly])").datepicker( {
-            format: "MM-yyyy",
-            startView: "months",
-            minViewMode: "months"
-        });
+        // $(".month-picker:not([readonly])").datepicker( {
+        //     format: "MM-yyyy",
+        //     startView: "months",
+        //     minViewMode: "months"
+        // });
 
         $('input.single-datepicker').on('apply.daterangepicker', function(ev, picker) {
             $(this).val(picker.startDate.format('DD-MM-YYYY'));
