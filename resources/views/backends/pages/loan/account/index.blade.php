@@ -12,20 +12,20 @@
             <table data-source="{{route('loan_account.data')}}" class="table loan-account-datatable compact table-hover table-bordered nowrap" style="width:100%">
                 <thead>
                     <tr>
-                        <th>SL</th>
-                        <th>Customer</th>
-                        <th>Account No</th>
-                        <th>Scheme</th>
-                        <th title="Loan Amount">LA</th>
-                        <th>Rate</th>
-                        <th title="Total Payable Amount">TP. Amount</th>
-                        <th title="Total Installment">Tot. Inst.</th>
-                        <th>Loan Date</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>Nominee</th>
-                        <th>Account Status</th>
-                        <th>Action</th>
+                        <th style="width: 3%">SL</th>
+                        <th style="width: 12%">Customer</th>
+                        <th style="width: 7%">Account No</th>
+                        <th style="width: 10%">Scheme</th>
+                        <th style="width: 5%" title="Loan Amount">L. Amount</th>
+                        <th style="width: 5%">Rate</th>
+                        <th style="width: 5%" title="Total Payable Amount">TP. Amount</th>
+                        <th style="width: 5%" title="Total Installment">Tot. Inst.</th>
+                        <th style="width: 7%">Loan Date</th>
+                        <th style="width: 7%">Start Date</th>
+                        <th style="width: 7%">End Date</th>
+                        <th style="width: 12%">Nominee</th>
+                        <th style="width: 7%">Account Status</th>
+                        <th style="width: 7%">Action</th>
                     </tr>
                     <tr>
                         <th></th>

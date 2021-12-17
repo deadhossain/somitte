@@ -12,17 +12,19 @@
             <table data-source="{{route('account.data')}}" class="table savings-account-datatable compact table-hover table-bordered nowrap" style="width:100%">
                 <thead>
                     <tr>
-                        <th>SL</th>
-                        <th>Customer</th>
-                        <th>Account No</th>
-                        <th>Scheme</th>
-                        <th>First Deposit</th>
-                        <th>Start Date</th>
-                        <th>Status</th>
-                        <th>Action</th>
+                        <th style="width: 3%">SL</th>
+                        <th style="width: 15%">Customer</th>
+                        <th style="width: 8%">Account No</th>
+                        <th style="width: 10%">Scheme</th>
+                        <th style="width: 5%">Total Deposit</th>
+                        <th style="width: 5%">First Deposit</th>
+                        <th style="width: 8%">Start Date</th>
+                        <th style="width: 8%">Status</th>
+                        <th style="width: 8%">Action</th>
                     </tr>
                     <tr>
                         <th></th>
+                        <th><input autocomplete="off" style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
                         <th><input autocomplete="off" style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
                         <th><input autocomplete="off" style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
                         <th><input autocomplete="off" style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
@@ -50,6 +52,7 @@
         {data: 'customer.name', name: 'customer.name'},
         {data: 'account_no', name: 'account_no'},
         {data: 'savings_scheme.name', name: 'savings_scheme.name'},
+        {data: 'totalSavingsDeposits', name: 'totalSavingsDeposits'},
         {data: 'first_deposit_amount', name: 'first_deposit_amount'},
         {data: 'start_date', name: 'start_date'},
         {data: 'status', name: 'status'},

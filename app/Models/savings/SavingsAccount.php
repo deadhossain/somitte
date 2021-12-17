@@ -22,7 +22,7 @@ class SavingsAccount extends Model
     ];
 
     protected $appends = [
-        'status'
+        'status','totalSavingsDeposits'
     ];
 
     public function getEncryptIdAttribute()
@@ -60,10 +60,25 @@ class SavingsAccount extends Model
         return $this->savingsDeposits()->where('active_fg',1);
     }
 
+    public function getTotalSavingsDepositsAttribute()
+    {
+        return $this->activeSavingsDeposits()->sum('deposit_amount');
+    }
+
     // current month deposit
     public function currentSavingsDeposit()
     {
         return $this->hasOne(SavingsDeposit::class, 'savings_accounts_id', 'id')->where('active_fg',1);
+    }
+
+    public function getStartDateAttribute()
+    {
+        return showDateFormat($this->attributes['start_date']);
+    }
+
+    public function getEndDateAttribute()
+    {
+        return showDateFormat($this->attributes['start_date']);
     }
 
     public function getStatusAttribute()

@@ -23,7 +23,7 @@ class LoanAccount extends Model
     ];
 
     protected $appends = [
-        'status','account_status','per_installment'
+        'status','account_status','per_installment','totalLoanDeposits'
     ];
 
     public function getEncryptIdAttribute()
@@ -61,10 +61,30 @@ class LoanAccount extends Model
         return $this->loanDeposits()->where('active_fg',1);
     }
 
+    public function getTotalLoanDepositsAttribute()
+    {
+        return $this->activeLoanDeposits()->sum('deposit_amount');
+    }
+
     // current month deposit
     public function currentLoanDeposit()
     {
         return $this->hasOne(LoanDeposit::class, 'loan_accounts_id', 'id')->where('active_fg',1);
+    }
+
+    public function getLoanDateAttribute()
+    {
+        return showDateFormat($this->attributes['loan_date']);
+    }
+
+    public function getStartInstallmentDateAttribute()
+    {
+        return showDateFormat($this->attributes['start_installment_date']);
+    }
+
+    public function getEndInstallmentDateAttribute()
+    {
+        return showDateFormat($this->attributes['end_installment_date']);
     }
 
     public function getPerInstallmentAttribute()

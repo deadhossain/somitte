@@ -33,19 +33,23 @@
                         <th style="width: 15%">Customer</th>
                         <th style="width: 12%">Scheme</th>
                         <th style="width: 8%">Account No</th>
-                        <th style="width: 8%">Deposit Amount</th>
+                        <th title="Total Amount" style="width: 5%">TA</th>
+                        <th title="Total Paid Amount" style="width: 5%">TPA</th>
+                        <th style="width: 5%">Per Installment</th>
                         <th style="width: 5%">Late Fee</th>
                         <th style="width: 5%">Status</th>
-                        <th>Action</th>
+                        <th style="width: 8%">Action</th>
                     </tr>
                     <tr>
                         <th></th>
-                        <th><input autocomplete="off" style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
-                        <th><input autocomplete="off" style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
-                        <th><input autocomplete="off" style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
-                        <th><input autocomplete="off" style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
-                        <th><input autocomplete="off" style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
-                        <th><input autocomplete="off" style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
+                        <th><input autocomplete="off" type="text" class="form-control filter-datatable" placeholder="search"></th>
+                        <th><input autocomplete="off" type="text" class="form-control filter-datatable" placeholder="search"></th>
+                        <th><input autocomplete="off" type="text" class="form-control filter-datatable" placeholder="search"></th>
+                        <th><input autocomplete="off" type="text" class="form-control filter-datatable" placeholder="search"></th>
+                        <th><input autocomplete="off" type="text" class="form-control filter-datatable" placeholder="search"></th>
+                        <th><input autocomplete="off" type="text" class="form-control filter-datatable" placeholder="search"></th>
+                        <th><input autocomplete="off" type="text" class="form-control filter-datatable" placeholder="search"></th>
+                        <th><input autocomplete="off" type="text" class="form-control filter-datatable" placeholder="search"></th>
                         <th></th>
                     </tr>
                 </thead>
@@ -67,6 +71,8 @@
         {data: 'customer.name', name: 'customer.name'},
         {data: 'loan_scheme.name', name: 'loan_scheme.name'},
         {data: 'account_no', name: 'account_no'},
+        {data: 'total_payable_amount', name: 'total_payable_amount'},
+        {data: 'totalLoanDeposits', name: 'totalLoanDeposits'},
         {data: 'per_installment', name: 'per_installment'},
         {data: 'loan_scheme.late_fee', name: 'loan_scheme.late_fee'},
         {data: 'paymentStatus', name: 'paymentStatus'},

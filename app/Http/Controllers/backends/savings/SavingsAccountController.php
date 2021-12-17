@@ -102,9 +102,9 @@ class SavingsAccountController extends Controller
      * @param  \App\Models\savings\SavingsAccount  $savingsAccount
      * @return \Illuminate\Http\Response
      */
-    public function show(SavingsAccount $savingsAccount)
+    public function show($savingsAccountId)
     {
-        //
+        $savingsAccounts = SavingsAccount::with(['customer','savingsScheme','activeSavingsDeposits'])->get();
     }
 
     /**
