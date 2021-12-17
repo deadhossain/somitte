@@ -92,6 +92,21 @@
                 </a>
             </li>
         </ul>
+        <ul class="pcoded-item pcoded-left-item">
+            <li class="pcoded-hasmenu">
+                <a href="javascript:void(0)">
+                    <span class="pcoded-micon"><i class="feather icon-package"></i></span>
+                    <span class="pcoded-mtext">Reports</span>
+                </a>
+                <ul class="pcoded-submenu">
+                    <li class=" ">
+                        <a href="{{route('loan_deposit.report.month-wise')}}">
+                            <span class="pcoded-mtext">Month Wise Report</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
 
     </div>
 </nav>

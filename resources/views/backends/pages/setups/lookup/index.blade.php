@@ -91,7 +91,7 @@
         {data: 'actions', name: 'actions'},
     ];
     $(document).ready(function(){
-        adjustWidth();
+        // adjustWidth();
         $('.lookup-datatable').each(function(){
             loadDatatableWithColumns($(this),columns);
         });

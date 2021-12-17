@@ -9,10 +9,10 @@
         <form action="{{route('loan_deposit.store',$account->encryptId)}}" method="post" novalidate="">
             @csrf
             <input type="hidden" readonly name="lateDays" id="late-days" value="{{$lateDays->value}}">
-            <div class="form-group row @error('customer_id') has-error @enderror">
-                <label class="col-sm-2 col-form-label"> Customer * </label>
-                <div class="col-sm-10">
-                    {{-- <input autocomplete="off" type="hidden" class="form-control" name="customer_id" value="{{ $account->customer->encryptId }}"> --}}
+
+            <div class="row">
+                <div class="col-md-4 form-group @error('customer_id') has-error @enderror">
+                    <label class="col-form-label"> Customer * </label>
                     <input autocomplete="off" type="text" class="form-control" name="customer_name" value="{{ $account->customer->name }}" readonly>
                     <span class="messages popover-valid">
                         @error('customer_id')
@@ -20,24 +20,9 @@
                         @enderror
                     </span>
                 </div>
-            </div>
 
-            <div class="form-group row @error('customer_id') has-error @enderror">
-                <label class="col-sm-2 col-form-label"> Scheme * </label>
-                <div class="col-sm-10">
-                    {{-- <input autocomplete="off" type="hidden" class="form-control" name="customer_id" value="{{ $account->loanScheme->encryptId }}"> --}}
-                    <input autocomplete="off" type="text" class="form-control" name="scheme_name" value="{{ $account->loanScheme->name }}" readonly>
-                    <span class="messages popover-valid">
-                        @error('customer_id')
-                            <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
-                        @enderror
-                    </span>
-                </div>
-            </div>
-
-            <div class="form-group row @error('account_no') has-error @enderror">
-                <label class="col-sm-2 col-form-label">Account No</label>
-                <div class="col-sm-10">
+                <div class="col-md-4 form-group @error('account_no') has-error @enderror">
+                    <label class="col-form-label">Account No</label>
                     <input autocomplete="off" type="text" class="form-control" name="account_no" value="{{ $account->account_no }}" readonly>
                     <span class="messages popover-valid">
                         @error('account_no')
@@ -45,23 +30,137 @@
                         @enderror
                     </span>
                 </div>
-            </div>
 
-            <div class="form-group row  @error('deposit_amount') has-error @enderror">
-                <label class="col-sm-2 col-form-label">Deposit Amount</label>
-                <div class="col-sm-10">
-                    <input autocomplete="off" type="text" class="form-control decimalNumber" name="deposit_amount" placeholder="Enter First Deposit Amount" value="{{ $account->loanScheme->amount }}">
+                <div class="col-md-4 form-group @error('loan_date') has-error @enderror">
+                    <label class="col-form-label">Loan Month</label>
+                    <input readonly autocomplete="off" type="text" class="form-control month-datepicker" name="loan_date" placeholder="Enter Schedule date" value="{{ showDateFormat($account->loan_date,'F-Y') }}">
                     <span class="messages popover-valid">
-                        @error('deposit_amount')
+                        @error('loan_date')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
                         @enderror
                     </span>
                 </div>
             </div>
 
-            <div class="form-group row  @error('late_fee') has-error @enderror">
-                <label class="col-sm-2 col-form-label"> Late Fee(<strong class="late-days">{{$days}}</strong> day(s) late)</label>
-                <div class="col-sm-10">
+            <div class="row">
+                <div class="col-md-4 form-group @error('scheme_name') has-error @enderror">
+                    <label class="col-form-label"> Scheme * </label>
+                    <input autocomplete="off" type="text" class="form-control" name="scheme_name" value="{{ $account->loanScheme->name }}" readonly>
+                    <span class="messages popover-valid">
+                        @error('scheme_name')
+                            <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
+                        @enderror
+                    </span>
+                </div>
+
+                <div class="col-md-2 form-group @error('rate') has-error @enderror">
+                    <label class="col-form-label">Rate (%)</label>
+                    <input readonly autocomplete="off" type="text" class="form-control decimalNumber" name="rate" placeholder="Enter Rate" value="{{ $account->loanScheme->rate }}">
+                    <span class="messages popover-valid-inline">
+                        @error('rate')
+                            <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
+                        @enderror
+                    </span>
+                </div>
+
+                <div class="col-md-2 form-group @error('min_amount') has-error @enderror">
+                    <label class="col-form-label">Min Amount</label>
+                    <input readonly autocomplete="off" type="text" class="form-control decimalNumber" name="min_amount" placeholder="Enter Min Amount" value="{{ $account->loanScheme->min_amount }}">
+                    <span class="messages popover-valid-inline">
+                        @error('min_amount')
+                            <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
+                        @enderror
+                    </span>
+                </div>
+
+                <div class="col-md-2 form-group @error('max_amount') has-error @enderror">
+                    <label class="col-form-label">Max Amount</label>
+                    <input readonly autocomplete="off" type="text" class="form-control decimalNumber" name="max_amount" placeholder="Enter Max Amount" value="{{ $account->loanScheme->max_amount }}">
+                    <span class="messages popover-valid-inline">
+                        @error('max_amount')
+                            <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
+                        @enderror
+                    </span>
+                </div>
+
+                <div class="col-md-2 form-group @error('max_installment') has-error @enderror">
+                    <label class="col-form-label">Max Installment</label>
+                    <input readonly autocomplete="off" type="text" class="form-control decimalNumber" name="max_installment" placeholder="Enter Max Installment" value="{{ $account->loanScheme->max_installment }}">
+                    <span class="messages popover-valid-inline">
+                        @error('max_installment')
+                            <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
+                        @enderror
+                    </span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3 form-group  @error('loan_amount') has-error @enderror">
+                    <label class="col-form-label">Loan Amount</label>
+                    <input readonly autocomplete="off" type="text" class="form-control decimalNumber" name="loan_amount" placeholder="Enter Loan Amount" value="{{ $account->loan_amount }}">
+                    <span class="messages popover-valid-inline">
+                        @error('loan_amount')
+                            <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
+                        @enderror
+                    </span>
+                </div>
+
+                <div class="col-md-2 form-group @error('profit') has-error @enderror">
+                    <label class="col-form-label">Profit</label>
+                    <input readonly autocomplete="off" type="text" class="form-control decimalNumber" name="profit" placeholder="Enter Rate" value="{{ $account->total_payable_amount - $account->loan_amount }}">
+                    <span class="messages popover-valid-inline">
+                        @error('profit')
+                            <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
+                        @enderror
+                    </span>
+                </div>
+
+                <div class="col-md-3 form-group  @error('total_payable_amount') has-error @enderror">
+                    <label class="col-form-label">Total Payable Amount</label>
+                    <input readonly autocomplete="off" type="text" class="form-control decimalNumber" name="total_payable_amount" placeholder="Enter Payable Amount" value="{{ $account->total_payable_amount }}">
+                    <span class="messages popover-valid-inline">
+                        @error('total_payable_amount')
+                            <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
+                        @enderror
+                    </span>
+                </div>
+
+                <div class="col-md-2 form-group @error('total_installment_no') has-error @enderror">
+                    <label class="col-form-label">Installment</label>
+                    <input readonly autocomplete="off" type="text" class="form-control wholeNumber" name="total_installment_no" placeholder="Enter Total Installment" value="{{ $account->total_installment_no }}">
+                    <span class="messages popover-valid-inline">
+                        @error('total_installment_no')
+                            <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
+                        @enderror
+                    </span>
+                </div>
+
+                <div class="col-md-2 form-group  @error('per_installment') has-error @enderror">
+                    <label class="col-form-label">Per Installment</label>
+                    <input readonly autocomplete="off" type="text" class="form-control wholeNumber" name="per_installment" placeholder="Per Installment" value="{{ $account->per_installment }}">
+                    <span class="messages popover-valid-inline">
+                        @error('per_installment')
+                            <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
+                        @enderror
+                    </span>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-3 form-group @error('deposit_amount') has-error @enderror">
+                    <label class="col-form-label">Deposit Amount</label>
+                    <input autocomplete="off" type="text" class="form-control decimalNumber" name="deposit_amount" placeholder="Enter First Deposit Amount" value="{{ $account->per_installment }}">
+                    <span class="messages popover-valid">
+                        @error('deposit_amount')
+                            <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
+                        @enderror
+                    </span>
+                </div>
+
+                <div class="col-md-3 form-group @error('late_fee') has-error @enderror">
+                    <label class="col-form-label"> Late Fee(<strong class="late-days">{{$days}}</strong> day(s) late)</label>
+
                     <input autocomplete="off" type="text" class="form-control decimalNumber" name="late_fee" placeholder="Enter Late Fee" latefee={{$account->loanScheme->late_fee}}
                     value="@php
                         if(empty(old('late_fee'))) if($days>=$lateDays->value) echo $account->loanScheme->late_fee; else echo 0;
@@ -72,12 +171,11 @@
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
                         @enderror
                     </span>
-                </div>
-            </div>
 
-            <div class="form-group row @error('schedule_date') has-error @enderror">
-                <label class="col-sm-2 col-form-label">Deposit Schedule Month</label>
-                <div class="col-sm-10">
+                </div>
+
+                <div class="col-md-3 form-group @error('schedule_date') has-error @enderror">
+                    <label class="col-form-label">Deposit Schedule Month</label>
                     <input readonly autocomplete="off" type="text" class="form-control month-datepicker" name="schedule_date" placeholder="Enter Schedule date" value="{{ showDateFormat($date,'F-Y') }}">
                     <span class="messages popover-valid">
                         @error('schedule_date')
@@ -85,11 +183,9 @@
                         @enderror
                     </span>
                 </div>
-            </div>
 
-            <div class="form-group row @error('deposit_date') has-error @enderror">
-                <label class="col-sm-2 col-form-label">Deposit Date</label>
-                <div class="col-sm-10">
+                <div class="col-md-3 form-group @error('deposit_date') has-error @enderror">
+                    <label class="col-form-label">Deposit Date</label>
                     <input autocomplete="off" type="text" class="form-control single-datepicker" name="deposit_date" placeholder="Enter Scheme End date" value="{{ date('d-m-Y') }}">
                     <span class="messages popover-valid">
                         @error('deposit_date')
@@ -97,11 +193,12 @@
                         @enderror
                     </span>
                 </div>
+
             </div>
 
-            <div class="form-group row @error('remarks') has-error @enderror">
-                <label class="col-sm-2 col-form-label">Remarks</label>
-                <div class="col-sm-10">
+            <div class="row">
+                <div class="col-md-12 form-group @error('remarks') has-error @enderror">
+                    <label class="col-form-label">Remarks</label>
                     <textarea rows="5" name="remarks" class="form-control" placeholder="Enter Remarks">{{old('remarks')}}</textarea>
                     <span class="messages popover-valid">
                         @error('remarks')
@@ -110,6 +207,7 @@
                     </span>
                 </div>
             </div>
+
 
             <div class="row">
                 <label class="col-sm-2"></label>

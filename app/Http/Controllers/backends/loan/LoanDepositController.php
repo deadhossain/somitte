@@ -83,7 +83,7 @@ class LoanDepositController extends Controller
         $date1 = new DateTime($date);
         $date2 = new DateTime();
         $days = $date1->diff($date2)->days; // check if customer paying late
-        $lateDays = LookupDetail::where(['udid' => 'LS'])->firstOrFail();
+        $lateDays = LookupDetail::where(['udid' => 'LLF'])->firstOrFail();
         return view('backends.pages.loan.deposit.create',compact('account','date','lateDays','days'));
     }
 
@@ -198,5 +198,51 @@ class LoanDepositController extends Controller
         catch (\Exception $e) {
             return response()->json(['type'=>'error', 'title'=>'System Failure!!', 'msg'=>$e->getMessage()], 400);
         }
+    }
+
+    public function monthWiseDepositReport(Request $request)
+    {
+        // dd($request->all());
+        $currentYear = date('01/01/Y').' - ' .date('31/12/Y');
+        $customerId = $request->input('customer_id')?:0;
+        $accountId = $request->input('account_id')?:0;
+        $loanSchemeId = $request->input('loan_scheme_id')?:0;
+
+        $daterange = $request->input('datefilter')?:$currentYear;
+        // dd($request->all(),$request->input('customer_id'),$customerId,$request->input('loan_scheme_id'),$loanSchemeId,$loanSchemeId!=0);
+
+        $daterangeArray = explode("-",$daterange);
+        $daterangeArray[0] = date('Y-m-d',strtotime(str_replace('/', '-', trim($daterangeArray[0]))));
+        $daterangeArray[1] = date('Y-m-d',strtotime(str_replace('/', '-', trim($daterangeArray[1]))));
+        $startTime = strtotime($daterangeArray[0]);
+        $endTime = strtotime($daterangeArray[1]);
+
+        $accounts = LoanAccount::with(['customer','loanScheme','activeLoanDeposits'])
+                    ->where('loan_accounts.start_installment_date','<',$daterangeArray[1])
+                    ->where('loan_accounts.active_fg',1)
+
+                    ->where(function ($query) use($daterangeArray) {
+                        $query->whereNull('end_installment_date')->orWhere('end_installment_date','>=',$daterangeArray[1]);
+                    });
+
+        if ($customerId!==0){
+            $customerId = Crypt::decrypt($customerId);
+            $accounts = $accounts->whereHas('customer', function($q) use ($customerId){ $q->where('id','=', $customerId);});
+        }
+        if ($accountId!==0){
+            $accountId = Crypt::decrypt($accountId);
+            $accounts = $accounts->where('id', $accountId);
+        }
+
+        if ($loanSchemeId!==0){
+            $loanSchemeId = Crypt::decrypt($loanSchemeId);
+            $accounts = $accounts->whereHas('loanScheme', function($q) use ($loanSchemeId){ $q->where('id','=', $loanSchemeId);});
+        }
+
+        $accounts = $accounts->get();
+        $customers = Customer::where('active_fg',1)->get();
+        $loanSchemes = LoanScheme::where('active_fg',1)->get();
+        return view('backends.pages.loan.deposit.reports.month_wise_report',
+                compact('daterange','daterangeArray','startTime','endTime','accounts','accountId','endTime','accounts','customers','customerId','loanSchemes','loanSchemeId'));
     }
 }

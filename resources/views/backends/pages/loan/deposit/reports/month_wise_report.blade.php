@@ -24,7 +24,7 @@
         <div class="card-header table-card-header">
 
                 <div class="col-md-12" style="margin-bottom: 25px">
-                    <h5 class="text-inverse">MONTH WISE SAVINGS DEPOSIT REPORT</h5>
+                    <h5 class="text-inverse">MONTH WISE LOAN DEPOSIT REPORT</h5>
                 </div>
 
                 <div class="col-md-12">
@@ -51,10 +51,10 @@
 
                         <div class="col-md-3 form-group">
                             <label class="col-form-label"> Scheme </label>
-                            <select name="savings_scheme_id" class="form-control select2-select" data-placeholder="Select Savings Scheme">
+                            <select name="loan_scheme_id" class="form-control select2-select" data-placeholder="Select Loan Scheme">
                                 <option value=""></option>
-                                @foreach ($savingsSchemes as $savingsScheme)
-                                    <option value="{{$savingsScheme->encryptId}}" @if($savingsSchemeId == $savingsScheme->id) selected @endif> {{$savingsScheme->name}} </option>
+                                @foreach ($loanSchemes as $loanScheme)
+                                    <option value="{{$loanScheme->encryptId}}" @if($loanSchemeId == $loanScheme->id) selected @endif> {{$loanScheme->name}} </option>
                                 @endforeach
                             </select>
                         </div>
@@ -82,12 +82,12 @@
     <div class="card-block">
 
         <div class="dt-responsive table-responsive">
-            <table data-source="{{route('deposit.data')}}" class="table savings-deposit-datatable compact table-hover table-bordered nowrap" style="width:100%;">
+            <table data-source="{{route('deposit.data')}}" class="table loan-deposit-datatable compact table-hover table-bordered nowrap" style="width:100%;">
                 <thead>
                     <tr>
                         <th>SL</th>
                         <th>Customer Information</th>
-                        <th>Savings Scheme</th>
+                        <th>Loan Scheme</th>
                         <th>Account Information</th>
                         @php $tempStartTime = $startTime @endphp
                         @while($tempStartTime <= $endTime)
@@ -113,18 +113,18 @@
                                     <li>{{$account->customer->name}}</li>
                                 </ul>
                             </td>
-                            <td>{{$account->savingsScheme->name}}</td>
+                            <td>{{$account->loanScheme->name}}</td>
                             <td>
                                 <ul class="list list-unstyled">
                                     <li>Account #: &nbsp;{{$account->account_no}}</li>
-                                    <li>Start Date #: &nbsp;{{showdateformat($account->start_date,'M-Y')}}</li>
-                                    <li>End Date #: &nbsp;{{showdateformat($account->end_date,'M-Y')}}</li>
+                                    <li>Start Date #: &nbsp;{{showdateformat($account->start_installment_date,'M-Y')}}</li>
+                                    <li>End Date #: &nbsp;{{showdateformat($account->end_installment_date,'M-Y')}}</li>
                                 </ul>
                             </td>
                             @php $tempStartTime = $startTime @endphp
                             @while($tempStartTime <= $endTime)
                                 @php $paid = false @endphp
-                                @foreach ($account->activeSavingsDeposits as $deposit)
+                                @foreach ($account->activeLoanDeposits as $deposit)
                                     @if($deposit->scheduleDateTime == $tempStartTime)
                                         @php
                                             $paid = true;
@@ -142,7 +142,7 @@
                                     @endif
                                 @endforeach
                                 @if($paid == false)
-                                    @if((strtotime($account->start_date) <= $tempStartTime) && (empty($account->end_date) || strtotime($account->end_date) >= $tempStartTime))
+                                    @if((strtotime($account->start_installment_date) <= $tempStartTime) && (empty($account->end_installment_date) || strtotime($account->end_installment_date) >= $tempStartTime))
                                         <td> 0 </td>
                                     @else
                                         <td> N/A </td>
@@ -174,10 +174,10 @@
             searchable: false
         },
         {data: 'customer.name', name: 'customer.name'},
-        {data: 'savings_scheme.name', name: 'savings_scheme.name'},
+        {data: 'loan_scheme.name', name: 'loan_scheme.name'},
         {data: 'account_no', name: 'account_no'},
-        {data: 'savings_scheme.amount', name: 'savings_scheme.amount'},
-        {data: 'savings_scheme.late_fee', name: 'savings_scheme.late_fee'},
+        {data: 'loan_scheme.amount', name: 'loan_scheme.amount'},
+        {data: 'loan_scheme.late_fee', name: 'loan_scheme.late_fee'},
         {data: 'paymentStatus', name: 'paymentStatus'},
         {data: 'actions', name: 'actions'},
     ]
@@ -188,7 +188,7 @@
             $('td:nth-child('+index+')').css('left',colWidth);
             colWidth += $('th:nth-child('+(index)+')').outerWidth();
         }
-        // loadDatatableWithColumns($('.savings-deposit-datatable'),columns);
+        // loadDatatableWithColumns($('.loan-deposit-datatable'),columns);
     });
 
 </script>
