@@ -78,5 +78,7 @@ Route::group(['middleware'=>'auth'],function () {
 
     Route::resource('/home', 'backends\user\UserController');
 
+    Route::get('dashboard','backends\dashboard\DashboardController@index')->name('dashboard.index');
+
 });
 

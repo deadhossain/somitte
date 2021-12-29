@@ -1,5 +1,16 @@
 <nav class="pcoded-navbar">
     <div class="pcoded-inner-navbar main-menu">
+
+        <div class="pcoded-navigatio-lavel">Summary</div>
+        <ul class="pcoded-item pcoded-left-item">
+            <li>
+                <a href="{{route('dashboard.index')}}">
+                    <span class="pcoded-micon"><i class="fa fa-home"></i></span>
+                    <span class="pcoded-mtext">Dashboard</span>
+                </a>
+            </li>
+        </ul>
+
         <div class="pcoded-navigatio-lavel">Setups</div>
         <ul class="pcoded-item pcoded-left-item">
             <li class="">
