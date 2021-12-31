@@ -124,9 +124,11 @@ class CustomerController extends Controller
      * @param  \App\Models\person\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function show(Customer $customer)
+    public function show($id)
     {
-        //
+        $id = Crypt::decrypt($id);
+        $customerInfo = Customer::with('loanAccounts','loanAccounts.activeLoanDeposits','savingsAccounts','savingsAccounts.activeSavingsDeposits')->findOrFail($id);
+        return view('backends.pages.person.customer.view',compact('customerInfo'));
     }
 
     /**

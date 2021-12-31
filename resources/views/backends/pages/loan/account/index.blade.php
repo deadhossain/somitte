@@ -25,9 +25,9 @@
                         <th style="width: 7%">End Date</th>
                         <th style="width: 12%">Nominee</th>
                         <th style="width: 7%">Account Status</th>
-                        <th style="width: 7%">Action</th>
+                        <th style="width: 7%" data-priority="1">Action</th>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th></th>
                         <th><input autocomplete="off" type="text" class="form-control filter-datatable" placeholder="search"></th>
                         <th><input autocomplete="off" type="text" class="form-control filter-datatable" placeholder="search"></th>
@@ -42,7 +42,7 @@
                         <th><input autocomplete="off" type="text" class="form-control filter-datatable" placeholder="search"></th>
                         <th><input autocomplete="off" type="text" class="form-control filter-datatable" placeholder="search"></th>
                         <th></th>
-                    </tr>
+                    </tr> --}}
                 </thead>
                 <tbody>
                 </tbody>
@@ -77,7 +77,12 @@
         {data: 'nominee.name', name: 'nominee.name'},
         {data: 'account_status', name: 'account_status'},
         {data: 'actions', name: 'actions'},
-    ]
+    ];
+    var columnDefs = [
+            { responsivePriority: 1, targets: 0 },
+            { responsivePriority: 10001, targets: 4 },
+            { responsivePriority: 2, targets: -2 }
+        ];
     $(document).ready(function(){
         adjustWidth();
         loadDatatableWithColumns($('.loan-account-datatable'),columns);

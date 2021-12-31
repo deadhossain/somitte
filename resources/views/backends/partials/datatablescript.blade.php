@@ -221,6 +221,7 @@ function loadDatatableWithColumns(table,columns){
 
         ],
         bAutoWidth: false,
+        responsive: true,
         // bSortCellsTop: false,
         orderCellsTop: true,
         fixedHeader: true,

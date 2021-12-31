@@ -20,7 +20,7 @@
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th></th>
                         <th><input autocomplete="off" style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
                         <th><input autocomplete="off" style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
@@ -28,7 +28,7 @@
                         <th><input autocomplete="off" style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
                         <th><input autocomplete="off" style="width:87%" type="text" class="form-control filter-datatable" placeholder="search"></th>
                         <th></th>
-                    </tr>
+                    </tr> --}}
                 </thead>
                 <tbody>
                 </tbody>

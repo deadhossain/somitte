@@ -53,6 +53,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('assets/pages/data-table/css/buttons.dataTables.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/pages/data-table/extensions/buttons/css/buttons.dataTables.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/pages/data-table/extensions/responsive/css/responsive.dataTables.css')}}">
 
     <!-- Style.css -->
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/style.css')}}">
@@ -207,6 +208,7 @@
 <script src="{{asset('bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js')}}"></script>
 <script src="{{asset('assets/pages/data-table/extensions/buttons/js/extension-btns-custom.js')}}"></script>
 <script src="{{asset('assets/pages/data-table/extensions/fixed-header/js/fixed-header-custom.js')}}"></script>
+{{-- <script src="{{asset('assets/pages/data-table/extensions/responsive/js/responsive-custom.js')}}"></script> --}}
 
 <!-- i18next.min.js -->
 <script type="text/javascript" src="{{asset('bower_components/i18next/js/i18next.min.js')}}"></script>
