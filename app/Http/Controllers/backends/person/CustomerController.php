@@ -127,8 +127,8 @@ class CustomerController extends Controller
     public function show($id)
     {
         $id = Crypt::decrypt($id);
-        $customerInfo = Customer::with('loanAccounts','loanAccounts.activeLoanDeposits','savingsAccounts','savingsAccounts.activeSavingsDeposits')->findOrFail($id);
-        return view('backends.pages.person.customer.view',compact('customerInfo'));
+        $customer = Customer::with('loanAccounts','loanAccounts.activeLoanDeposits','savingsAccounts','savingsAccounts.activeSavingsDeposits')->findOrFail($id);
+        return view('backends.pages.person.customer.view',compact('customer'));
     }
 
     /**
@@ -176,6 +176,7 @@ class CustomerController extends Controller
                     $request->file('nid_attachment')->storeAs('customers/nids', $customer->nid_attachment,'public');
                 }
                 if($request->hasFile('image')){
+                    // dd($request->file('image'));
                     $customer->image = 'image_'.$id .'.'.$request->file('image')->extension();
                     $request->file('image')->storeAs('customers/images', $customer->image,'public');
                 }
