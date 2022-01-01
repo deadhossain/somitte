@@ -3,27 +3,27 @@
 <div class="row">
 
 
-<div class="col-xl-3 col-md-6">
-    <div class="card bg-c-yellow update-card">
-        <div class="card-block">
-            <div class="row align-items-end">
-                <div class="col-8">
-                    <h4 class="text-white">$30200</h4>
-                    <h6 class="text-white m-b-0">Savings Amount</h6>
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-c-yellow update-card">
+            <div class="card-block">
+                <div class="row align-items-end">
+                    <div class="col-8">
+                        <h4 class="text-white">$30200</h4>
+                        <h6 class="text-white m-b-0">Savings Amount</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="row align-items-center">
+                    <div class="col-9">
+                        <p class="text-white m-b-0">Savings Account</p>
+                    </div>
+                    <div class="col-3 text-right">
+                        <p class="text-white m-b-0">302</p>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="card-footer">
-            <div class="row align-items-center">
-                <div class="col-9">
-                    <p class="text-white m-b-0">Savings Account</p>
-                </div>
-                <div class="col-3 text-right">
-                    <p class="text-white m-b-0">302</p>
-                </div>
-            </div>
-        </div>
-    </div>
     </div>
     <div class="col-xl-3 col-md-6">
         <div class="card bg-c-green update-card">

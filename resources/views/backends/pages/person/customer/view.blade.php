@@ -7,7 +7,7 @@
             <div class="card-block">
                 <div class="img-hover">
                     {{-- <img style="width: 280px;height: 300px;margin: auto;" src="{{$customer->image_path}}" alt="customer-default-pic" class="img-thumbnail image-preview"> --}}
-                    <img class="img-fluid img-radius" src="{{$customer->image_path}}" alt="customer-default-pic">
+                    <img class="img-fluid img-radius" src="{{$customer->image_path}}" alt="customer-default-pic" style="height: 170px">
                     {{-- <div class="img-overlay img-radius">
                         <span>
                             <a href="#" class="btn btn-sm btn-primary" data-popup="lightbox"><i class="icofont icofont-plus"></i></a>
@@ -24,6 +24,150 @@
             </div>
         </div>
     </div>
+
+    <div class="col-lg-6 col-xl-9 col-md-6">
+        <div class="row">
+            <div class="col-xl-4 col-md-6">
+                <div class="card bg-c-yellow update-card">
+                    <div class="card-block">
+                        <div class="row align-items-end">
+                            <div class="col-8">
+                                <h4 class="text-white">$30200</h4>
+                                <h6 class="text-white m-b-0">Total Savings Amount</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row align-items-center">
+                            <div class="col-9">
+                                <p class="text-white m-b-0">Savings Account</p>
+                            </div>
+                            <div class="col-3 text-right">
+                                <p class="text-white m-b-0">302</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-4 col-md-6">
+                <div class="card bg-c-yellow update-card">
+                    <div class="card-block">
+                        <div class="row align-items-end">
+                            <div class="col-8">
+                                <h4 class="text-white">$0</h4>
+                                <h6 class="text-white m-b-0">With Draw</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row align-items-center">
+                            <div class="col-9">
+                                <p class="text-white m-b-0">Times</p>
+                            </div>
+                            <div class="col-3 text-right">
+                                <p class="text-white m-b-0">0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-4 col-md-6">
+                <div class="card bg-c-yellow update-card">
+                    <div class="card-block">
+                        <div class="row align-items-end">
+                            <div class="col-8">
+                                <h4 class="text-white">$30200</h4>
+                                <h6 class="text-white m-b-0">Balance</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row align-items-center">
+                            <div class="col-9">
+                                <p class="text-white m-b-0">Active Savings Account</p>
+                            </div>
+                            <div class="col-3 text-right">
+                                <p class="text-white m-b-0">302</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-4 col-md-6">
+                <div class="card bg-c-yellow update-card">
+                    <div class="card-block">
+                        <div class="row align-items-end">
+                            <div class="col-8">
+                                <h4 class="text-white">$30200</h4>
+                                <h6 class="text-white m-b-0">Loan Amount</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row align-items-center">
+                            <div class="col-9">
+                                <p class="text-white m-b-0">Loan Account</p>
+                            </div>
+                            <div class="col-3 text-right">
+                                <p class="text-white m-b-0">302</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-4 col-md-6">
+                <div class="card bg-c-yellow update-card">
+                    <div class="card-block">
+                        <div class="row align-items-end">
+                            <div class="col-8">
+                                <h4 class="text-white">$30200</h4>
+                                <h6 class="text-white m-b-0">Paid Loan Amount</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row align-items-center">
+                            <div class="col-9">
+                                <p class="text-white m-b-0">Loan Account</p>
+                            </div>
+                            <div class="col-3 text-right">
+                                <p class="text-white m-b-0">302</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-4 col-md-6">
+                <div class="card bg-c-yellow update-card">
+                    <div class="card-block">
+                        <div class="row align-items-end">
+                            <div class="col-8">
+                                <h4 class="text-white">$30200</h4>
+                                <h6 class="text-white m-b-0">Remaining Loan </h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row align-items-center">
+                            <div class="col-9">
+                                <p class="text-white m-b-0">Loan Account</p>
+                            </div>
+                            <div class="col-3 text-right">
+                                <p class="text-white m-b-0">302</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
 </div>
 
