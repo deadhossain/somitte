@@ -31,11 +31,47 @@
                     <select name="savings_scheme_id" class="form-control select2-select" data-placeholder="Select Savings Scheme" required>
                         <option value="">Select Savings Scheme</option>
                         @foreach ($savingsSchemes as $savingsScheme)
-                            <option value="{{$savingsScheme->encryptId}}" @if(!@empty(old('savings_scheme_id')) && Crypt::decrypt(old('savings_scheme_id')) == $savingsScheme->id) selected @endif> {{$savingsScheme->name}} </option>
+                            <option late_fee="{{ $savingsScheme->late_fee}}" amount="{{ $savingsScheme->amount}}" profit="{{ $savingsScheme->profit}}" value="{{$savingsScheme->encryptId}}" @if(!@empty(old('savings_scheme_id')) && Crypt::decrypt(old('savings_scheme_id')) == $savingsScheme->id) selected @endif> {{$savingsScheme->name}} </option>
                         @endforeach
                     </select>
                     <span class="messages popover-valid">
                         @error('savings_scheme_id')
+                            <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
+                        @enderror
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group row @error('amount') has-error @enderror">
+                <label class="col-sm-2 col-form-label">Amount</label>
+                <div class="col-sm-10">
+                    <input readonly autocomplete="off" type="text" class="form-control decimalNumber" name="amount" placeholder="Enter Amount" value="{{ old('amount') }}">
+                    <span class="messages popover-valid-inline">
+                        @error('amount')
+                            <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
+                        @enderror
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group row @error('profit') has-error @enderror">
+                <label class="col-sm-2 col-form-label">Profit (%)</label>
+                <div class="col-sm-10">
+                    <input readonly autocomplete="off" type="text" class="form-control decimalNumber" name="profit" placeholder="Enter Profit" value="{{ old('profit') }}">
+                    <span class="messages popover-valid-inline">
+                        @error('profit')
+                            <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
+                        @enderror
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group row @error('late_fee') has-error @enderror">
+                <label class="col-sm-2 col-form-label">Late Fee</label>
+                <div class="col-sm-10">
+                    <input autocomplete="off" type="text" class="form-control wholeNumber" name="late_fee" placeholder="Enter Late Fee" value="{{ old('late_fee') }}">
+                    <span class="messages popover-valid-inline">
+                        @error('late_fee')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
                         @enderror
                     </span>
@@ -112,5 +148,38 @@
     </div>
 </div>
 <!-- Tooltip Validation card end -->
+
+<script>
+    $(document).ready(function () {
+
+        $(document).on('change','select[name="savings_scheme_id"]',function (params) {
+            var schemeId = $(this).val();
+            var form = $(this).closest('form');
+            elementAmount = form.find('input[name="amount"]');
+            elementLateFee = form.find('input[name="late_fee"]');
+            elementProfit = form.find('input[name="profit"]');
+            elementAmount.val("");
+            if(schemeId){
+                var element = $(this).find('option:selected');
+                var minAmount = element.attr('min');
+                var maxAmount = element.attr('max');
+                var maxInstallment = element.attr('max-installment');
+                elementProfit.val(element.attr('rate'));
+                elementLateFee.val(element.attr('late_fee'));
+                elementLoanAmount.attr('min',minAmount);
+                elementLoanAmount.attr('max',maxAmount);
+                elementLoanAmount.attr("readonly", false);
+                elementPayableAmount.attr("readonly", false);
+                elementTotalInstallment.attr("readonly", false);
+            }else{
+                elementLoanAmount.attr("readonly", true);
+                elementLateFee.val("");
+                elementProfit.val("");
+            }
+        });
+
+        $('select[name="savings_scheme_id"]').trigger("change");
+    })
+</script>
 
 @endsection
