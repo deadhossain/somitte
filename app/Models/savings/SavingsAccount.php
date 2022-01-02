@@ -18,7 +18,7 @@ class SavingsAccount extends Model
      * @var array
      */
     protected $fillable = [
-        'account_no','first_deposit_amount','customer_id','savings_scheme_id','start_date','end_date','active_fg','remarks','late_fee','rate'
+        'account_no','first_deposit_amount','customer_id','savings_scheme_id','start_date','end_date','active_fg','remarks','late_fee','profit','deposit_amount'
     ];
 
     protected $appends = [
@@ -71,6 +71,21 @@ class SavingsAccount extends Model
         return $this->hasOne(SavingsDeposit::class, 'savings_accounts_id', 'id')->where('active_fg',1);
     }
 
+    public function getAmountAttribute()
+    {
+        return $this->attributes['amount']+0; // remove trailing zeroes
+    }
+
+    public function getProfitAttribute()
+    {
+        return $this->attributes['profit']+0; // remove trailing zeroes
+    }
+
+    public function getLateFeeAttribute()
+    {
+        return $this->attributes['late_fee']+0; // remove trailing zeroes
+    }
+
     public function getStartDateAttribute()
     {
         return showDateFormat($this->attributes['start_date']);
@@ -78,7 +93,7 @@ class SavingsAccount extends Model
 
     public function getEndDateAttribute()
     {
-        return showDateFormat($this->attributes['start_date']);
+        return showDateFormat($this->attributes['end_date']);
     }
 
     public function getStatusAttribute()

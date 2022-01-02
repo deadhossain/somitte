@@ -33,11 +33,47 @@
                     <select name="savings_scheme_id" class="form-control select2-select" data-placeholder="Select Savings Scheme" required>
                         <option value="">Select Savings Scheme</option>
                         @foreach ($savingsSchemes as $savingsScheme)
-                            <option value="{{$savingsScheme->encryptId}}" @if($savingsScheme->id==$savingsAccount->savings_scheme_id) selected @endif> {{$savingsScheme->name}} </option>
+                            <option late_fee="{{ $savingsScheme->late_fee}}" amount="{{ $savingsScheme->amount}}" profit="{{ $savingsScheme->profit}}" value="{{$savingsScheme->encryptId}}" @if($savingsScheme->id==$savingsAccount->savings_scheme_id) selected @endif> {{$savingsScheme->name}} </option>
                         @endforeach
                     </select>
                     <span class="messages popover-valid">
                         @error('savings_scheme_id')
+                            <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
+                        @enderror
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group row @error('deposit_amount') has-error @enderror">
+                <label class="col-sm-2 col-form-label">Deposit Amount</label>
+                <div class="col-sm-10">
+                    <input readonly autocomplete="off" type="text" class="form-control decimalNumber" name="deposit_amount" placeholder="Enter Deposit Amount" value="{{ old('deposit_amount')?:$savingsAccount->deposit_amount }}">
+                    <span class="messages popover-valid-inline">
+                        @error('deposit_amount')
+                            <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
+                        @enderror
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group row @error('profit') has-error @enderror">
+                <label class="col-sm-2 col-form-label">Profit (%)</label>
+                <div class="col-sm-10">
+                    <input readonly autocomplete="off" type="text" class="form-control decimalNumber" name="profit" placeholder="Enter Profit" value="{{ old('profit')?:$savingsAccount->profit }}">
+                    <span class="messages popover-valid-inline">
+                        @error('profit')
+                            <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
+                        @enderror
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group row @error('late_fee') has-error @enderror">
+                <label class="col-sm-2 col-form-label">Late Fee</label>
+                <div class="col-sm-10">
+                    <input autocomplete="off" type="text" class="form-control wholeNumber" name="late_fee" placeholder="Enter Late Fee" value="{{ old('late_fee')?:$savingsAccount->late_fee }}">
+                    <span class="messages popover-valid-inline">
+                        @error('late_fee')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
                         @enderror
                     </span>
@@ -59,7 +95,7 @@
             <div class="form-group row  @error('first_deposit_amount') has-error @enderror">
                 <label class="col-sm-2 col-form-label">First Deposit Amount</label>
                 <div class="col-sm-10">
-                    <input autocomplete="off" type="text" class="form-control decimalNumber" name="amount" placeholder="Enter First Deposit Amount" value="{{ old('first_deposit_amount')?:$savingsAccount->first_deposit_amount }}">
+                    <input autocomplete="off" type="text" class="form-control decimalNumber" name="first_deposit_amount" placeholder="Enter First Deposit Amount" value="{{ old('first_deposit_amount')?:$savingsAccount->first_deposit_amount }}">
                     <span class="messages popover-valid">
                         @error('first_deposit_amount')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
@@ -71,7 +107,7 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Start Date</label>
                 <div class="col-sm-10">
-                    <input autocomplete="off" type="text" class="form-control today-datepicker @error('start_date') form-control-danger @enderror" name="start_date" placeholder="Enter Scheme Start date" value="{{ old('start_date')?:showDateFormat($savingsAccount->start_date)}}">
+                    <input autocomplete="off" type="text" class="form-control today-datepicker @error('start_date') form-control-danger @enderror" name="start_date" placeholder="Enter Scheme Start date" value="{{ old('start_date')?:$savingsAccount->start_date}}">
                     <span class="messages popover-valid">
                         @error('start_date')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
@@ -83,7 +119,7 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">End Date</label>
                 <div class="col-sm-10">
-                    <input autocomplete="off" type="text" class="form-control single-datepicker @error('end_date') form-control-danger @enderror" name="end_date" placeholder="Enter Scheme End date" value="{{old('end_date')?:showDateFormat($savingsAccount->end_date)}}">
+                    <input autocomplete="off" type="text" class="form-control single-datepicker @error('end_date') form-control-danger @enderror" name="end_date" placeholder="Enter Scheme End date" value="{{old('end_date')?:$savingsAccount->end_date}}">
                     <span class="messages popover-valid">
                         @error('end_date')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
@@ -124,5 +160,34 @@
     </div>
 </div>
 <!-- Tooltip Validation card end -->
+
+<script>
+    $(document).ready(function () {
+
+        $(document).on('change','select[name="savings_scheme_id"]',function (params) {
+            var schemeId = $(this).val();
+            var form = $(this).closest('form');
+            elementDepositAmount = form.find('input[name="deposit_amount"]');
+            elementLateFee = form.find('input[name="late_fee"]');
+            elementProfit = form.find('input[name="profit"]');
+            elementDepositAmount.val("");
+            if(schemeId){
+                var element = $(this).find('option:selected');
+                var maxInstallment = element.attr('max-installment');
+                elementDepositAmount.val(element.attr('amount'));
+                elementProfit.val(element.attr('profit'));
+                elementLateFee.val(element.attr('late_fee'));
+                elementDepositAmount.attr("readonly", false);
+            }else{
+                elementDepositAmount.attr("readonly", true);
+                elementLateFee.val("");
+                elementProfit.val("");
+            }
+        });
+
+        // $('select[name="savings_scheme_id"]').trigger("change");
+    })
+</script>
+
 @endsection
 

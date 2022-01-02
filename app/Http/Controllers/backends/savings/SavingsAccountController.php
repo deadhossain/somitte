@@ -77,8 +77,9 @@ class SavingsAccountController extends Controller
             $savingsAccount->first_deposit_amount = trim($request->input('first_deposit_amount'))?:0;
             $savingsAccount->customer_id = Crypt::decrypt($request->input('customer_id'));
             $savingsAccount->savings_scheme_id = Crypt::decrypt($request->input('savings_scheme_id'));
+            $savingsAccount->deposit_amount = trim($request->input('deposit_amount'))?:0;
             $savingsAccount->late_fee = trim($request->input('late_fee'))?:0;
-            $savingsAccount->rate = $request->input('rate');
+            $savingsAccount->profit = $request->input('profit');
             $savingsAccount->start_date = insertDateFormat($request->input('start_date'));
             $savingsAccount->end_date = insertDateFormat($request->input('end_date'));
             $savingsAccount->remarks = $request->input('remarks');
@@ -140,8 +141,9 @@ class SavingsAccountController extends Controller
             $savingsAccount->first_deposit_amount = trim($request->input('first_deposit_amount'))?:0;
             $savingsAccount->customer_id = Crypt::decrypt($request->input('customer_id'));
             $savingsAccount->savings_scheme_id = Crypt::decrypt($request->input('savings_scheme_id'));
+            $savingsAccount->deposit_amount = trim($request->input('deposit_amount'))?:0;
             $savingsAccount->late_fee = trim($request->input('late_fee'))?:0;
-            $savingsAccount->rate = $request->input('rate');
+            $savingsAccount->profit = $request->input('profit');
             $savingsAccount->start_date = insertDateFormat($request->input('start_date'));
             $savingsAccount->end_date = insertDateFormat($request->input('end_date'));
             $savingsAccount->remarks = $request->input('remarks');

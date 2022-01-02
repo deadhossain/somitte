@@ -42,12 +42,12 @@
                 </div>
             </div>
 
-            <div class="form-group row @error('amount') has-error @enderror">
-                <label class="col-sm-2 col-form-label">Amount</label>
+            <div class="form-group row @error('deposit_amount') has-error @enderror">
+                <label class="col-sm-2 col-form-label">Deposit Amount</label>
                 <div class="col-sm-10">
-                    <input readonly autocomplete="off" type="text" class="form-control decimalNumber" name="amount" placeholder="Enter Amount" value="{{ old('amount') }}">
+                    <input readonly autocomplete="off" type="text" class="form-control decimalNumber" name="deposit_amount" placeholder="Enter Deposit Amount" value="{{ old('deposit_amount') }}">
                     <span class="messages popover-valid-inline">
-                        @error('amount')
+                        @error('deposit_amount')
                             <i class="text-danger error icofont icofont-close-circled" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="" data-original-title="{{$message}}"></i>
                         @enderror
                     </span>
@@ -155,24 +155,19 @@
         $(document).on('change','select[name="savings_scheme_id"]',function (params) {
             var schemeId = $(this).val();
             var form = $(this).closest('form');
-            elementAmount = form.find('input[name="amount"]');
+            elementDepositAmount = form.find('input[name="deposit_amount"]');
             elementLateFee = form.find('input[name="late_fee"]');
             elementProfit = form.find('input[name="profit"]');
-            elementAmount.val("");
+            elementDepositAmount.val("");
             if(schemeId){
                 var element = $(this).find('option:selected');
-                var minAmount = element.attr('min');
-                var maxAmount = element.attr('max');
                 var maxInstallment = element.attr('max-installment');
-                elementProfit.val(element.attr('rate'));
+                elementDepositAmount.val(element.attr('amount'));
+                elementProfit.val(element.attr('profit'));
                 elementLateFee.val(element.attr('late_fee'));
-                elementLoanAmount.attr('min',minAmount);
-                elementLoanAmount.attr('max',maxAmount);
-                elementLoanAmount.attr("readonly", false);
-                elementPayableAmount.attr("readonly", false);
-                elementTotalInstallment.attr("readonly", false);
+                elementDepositAmount.attr("readonly", false);
             }else{
-                elementLoanAmount.attr("readonly", true);
+                elementDepositAmount.attr("readonly", true);
                 elementLateFee.val("");
                 elementProfit.val("");
             }
