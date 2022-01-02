@@ -1,19 +1,19 @@
 @extends('backends.pages.main')
 @section('main-body')
+<style>
+    .card .card-header {
+        background-color: transparent;
+        border-bottom: none;
+        padding: 10px 20px;
+    }
+</style>
 <div class="row">
 
     <div class="col-lg-6 col-xl-3 col-md-6">
         <div class="card rounded-card user-card">
             <div class="card-block">
                 <div class="img-hover">
-                    {{-- <img style="width: 280px;height: 300px;margin: auto;" src="{{$customer->image_path}}" alt="customer-default-pic" class="img-thumbnail image-preview"> --}}
                     <img class="img-fluid img-radius" src="{{$customer->image_path}}" alt="customer-default-pic" style="height: 170px">
-                    {{-- <div class="img-overlay img-radius">
-                        <span>
-                            <a href="#" class="btn btn-sm btn-primary" data-popup="lightbox"><i class="icofont icofont-plus"></i></a>
-                            <a href="" class="btn btn-sm btn-primary"><i class="icofont icofont-link-alt"></i></a>
-                        </span>
-                    </div> --}}
                 </div>
                 <div class="user-content">
                     <h4 class="">{{$customer->name}}</h4>
@@ -218,33 +218,45 @@
                                 <!-- contact data table card start -->
                                 <div class="card">
                                     <div class="card-header">
-                                        <h5 class="card-header-text">Deposit History</h5>
+                                        <h5 class="card-header">Account Summary</h5>
                                     </div>
                                     <div class="card-block contact-details">
                                         <div class="data_table_main table-responsive dt-responsive">
-                                            <table id="simpletable" class="table  table-striped table-bordered nowrap">
+                                            <table id="simpletable" class="table table-xs table-striped table-bordered nowrap">
                                                 <thead>
                                                     <tr>
                                                         <th>SL</th>
-                                                        <th>SChedule Date</th>
-                                                        <th>Deposit Date</th>
-                                                        <th>Deposit Amount</th>
-                                                        <th>Late Fee</th>
-                                                        {{-- <th>Status</th> --}}
+                                                        <th>Name</th>
+                                                        <th>Total</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     @php $sl = 0; @endphp
-                                                    @foreach ($savingsAccount->activeSavingsDeposits as $savingsDeposits)
-                                                        <tr>
-                                                            <td> {{++$sl}} </td>
-                                                            <td> {{showDateFormat($savingsDeposits->schedule_date)}} </td>
-                                                            <td> {{showDateFormat($savingsDeposits->deposit_date)}} </td>
-                                                            <td> {{$savingsDeposits->deposit_amount}} </td>
-                                                            <td> {{$savingsDeposits->late_fee}} </td>
-                                                            {{-- <td> {!! $user->status !!} </td> --}}
-                                                        </tr>
-                                                    @endforeach
+                                                    <tr>
+                                                        <td> {{++$sl}} </td>
+                                                        <td> Total Savings Amount </td>
+                                                        <td>{{$savingsAccount->totalSavingsDeposits}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td> {{++$sl}} </td>
+                                                        <td> Profit </td>
+                                                        <td> {{$savingsAccount->profit}}% </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td> {{++$sl}} </td>
+                                                        <td> Total Late Fee </td>
+                                                        <td> {{$savingsAccount->totalSavingsDepositsLateFee}} </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td> {{++$sl}} </td>
+                                                        <td> Total WithDraw Amount </td>
+                                                        <td> 0 </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td> {{++$sl}} </td>
+                                                        <td> Remaining Saving amount </td>
+                                                        <td> {{$savingsAccount->totalSavingsDeposits}} </td>
+                                                    </tr>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -271,13 +283,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th>SL</th>
-                                                        <th>Total Savings Amount</th>
-                                                        <th>Rate</th>
-                                                        <th>Total WithDraw Amount</th>
-                                                        <th>Total Late Fee</th>
-Total Withdraw amount - 5000
-Total Late fee - 0
-Remaining Saving amount - 10000
+                                                        <th>SChedule Date</th>
                                                         <th>Deposit Date</th>
                                                         <th>Deposit Amount</th>
                                                         <th>Late Fee</th>

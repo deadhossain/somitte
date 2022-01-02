@@ -65,6 +65,11 @@ class SavingsAccount extends Model
         return $this->activeSavingsDeposits()->sum('deposit_amount');
     }
 
+    public function getTotalSavingsDepositsLateFeeAttribute()
+    {
+        return $this->activeSavingsDeposits()->sum('late_fee');
+    }
+
     // current month deposit
     public function currentSavingsDeposit()
     {
