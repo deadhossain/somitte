@@ -192,124 +192,114 @@
             <!-- tab pane contact start -->
             <div class="tab-pane active" id="contacts" role="tabpanel">
                 <div class="row">
-                    <div class="col-xl-3">
+                    <div class="col-xl-12">
                         <!-- user contact card left side start -->
                         <div class="card">
-                            <div class="card-header contact-user">
-                                <h5 class="m-l-10">Account List</h5>
+                            <div class="card-header">
+                                <h5 class="card-header-text">All Savings Accounts</h5>
                             </div>
-                            <div class="card-block">
-                                <ul class="list-group list-contacts">
+                            <div class="card-block accordion-block">
+                                <div id="accordion" role="tablist" aria-multiselectable="true">
                                     @foreach ($customer->savingsAccounts as $savingsAccount)
-                                        <li class="list-group-item">
-                                            <a href="#">{{$savingsAccount->account_no}}</a>
-                                            <span class="badge badge-info badge-pill pull-right">30</span>
-                                        </li>
+                                        @php $id = $savingsAccount->id; @endphp
+                                        <div class="accordion-panel">
+                                            <div class="accordion-heading" role="tab" id="heading{{$id}}">
+                                                <h5 class="card-title accordion-title" >
+                                                    <div class="accordion-msg">
+                                                        <a style="color: white;font-size: inherit;" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$id}}" aria-expanded="true" aria-controls="collapse{{$savingsAccount->id}}">
+                                                            {{$savingsAccount->account_no}}
+                                                        </a>
+                                                        <small style="float:right;">
+                                                            <a href="" class="edit">
+                                                                <span class="label label-info">
+                                                                    <i class="ace-icon fa fa-pencil"></i>
+                                                                    Show Deposit
+                                                                </span>
+                                                            </a>
+                                                        </small>
+                                                    </div>
+                                                </h5>
+                                            </div>
+                                            <div id="collapse{{$id}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading{{$id}}">
+                                                <div class="accordion-content accordion-desc">
+                                                    <div class="row">
+                                                        <div class="dt-responsive table-responsive col-md-5">
+                                                            <table id="simpletable" class="table table-xs table-striped table-bordered nowrap">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>SL</th>
+                                                                        <th>Name</th>
+                                                                        <th>Total</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @php $sl = 0; @endphp
+                                                                    <tr>
+                                                                        <td> {{++$sl}} </td>
+                                                                        <td> Total Savings Amount </td>
+                                                                        <td>{{$savingsAccount->totalSavingsDeposits}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td> {{++$sl}} </td>
+                                                                        <td> Profit </td>
+                                                                        <td> {{$savingsAccount->profit}}% </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td> {{++$sl}} </td>
+                                                                        <td> Total Late Fee </td>
+                                                                        <td> {{$savingsAccount->totalSavingsDepositsLateFee}} </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td> {{++$sl}} </td>
+                                                                        <td> Total WithDraw Amount </td>
+                                                                        <td> 0 </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td> {{++$sl}} </td>
+                                                                        <td> Remaining Saving amount </td>
+                                                                        <td> {{$savingsAccount->totalSavingsDeposits}} </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="data_table_main table-responsive dt-responsive col-md-7">
+                                                            <table id="simpletable" class="table  table-striped table-bordered nowrap">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>SL</th>
+                                                                        <th>SChedule Date</th>
+                                                                        <th>Deposit Date</th>
+                                                                        <th>Deposit Amount</th>
+                                                                        <th>Late Fee</th>
+                                                                        {{-- <th>Status</th> --}}
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @php $sl = 0; @endphp
+                                                                    @foreach ($savingsAccount->activeSavingsDeposits as $savingsDeposits)
+                                                                        <tr>
+                                                                            <td> {{++$sl}} </td>
+                                                                            <td> {{showDateFormat($savingsDeposits->schedule_date)}} </td>
+                                                                            <td> {{showDateFormat($savingsDeposits->deposit_date)}} </td>
+                                                                            <td> {{$savingsDeposits->deposit_amount}} </td>
+                                                                            <td> {{$savingsDeposits->late_fee}} </td>
+                                                                            {{-- <td> {!! $user->status !!} </td> --}}
+                                                                        </tr>
+                                                                    @endforeach
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
                                     @endforeach
-                                </ul>
+                                </div>
                             </div>
                         </div>
-
                         <!-- user contact card left side end -->
-                    </div>
-                    <div class="col-xl-9">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <!-- contact data table card start -->
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h5 class="card-header">Account Summary</h5>
-                                    </div>
-                                    <div class="card-block contact-details">
-                                        <div class="data_table_main table-responsive dt-responsive">
-                                            <table id="simpletable" class="table table-xs table-striped table-bordered nowrap">
-                                                <thead>
-                                                    <tr>
-                                                        <th>SL</th>
-                                                        <th>Name</th>
-                                                        <th>Total</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @php $sl = 0; @endphp
-                                                    <tr>
-                                                        <td> {{++$sl}} </td>
-                                                        <td> Total Savings Amount </td>
-                                                        <td>{{$savingsAccount->totalSavingsDeposits}}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td> {{++$sl}} </td>
-                                                        <td> Profit </td>
-                                                        <td> {{$savingsAccount->profit}}% </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td> {{++$sl}} </td>
-                                                        <td> Total Late Fee </td>
-                                                        <td> {{$savingsAccount->totalSavingsDepositsLateFee}} </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td> {{++$sl}} </td>
-                                                        <td> Total WithDraw Amount </td>
-                                                        <td> 0 </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td> {{++$sl}} </td>
-                                                        <td> Remaining Saving amount </td>
-                                                        <td> {{$savingsAccount->totalSavingsDeposits}} </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- contact data table card end -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-xl-12">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <!-- contact data table card start -->
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h5 class="card-header-text">Deposit History</h5>
-                                    </div>
-                                    <div class="card-block contact-details">
-                                        <div class="data_table_main table-responsive dt-responsive">
-                                            <table id="simpletable" class="table  table-striped table-bordered nowrap">
-                                                <thead>
-                                                    <tr>
-                                                        <th>SL</th>
-                                                        <th>SChedule Date</th>
-                                                        <th>Deposit Date</th>
-                                                        <th>Deposit Amount</th>
-                                                        <th>Late Fee</th>
-                                                        {{-- <th>Status</th> --}}
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @php $sl = 0; @endphp
-                                                    @foreach ($savingsAccount->activeSavingsDeposits as $savingsDeposits)
-                                                        <tr>
-                                                            <td> {{++$sl}} </td>
-                                                            <td> {{showDateFormat($savingsDeposits->schedule_date)}} </td>
-                                                            <td> {{showDateFormat($savingsDeposits->deposit_date)}} </td>
-                                                            <td> {{$savingsDeposits->deposit_amount}} </td>
-                                                            <td> {{$savingsDeposits->late_fee}} </td>
-                                                            {{-- <td> {!! $user->status !!} </td> --}}
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- contact data table card end -->
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -320,166 +310,7 @@
                         <h5 class="card-header-text">Review</h5>
                     </div>
                     <div class="card-block">
-                        <ul class="media-list">
-                            <li class="media">
-                                <div class="media-left">
-                                    <a href="#">
-                                        <img class="media-object img-radius comment-img" src="..\files\assets\images\avatar-1.jpg" alt="Generic placeholder image">
-                                    </a>
-                                </div>
-                                <div class="media-body">
-                                    <h6 class="media-heading">Sortino media<span class="f-12 text-muted m-l-5">Just now</span></h6>
-                                    <div class="stars-example-css review-star">
-                                        <i class="icofont icofont-star"></i>
-                                        <i class="icofont icofont-star"></i>
-                                        <i class="icofont icofont-star"></i>
-                                        <i class="icofont icofont-star"></i>
-                                        <i class="icofont icofont-star"></i>
-                                    </div>
-                                    <p class="m-b-0">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</p>
-                                    <div class="m-b-25">
-                                        <span><a href="#!" class="m-r-10 f-12">Reply</a></span><span><a href="#!" class="f-12">Edit</a> </span>
-                                    </div>
-                                    <hr>
-                                    <!-- Nested media object -->
-                                    <div class="media mt-2">
-                                        <a class="media-left" href="#">
-                                            <img class="media-object img-radius comment-img" src="..\files\assets\images\avatar-2.jpg" alt="Generic placeholder image">
-                                        </a>
-                                        <div class="media-body">
-                                            <h6 class="media-heading">Larry heading <span class="f-12 text-muted m-l-5">Just now</span></h6>
-                                            <div class="stars-example-css review-star">
-                                                <i class="icofont icofont-star"></i>
-                                                <i class="icofont icofont-star"></i>
-                                                <i class="icofont icofont-star"></i>
-                                                <i class="icofont icofont-star"></i>
-                                                <i class="icofont icofont-star"></i>
-                                            </div>
-                                            <p class="m-b-0"> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</p>
-                                            <div class="m-b-25">
-                                                <span><a href="#!" class="m-r-10 f-12">Reply</a></span><span><a href="#!" class="f-12">Edit</a> </span>
-                                            </div>
-                                            <hr>
-                                            <!-- Nested media object -->
-                                            <div class="media mt-2">
-                                                <div class="media-left">
-                                                    <a href="#">
-                                                        <img class="media-object img-radius comment-img" src="..\files\assets\images\avatar-3.jpg" alt="Generic placeholder image">
-                                                    </a>
-                                                </div>
-                                                <div class="media-body">
-                                                    <h6 class="media-heading">Colleen Hurst <span class="f-12 text-muted m-l-5">Just now</span></h6>
-                                                    <div class="stars-example-css review-star">
-                                                        <i class="icofont icofont-star"></i>
-                                                        <i class="icofont icofont-star"></i>
-                                                        <i class="icofont icofont-star"></i>
-                                                        <i class="icofont icofont-star"></i>
-                                                        <i class="icofont icofont-star"></i>
-                                                    </div>
-                                                    <p class="m-b-0">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</p>
-                                                    <div class="m-b-25">
-                                                        <span><a href="#!" class="m-r-10 f-12">Reply</a></span><span><a href="#!" class="f-12">Edit</a> </span>
-                                                    </div>
-                                                </div>
-                                                <hr>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Nested media object -->
-                                    <div class="media mt-2">
-                                        <div class="media-left">
-                                            <a href="#">
-                                                <img class="media-object img-radius comment-img" src="..\files\assets\images\avatar-1.jpg" alt="Generic placeholder image">
-                                            </a>
-                                        </div>
-                                        <div class="media-body">
-                                            <h6 class="media-heading">Cedric Kelly<span class="f-12 text-muted m-l-5">Just now</span></h6>
-                                            <div class="stars-example-css review-star">
-                                                <i class="icofont icofont-star"></i>
-                                                <i class="icofont icofont-star"></i>
-                                                <i class="icofont icofont-star"></i>
-                                                <i class="icofont icofont-star"></i>
-                                                <i class="icofont icofont-star"></i>
-                                            </div>
-                                            <p class="m-b-0">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</p>
-                                            <div class="m-b-25">
-                                                <span><a href="#!" class="m-r-10 f-12">Reply</a></span><span><a href="#!" class="f-12">Edit</a> </span>
-                                            </div>
-                                            <hr>
-                                        </div>
-                                    </div>
-                                    <div class="media mt-2">
-                                        <a class="media-left" href="#">
-                                            <img class="media-object img-radius comment-img" src="..\files\assets\images\avatar-4.jpg" alt="Generic placeholder image">
-                                        </a>
-                                        <div class="media-body">
-                                            <h6 class="media-heading">Larry heading <span class="f-12 text-muted m-l-5">Just now</span></h6>
-                                            <div class="stars-example-css review-star">
-                                                <i class="icofont icofont-star"></i>
-                                                <i class="icofont icofont-star"></i>
-                                                <i class="icofont icofont-star"></i>
-                                                <i class="icofont icofont-star"></i>
-                                                <i class="icofont icofont-star"></i>
-                                            </div>
-                                            <p class="m-b-0"> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</p>
-                                            <div class="m-b-25">
-                                                <span><a href="#!" class="m-r-10 f-12">Reply</a></span><span><a href="#!" class="f-12">Edit</a> </span>
-                                            </div>
-                                            <hr>
-                                            <!-- Nested media object -->
-                                            <div class="media mt-2">
-                                                <div class="media-left">
-                                                    <a href="#">
-                                                        <img class="media-object img-radius comment-img" src="..\files\assets\images\avatar-3.jpg" alt="Generic placeholder image">
-                                                    </a>
-                                                </div>
-                                                <div class="media-body">
-                                                    <h6 class="media-heading">Colleen Hurst <span class="f-12 text-muted m-l-5">Just now</span></h6>
-                                                    <div class="stars-example-css review-star">
-                                                        <i class="icofont icofont-star"></i>
-                                                        <i class="icofont icofont-star"></i>
-                                                        <i class="icofont icofont-star"></i>
-                                                        <i class="icofont icofont-star"></i>
-                                                        <i class="icofont icofont-star"></i>
-                                                    </div>
-                                                    <p class="m-b-0">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</p>
-                                                    <div class="m-b-25">
-                                                        <span><a href="#!" class="m-r-10 f-12">Reply</a></span><span><a href="#!" class="f-12">Edit</a> </span>
-                                                    </div>
-                                                </div>
-                                                <hr>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="media mt-2">
-                                        <div class="media-left">
-                                            <a href="#">
-                                                <img class="media-object img-radius comment-img" src="..\files\assets\images\avatar-2.jpg" alt="Generic placeholder image">
-                                            </a>
-                                        </div>
-                                        <div class="media-body">
-                                            <h6 class="media-heading">Mark Doe<span class="f-12 text-muted m-l-5">Just now</span></h6>
-                                            <div class="stars-example-css review-star">
-                                                <i class="icofont icofont-star"></i>
-                                                <i class="icofont icofont-star"></i>
-                                                <i class="icofont icofont-star"></i>
-                                                <i class="icofont icofont-star"></i>
-                                                <i class="icofont icofont-star"></i>
-                                            </div>
-                                            <p class="m-b-0">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</p>
-                                            <div class="m-b-25">
-                                                <span><a href="#!" class="m-r-10 f-12">Reply</a></span><span><a href="#!" class="f-12">Edit</a> </span>
-                                            </div>
-                                            <hr>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Right addon">
-                            <span class="input-group-addon"><i class="icofont icofont-send-mail"></i></span>
-                        </div>
+                        
 
                     </div>
                 </div>
