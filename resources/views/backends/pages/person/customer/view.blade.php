@@ -8,7 +8,15 @@
     }
 </style>
 <div class="row">
+    @php
+        $totalSavingsDeposits = $customer->totalActiveSavingsDeposits;
+        $totalSavingsLateFees = $customer->totalActiveSavingsDepositsLateFee;
+        $totalRemainingSavingsBalance = $totalSavingsDeposits - $totalSavingsLateFees;
 
+        $totalLoanDeposits = $customer->totalActiveLoanDeposits;
+        $totalLoanLateFees = $customer->totalActiveLoanDepositsLateFee;
+        $totalRemainingBalance = $totalLoanDeposits - $totalLoanLateFees;
+    @endphp
     <div class="col-lg-6 col-xl-3 col-md-6">
         <div class="card rounded-card user-card">
             <div class="card-block">
@@ -32,7 +40,7 @@
                     <div class="card-block">
                         <div class="row align-items-end">
                             <div class="col-8">
-                                <h4 class="text-white">$30200</h4>
+                                <h4 class="text-white">{{$totalSavingsDeposits}}</h4>
                                 <h6 class="text-white m-b-0">Total Savings Amount</h6>
                             </div>
                         </div>
@@ -43,7 +51,7 @@
                                 <p class="text-white m-b-0">Savings Account</p>
                             </div>
                             <div class="col-3 text-right">
-                                <p class="text-white m-b-0">302</p>
+                                <p class="text-white m-b-0">{{count($customer->savingsAccounts)}}</p>
                             </div>
                         </div>
                     </div>
@@ -63,10 +71,10 @@
                     <div class="card-footer">
                         <div class="row align-items-center">
                             <div class="col-9">
-                                <p class="text-white m-b-0">Times</p>
+                                <p class="text-white m-b-0">Late Fee</p>
                             </div>
                             <div class="col-3 text-right">
-                                <p class="text-white m-b-0">0</p>
+                                <p class="text-white m-b-0">{{$totalSavingsLateFees}}</p>
                             </div>
                         </div>
                     </div>
@@ -78,7 +86,7 @@
                     <div class="card-block">
                         <div class="row align-items-end">
                             <div class="col-8">
-                                <h4 class="text-white">$30200</h4>
+                                <h4 class="text-white">{{$totalRemainingSavingsBalance}}</h4>
                                 <h6 class="text-white m-b-0">Balance</h6>
                             </div>
                         </div>
@@ -101,7 +109,7 @@
                     <div class="card-block">
                         <div class="row align-items-end">
                             <div class="col-8">
-                                <h4 class="text-white">$30200</h4>
+                                <h4 class="text-white">{{$totalLoanDeposits}}</h4>
                                 <h6 class="text-white m-b-0">Loan Amount</h6>
                             </div>
                         </div>
@@ -112,7 +120,7 @@
                                 <p class="text-white m-b-0">Loan Account</p>
                             </div>
                             <div class="col-3 text-right">
-                                <p class="text-white m-b-0">302</p>
+                                <p class="text-white m-b-0">{{count($customer->loanAccounts)}}</p>
                             </div>
                         </div>
                     </div>
@@ -124,7 +132,10 @@
                     <div class="card-block">
                         <div class="row align-items-end">
                             <div class="col-8">
-                                <h4 class="text-white">$30200</h4>
+
+        $totalLoanLateFees = $customer->totalActiveLoanDepositsLateFee;
+        $totalRemainingBalance = $totalLoanDeposits - $totalLoanLateFees;
+                                <h4 class="text-white">{{$totalLoanDeposits}}</h4>
                                 <h6 class="text-white m-b-0">Paid Loan Amount</h6>
                             </div>
                         </div>
@@ -202,25 +213,17 @@
                                 <div id="accordion" role="tablist" aria-multiselectable="true">
                                     @foreach ($customer->savingsAccounts as $savingsAccount)
                                         @php $id = $savingsAccount->id; @endphp
-                                        <div class="accordion-panel">
-                                            <div class="accordion-heading" role="tab" id="heading{{$id}}">
+                                        <div class="panel panel-primary accordion-panel" style="border-color: #01a9ac;margin-bottom:15px;">
+                                            <div class="accordion-heading" role="tab" id="heading{{$id}}" style="margin: -1px;" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$id}}" aria-expanded="true" aria-controls="collapse{{$savingsAccount->id}}">
                                                 <h5 class="card-title accordion-title" >
                                                     <div class="accordion-msg">
-                                                        <a style="color: white;font-size: inherit;" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$id}}" aria-expanded="true" aria-controls="collapse{{$savingsAccount->id}}">
+                                                        <a style="color: white;font-size: inherit;">
                                                             {{$savingsAccount->account_no}}
                                                         </a>
-                                                        <small style="float:right;">
-                                                            <a href="" class="edit">
-                                                                <span class="label label-info">
-                                                                    <i class="ace-icon fa fa-pencil"></i>
-                                                                    Show Deposit
-                                                                </span>
-                                                            </a>
-                                                        </small>
                                                     </div>
                                                 </h5>
                                             </div>
-                                            <div id="collapse{{$id}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading{{$id}}">
+                                            <div id="collapse{{$id}}" class="panel-body panel-collapse collapse in" role="tabpanel" aria-labelledby="heading{{$id}}" style="margin-top: 25px;">
                                                 <div class="accordion-content accordion-desc">
                                                     <div class="row">
                                                         <div class="dt-responsive table-responsive col-md-5">
@@ -263,7 +266,7 @@
                                                             </table>
                                                         </div>
                                                         <div class="data_table_main table-responsive dt-responsive col-md-7">
-                                                            <table id="simpletable" class="table  table-striped table-bordered nowrap">
+                                                            <table id="simpletable" class="table table-xs table-striped table-bordered">
                                                                 <thead>
                                                                     <tr>
                                                                         <th>SL</th>
@@ -310,7 +313,7 @@
                         <h5 class="card-header-text">Review</h5>
                     </div>
                     <div class="card-block">
-                        
+
 
                     </div>
                 </div>
