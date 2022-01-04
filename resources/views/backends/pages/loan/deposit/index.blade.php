@@ -29,7 +29,7 @@
             <table data-source="{{route('loan_deposit.data',$month)}}" class="table loan-deposit-datatable compact table-hover table-bordered nowrap" style="width:100%">
                 <thead>
                     <tr>
-                        <th>SL</th>
+                        <th style="width: 3%">SL</th>
                         <th style="width: 15%">Customer</th>
                         <th style="width: 12%">Scheme</th>
                         <th style="width: 8%">Account No</th>

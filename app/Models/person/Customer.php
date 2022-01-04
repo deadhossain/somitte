@@ -92,6 +92,11 @@ class Customer extends Model
         return $this->loanAccounts()->where('active_fg',1);
     }
 
+    public function getTotalLoanAmountAttribute()
+    {
+        return $this->activeLoanAccounts()->sum('total_payable_amount')+0;
+    }
+
     public function loanDeposits()
     {
         return $this->hasManyThrough(
@@ -111,12 +116,12 @@ class Customer extends Model
 
     public function getTotalActiveLoanDepositsAttribute()
     {
-        return $this->activeLoanDeposits()->sum('loan_deposits.deposit_amount');
+        return $this->activeLoanDeposits()->sum('loan_deposits.deposit_amount')+0;
     }
 
     public function getTotalActiveLoanDepositsLateFeeAttribute()
     {
-        return $this->activeLoanDeposits()->sum('loan_deposits.late_fee');
+        return $this->activeLoanDeposits()->sum('loan_deposits.late_fee')+0;
     }
 
 

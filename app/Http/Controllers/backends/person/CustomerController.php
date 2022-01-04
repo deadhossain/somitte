@@ -128,7 +128,7 @@ class CustomerController extends Controller
     {
         $id = Crypt::decrypt($id);
         $customer = Customer::with('loanAccounts','loanAccounts.activeLoanDeposits','savingsAccounts','savingsAccounts.activeSavingsDeposits')->findOrFail($id);
-        // dd($customer);
+        // dd($customer->totalActiveLoanDepositsLateFee);
         // foreach ($customer->savingsAccounts as $savingsAccount){
         //     var_dump($savingsAccount->activeSavingsDeposits);
         // }

@@ -66,6 +66,11 @@ class LoanAccount extends Model
         return $this->activeLoanDeposits()->sum('deposit_amount');
     }
 
+    public function getTotalLoanDepositsLateFeeAttribute()
+    {
+        return $this->activeLoanDeposits()->sum('late_fee');
+    }
+
     // current month deposit
     public function currentLoanDeposit()
     {

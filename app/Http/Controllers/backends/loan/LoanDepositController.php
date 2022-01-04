@@ -155,7 +155,7 @@ class LoanDepositController extends Controller
     public function update(StoreLoanDepositRequest $request, LoanDeposit $loanAccountDeposit)
     {
         try {
-            $id = Crypt::decrypt($request->loan_deposit);
+            $id = Crypt::decrypt($request->deposit);
             $loanAccountDeposit = LoanDeposit::findOrFail($id);
             // $loanAccountDeposit->schedule_date = insertDateFormat($request->input('schedule_date'));
             $loanAccountDeposit->deposit_amount = trim($request->input('deposit_amount'))?:0;
