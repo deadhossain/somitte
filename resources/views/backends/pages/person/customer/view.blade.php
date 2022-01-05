@@ -265,7 +265,7 @@
                                                             </table>
                                                         </div>
                                                         <div class="data_table_main table-responsive dt-responsive col-md-7">
-                                                            <table id="simpletable" class="table table-xs table-striped table-bordered">
+                                                            <table class="table basic-datatable table-xs table-striped table-bordered">
                                                                 <thead>
                                                                     <tr>
                                                                         <th>SL</th>
@@ -332,7 +332,7 @@
                                                 <div class="accordion-content accordion-desc">
                                                     <div class="row">
                                                         <div class="dt-responsive table-responsive col-md-5">
-                                                            <table id="simpletable" class="table table-xs table-striped table-bordered nowrap">
+                                                            <table class="table table-xs table-striped table-bordered nowrap">
                                                                 <thead>
                                                                     <tr>
                                                                         <th>SL</th>
@@ -381,7 +381,7 @@
                                                             </table>
                                                         </div>
                                                         <div class="data_table_main table-responsive dt-responsive col-md-7">
-                                                            <table id="simpletable" class="table table-xs table-striped table-bordered">
+                                                            <table class="table basic-datatable table-xs table-striped table-bordered">
                                                                 <thead>
                                                                     <tr>
                                                                         <th>SL</th>
@@ -425,4 +425,14 @@
         <!-- tab content end -->
     </div>
 </div>
+@include('backends.partials.datatablescript')
+<script type="text/javascript">
+    $(document).ready(function(){
+        // adjustWidth();
+        $('.basic-datatable').each(function(){
+            normalDatatable($(this));
+        });
+    });
+</script>
+
 @endsection
