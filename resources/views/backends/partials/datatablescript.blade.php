@@ -255,7 +255,7 @@ function normalDatatable(table){
         fixedHeader: true,
         processing: true,
         // serverSide: true,
-        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        lengthMenu: [[7, 25, 50, -1], [7, 25, 50, "All"]],
         "footerCallback": function(row, data, start, end, display) {
             var api = this.api();
 
