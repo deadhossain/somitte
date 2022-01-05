@@ -165,22 +165,7 @@
     </div>
 </div>
 
-{{-- @include('backends.partials.datatablescript') --}}
 <script type="text/javascript">
-    var columns = [
-        {
-            "data": 'DT_RowIndex',
-            orderable: false,
-            searchable: false
-        },
-        {data: 'customer.name', name: 'customer.name'},
-        {data: 'loan_scheme.name', name: 'loan_scheme.name'},
-        {data: 'account_no', name: 'account_no'},
-        {data: 'loan_scheme.amount', name: 'loan_scheme.amount'},
-        {data: 'loan_scheme.late_fee', name: 'loan_scheme.late_fee'},
-        {data: 'paymentStatus', name: 'paymentStatus'},
-        {data: 'actions', name: 'actions'},
-    ]
     $(document).ready(function(){
         let colWidth = 0;
         for (let index = 1; index <= 4; index++) {
@@ -188,7 +173,6 @@
             $('td:nth-child('+index+')').css('left',colWidth);
             colWidth += $('th:nth-child('+(index)+')').outerWidth();
         }
-        // loadDatatableWithColumns($('.loan-deposit-datatable'),columns);
     });
 
 </script>

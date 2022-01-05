@@ -8,7 +8,9 @@ use App\Models\savings\SavingsAccount;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
 use Yajra\DataTables\Facades\DataTables;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\backends\savings\StoreSavingsDepositRequest;
+use App\Exports\backends\savings\SavingsDepositsExportView;
 use App\Models\setups\LookupDetail;
 use App\Models\person\Customer;
 use App\Models\savings\SavingsScheme;
@@ -202,14 +204,13 @@ class SavingsDepositController extends Controller
 
     public function monthWiseDepositReport(Request $request)
     {
-        // dd($request->all());
         $currentYear = date('01/01/Y').' - ' .date('31/12/Y');
         $customerId = $request->input('customer_id')?:0;
         $accountId = $request->input('account_id')?:0;
         $savingsSchemeId = $request->input('savings_scheme_id')?:0;
 
         $daterange = $request->input('datefilter')?:$currentYear;
-        // dd($request->all(),$request->input('customer_id'),$customerId,$request->input('savings_scheme_id'),$savingsSchemeId,$savingsSchemeId!=0);
+        // dd($request->all(),$request->input('month-wise-report'),$customerId,$request->input('savings_scheme_id'),$savingsSchemeId,$savingsSchemeId!=0);
 
         $daterangeArray = explode("-",$daterange);
         $daterangeArray[0] = date('Y-m-d',strtotime(str_replace('/', '-', trim($daterangeArray[0]))));
@@ -242,7 +243,10 @@ class SavingsDepositController extends Controller
         $accounts = $accounts->get();
         $customers = Customer::where('active_fg',1)->get();
         $savingsSchemes = SavingsScheme::where('active_fg',1)->get();
+        if ($request->input('month-wise-report')=='Excel') {
+            return Excel::download(new SavingsDepositsExportView($startTime,$endTime,$accounts), 'monthWiseDepositReport.xlsx');
+        }
         return view('backends.pages.savings.deposit.reports.month_wise_report',
-                compact('daterange','daterangeArray','startTime','endTime','accounts','accountId','endTime','accounts','customers','customerId','savingsSchemes','savingsSchemeId'));
+                compact('daterange','daterangeArray','startTime','endTime','accounts','accountId','accounts','customers','customerId','savingsSchemes','savingsSchemeId'));
     }
 }

@@ -73,7 +73,8 @@
                     </div>
                     <div class=" col-md-3 form-group row">
                         <label class="col-form-label"> </label>
-                        <input type="submit" class="btn btn-primary m-b-0" name="month-wise-report" value="Submit">
+                        <input style="margin-right:10px " type="submit" class="btn btn-primary m-b-0" name="month-wise-report" value="Submit">
+                        <input type="submit" class="btn btn-primary m-b-0" name="month-wise-report" value="Excel">
                     </div>
                 </div>
             <hr>
@@ -88,9 +89,17 @@
                 ]
             ) --}}
             @include('backends.pages.savings.deposit.reports.month_wise_report_table')
-            {{-- https://www.youtube.com/watch?v=n3WjgZiPZdM --}}
-            {{-- https://www.youtube.com/watch?v=ujUA3OL9As0 --}}
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        let colWidth = 0;
+        for (let index = 1; index <= 4; index++) {
+            $('th:nth-child('+index+')').css('left',colWidth);
+            $('td:nth-child('+index+')').css('left',colWidth);
+            colWidth += $('th:nth-child('+(index)+')').outerWidth();
+        }
+    });
+</script>
 @endsection
