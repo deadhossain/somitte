@@ -38,12 +38,12 @@
     <div class="col-lg-6 col-xl-9 col-md-6">
         <div class="row">
             <div class="col-xl-4 col-md-6">
-                <div class="card bg-c-yellow update-card">
+                <div class="card bg-c-blue update-card">
                     <div class="card-block">
                         <div class="row align-items-end">
                             <div class="col-8">
                                 <h4 class="text-white">${{$totalSavingsDeposits}}</h4>
-                                <h6 class="text-white m-b-0">Total Savings Amount</h6>
+                                <h6 class="text-white m-b-0">Total Savings Deposit</h6>
                             </div>
                         </div>
                     </div>
@@ -61,7 +61,7 @@
             </div>
 
             <div class="col-xl-4 col-md-6">
-                <div class="card bg-c-yellow update-card">
+                <div class="card bg-c-orenge update-card">
                     <div class="card-block">
                         <div class="row align-items-end">
                             <div class="col-8">
@@ -84,7 +84,7 @@
             </div>
 
             <div class="col-xl-4 col-md-6">
-                <div class="card bg-c-yellow update-card">
+                <div class="card bg-c-green update-card">
                     <div class="card-block">
                         <div class="row align-items-end">
                             <div class="col-8">
@@ -107,7 +107,7 @@
             </div>
 
             <div class="col-xl-4 col-md-6">
-                <div class="card bg-c-yellow update-card">
+                <div class="card bg-c-lite-green update-card">
                     <div class="card-block">
                         <div class="row align-items-end">
                             <div class="col-8">
@@ -130,7 +130,7 @@
             </div>
 
             <div class="col-xl-4 col-md-6">
-                <div class="card bg-c-yellow update-card">
+                <div class="card bg-c-orenge update-card">
                     <div class="card-block">
                         <div class="row align-items-end">
                             <div class="col-8">
@@ -153,7 +153,7 @@
             </div>
 
             <div class="col-xl-4 col-md-6">
-                <div class="card bg-c-yellow update-card">
+                <div class="card bg-c-pink update-card">
                     <div class="card-block">
                         <div class="row align-items-end">
                             <div class="col-8">

@@ -80,117 +80,17 @@
         </div>
     </form>
     <div class="card-block">
-
         <div class="dt-responsive table-responsive">
-            <table data-source="{{route('deposit.data')}}" class="table savings-deposit-datatable compact table-hover table-bordered nowrap" style="width:100%;">
-                <thead>
-                    <tr>
-                        <th>SL</th>
-                        <th>Customer Information</th>
-                        <th>Savings Scheme</th>
-                        <th>Account Information</th>
-                        @php $tempStartTime = $startTime @endphp
-                        @while($tempStartTime <= $endTime)
-                            <th> @php echo date('F-Y',$tempStartTime) @endphp</th>
-                            @php $tempStartTime = strtotime("+1 month", $tempStartTime); @endphp
-
-                        @endwhile
-                        <th>Deposit Details</th>
-                        <th>Total Amount</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @php $sl = 1 @endphp
-                    @foreach ($accounts as $account)
-                        @php
-                            $totalDeposit = 0; $totalLateFee = 0; $totalAmount = 0
-                        @endphp
-                        <tr>
-                            <td>{{$sl++}}</td>
-                            <td>
-                                <ul class="list list-unstyled">
-                                    <li>ID #: &nbsp;{{$account->customer->customer_uid}}</li>
-                                    <li>{{$account->customer->name}}</li>
-                                </ul>
-                            </td>
-                            <td>{{$account->savingsScheme->name}}</td>
-                            <td>
-                                <ul class="list list-unstyled">
-                                    <li>Account #: &nbsp;{{$account->account_no}}</li>
-                                    <li>Start Date #: &nbsp;{{showdateformat($account->start_date,'M-Y')}}</li>
-                                    <li>End Date #: &nbsp;{{showdateformat($account->end_date,'M-Y')}}</li>
-                                </ul>
-                            </td>
-                            @php $tempStartTime = $startTime @endphp
-                            @while($tempStartTime <= $endTime)
-                                @php $paid = false @endphp
-                                @foreach ($account->activeSavingsDeposits as $deposit)
-                                    @if($deposit->scheduleDateTime == $tempStartTime)
-                                        @php
-                                            $paid = true;
-                                            $depositAmount = $deposit->deposit_amount;
-                                            $lateFee = $deposit->late_fee;
-                                            $totalDeposit += $depositAmount;
-                                            $totalLateFee += $lateFee;
-                                        @endphp
-                                        <td>
-                                            <ul class="list list-unstyled">
-                                                <li>Deposit #: &nbsp;{{$depositAmount}}</li>
-                                                <li style="color: red">Late Fee #: &nbsp;{{$lateFee}}</li>
-                                            </ul>
-                                        </td>
-                                    @endif
-                                @endforeach
-                                @if($paid == false)
-                                    @if((strtotime($account->start_date) <= $tempStartTime) && (empty($account->end_date) || strtotime($account->end_date) >= $tempStartTime))
-                                        <td> 0 </td>
-                                    @else
-                                        <td> N/A </td>
-                                    @endif
-                                @endif
-                                @php $tempStartTime = strtotime("+1 month", $tempStartTime); @endphp
-                            @endwhile
-                            <td>
-                                <ul class="list list-unstyled">
-                                    <li>Total Deposit #: &nbsp;{{$totalDeposit}}</li>
-                                    <li style="color: red">Total Late Fee #: &nbsp;{{$totalLateFee}}</li>
-                                </ul>
-                            </td>
-                            <td>{{$totalDeposit+$totalLateFee}}</td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+            {{-- @include('backends.pages.savings.deposit.reports.month_wise_report_table',[
+                    'startTime' => $startTime,
+                    'endTime' => $endTime,
+                    'accounts' => $accounts
+                ]
+            ) --}}
+            @include('backends.pages.savings.deposit.reports.month_wise_report_table')
+            {{-- https://www.youtube.com/watch?v=n3WjgZiPZdM --}}
+            {{-- https://www.youtube.com/watch?v=ujUA3OL9As0 --}}
         </div>
     </div>
 </div>
-
-{{-- @include('backends.partials.datatablescript') --}}
-<script type="text/javascript">
-    var columns = [
-        {
-            "data": 'DT_RowIndex',
-            orderable: false,
-            searchable: false
-        },
-        {data: 'customer.name', name: 'customer.name'},
-        {data: 'savings_scheme.name', name: 'savings_scheme.name'},
-        {data: 'account_no', name: 'account_no'},
-        {data: 'savings_scheme.amount', name: 'savings_scheme.amount'},
-        {data: 'savings_scheme.late_fee', name: 'savings_scheme.late_fee'},
-        {data: 'paymentStatus', name: 'paymentStatus'},
-        {data: 'actions', name: 'actions'},
-    ]
-    $(document).ready(function(){
-        let colWidth = 0;
-        for (let index = 1; index <= 4; index++) {
-            $('th:nth-child('+index+')').css('left',colWidth);
-            $('td:nth-child('+index+')').css('left',colWidth);
-            colWidth += $('th:nth-child('+(index)+')').outerWidth();
-        }
-        // loadDatatableWithColumns($('.savings-deposit-datatable'),columns);
-    });
-
-</script>
-
 @endsection
