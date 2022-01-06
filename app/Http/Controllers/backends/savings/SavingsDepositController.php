@@ -244,7 +244,7 @@ class SavingsDepositController extends Controller
         $customers = Customer::where('active_fg',1)->get();
         $savingsSchemes = SavingsScheme::where('active_fg',1)->get();
         if ($request->input('month-wise-report')=='Excel') {
-            return Excel::download(new SavingsDepositsExportView($startTime,$endTime,$accounts), 'monthWiseDepositReport.xlsx');
+            return Excel::download(new SavingsDepositsExportView($startTime,$endTime,$accounts), 'monthWiseSavingsDepositReport.xlsx');
         }
         return view('backends.pages.savings.deposit.reports.month_wise_report',
                 compact('daterange','daterangeArray','startTime','endTime','accounts','accountId','accounts','customers','customerId','savingsSchemes','savingsSchemeId'));

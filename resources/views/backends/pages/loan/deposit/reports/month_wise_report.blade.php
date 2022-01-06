@@ -19,7 +19,7 @@
 
 <!-- HTML5 Export Buttons table start -->
 <div class="card">
-    <form action="{{route('deposit.report.month-wise')}}" method="post">
+    <form action="{{route('loan_deposit.report.month-wise')}}" method="post">
         @csrf
         <div class="card-header table-card-header">
 
@@ -73,7 +73,8 @@
                     </div>
                     <div class=" col-md-3 form-group row">
                         <label class="col-form-label"> </label>
-                        <input type="submit" class="btn btn-primary m-b-0" name="month-wise-report" value="Submit">
+                        <input style="margin-right:10px " type="submit" class="btn btn-primary m-b-0" name="month-wise-report" value="Submit">
+                        <input type="submit" class="btn btn-primary m-b-0" name="month-wise-report" value="Excel">
                     </div>
                 </div>
             <hr>

@@ -8,7 +8,9 @@ use App\Models\loan\LoanAccount;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
 use Yajra\DataTables\Facades\DataTables;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\backends\loan\StoreLoanDepositRequest;
+use App\Exports\backends\loan\LoanDepositsExportView;
 use App\Models\setups\LookupDetail;
 use App\Models\person\Customer;
 use App\Models\loan\LoanScheme;
@@ -242,6 +244,9 @@ class LoanDepositController extends Controller
         $accounts = $accounts->get();
         $customers = Customer::where('active_fg',1)->get();
         $loanSchemes = LoanScheme::where('active_fg',1)->get();
+        if ($request->input('month-wise-report')=='Excel') {
+            return Excel::download(new LoanDepositsExportView($startTime,$endTime,$accounts), 'monthWiseLoanDepositReport.xlsx');
+        }
         return view('backends.pages.loan.deposit.reports.month_wise_report',
                 compact('daterange','daterangeArray','startTime','endTime','accounts','accountId','endTime','accounts','customers','customerId','loanSchemes','loanSchemeId'));
     }
