@@ -71,10 +71,11 @@
 
 
                     </div>
-                    <div class=" col-md-3 form-group row">
+                    <div class=" col-md-5 form-group row">
                         <label class="col-form-label"> </label>
-                        <input style="margin-right:10px " type="submit" class="btn btn-primary m-b-0" name="month-wise-report" value="Submit">
-                        <input type="submit" class="btn btn-primary m-b-0" name="month-wise-report" value="Excel">
+                        <input style="margin-right:10px" type="submit" class="btn btn-primary m-b-0" name="month-wise-report" value="Submit">
+                        <input style="margin-right:10px" type="submit" class="btn btn-primary m-b-0" name="month-wise-report" value="Excel">
+                        {{-- <input type="submit" class="btn btn-primary m-b-0" name="month-wise-report" value="PDF"> --}}
                     </div>
                 </div>
             <hr>

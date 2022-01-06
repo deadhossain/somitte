@@ -16,6 +16,7 @@ use App\Models\person\Customer;
 use App\Models\savings\SavingsScheme;
 use Auth;
 use DateTime;
+use PDF;
 
 class SavingsDepositController extends Controller
 {
@@ -243,6 +244,15 @@ class SavingsDepositController extends Controller
         $accounts = $accounts->get();
         $customers = Customer::where('active_fg',1)->get();
         $savingsSchemes = SavingsScheme::where('active_fg',1)->get();
+        if ($request->input('month-wise-report')=='PDF') {
+            $data = array(
+                'startTime' => $startTime,
+                'endTime' => $endTime,
+                'accounts' => $accounts
+            );
+            $pdf = PDF::loadView('backends.pages.savings.deposit.reports.month_wise_report', $data);
+            return $pdf->download('invoice.pdf');
+        }
         if ($request->input('month-wise-report')=='Excel') {
             return Excel::download(new SavingsDepositsExportView($startTime,$endTime,$accounts), 'monthWiseSavingsDepositReport.xlsx');
         }
