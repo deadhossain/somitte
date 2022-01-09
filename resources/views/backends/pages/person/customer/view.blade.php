@@ -49,11 +49,11 @@
                     </div>
                     <div class="card-footer">
                         <div class="row align-items-center">
-                            <div class="col-9">
-                                <p class="text-white m-b-0">Savings Account</p>
+                            <div class="col-8">
+                                <p class="text-white m-b-0">Total First Deposit</p>
                             </div>
-                            <div class="col-3 text-right">
-                                <p class="text-white m-b-0">{{count($customer->savingsAccounts)}}</p>
+                            <div class="col-4 text-right">
+                                <p class="text-white m-b-0">{{$customer->totalSavingsAccountFirstDeposit}}</p>
                             </div>
                         </div>
                     </div>
@@ -96,10 +96,10 @@
                     <div class="card-footer">
                         <div class="row align-items-center">
                             <div class="col-9">
-                                <p class="text-white m-b-0">Active Savings Account</p>
+                                <p class="text-white m-b-0">Savings Account</p>
                             </div>
                             <div class="col-3 text-right">
-                                <p class="text-white m-b-0">302</p>
+                                <p class="text-white m-b-0">{{count($customer->savingsAccounts)}}</p>
                             </div>
                         </div>
                     </div>
@@ -238,8 +238,13 @@
                                                                     @php $sl = 0; @endphp
                                                                     <tr>
                                                                         <td> {{++$sl}} </td>
-                                                                        <td> Total Savings Amount </td>
+                                                                        <td> Total Savings Deposit Amount </td>
                                                                         <td>{{$savingsAccount->totalSavingsDeposits}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td> {{++$sl}} </td>
+                                                                        <td> Total First Deposit Amount </td>
+                                                                        <td>{{$savingsAccount->first_deposit_amount}}</td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td> {{++$sl}} </td>
@@ -259,7 +264,7 @@
                                                                     <tr>
                                                                         <td> {{++$sl}} </td>
                                                                         <td> Remaining Saving amount </td>
-                                                                        <td> {{$savingsAccount->totalSavingsDeposits}} </td>
+                                                                        <td> {{$savingsAccount->totalSavingsDeposits+$savingsAccount->first_deposit_amount}} </td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>

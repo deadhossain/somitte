@@ -55,6 +55,11 @@ class Customer extends Model
         return $this->savingsAccounts()->where('active_fg',1);
     }
 
+    public function getTotalSavingsAccountFirstDepositAttribute()
+    {
+        return $this->activeSavingsAccounts()->sum('first_deposit_amount');
+    }
+
     public function savingsDeposits()
     {
         return $this->hasManyThrough(
